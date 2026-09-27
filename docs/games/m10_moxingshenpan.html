@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型审判 · DSDH 模块十</title>
+<style>
+:root{--ink:#1F2A44;--sub:#5F6368;--line:#DDE1E8;--bg:#F6F7F9;--card:#fff;
+--blue:#185FA5;--blue-bg:#E6F1FB;--blue-line:#B5D4F4;
+--teal:#0F6E56;--teal-bg:#E1F5EE;--teal-line:#9FE1CB;
+--red:#A32D2D;--red-bg:#FCEBEB;--red-line:#F09595;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:20px;margin:0 0 4px;font-weight:500}
+.sub{font-size:13px;color:var(--sub);margin:0}
+.badges{margin:12px 0 18px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--sub)}
+.badge.b{color:var(--blue);border-color:var(--blue-line);background:var(--blue-bg)}
+.badge.t{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.badge.r{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+h2{font-size:15px;margin:0 0 10px;font-weight:500}
+h3{font-size:14px;margin:0 0 8px;font-weight:500}
+.hint{font-size:12px;color:var(--sub);margin:-4px 0 10px}
+.case{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:14px;background:#fff}
+.metrics{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:10px}
+.metrics td,.metrics th{border:1px solid var(--line);padding:5px 8px;text-align:left}
+.metrics th{background:#FAFBFC;color:var(--sub);font-weight:500}
+.q{background:#FAFBFC;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+.q .qt{font-size:13.5px;font-weight:500;margin-bottom:8px}
+.q .kind{font-size:11px;color:var(--blue);border:1px solid var(--blue-line);border-radius:4px;padding:0 6px;margin-right:6px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px;background:#fff}
+.opt:hover{border-color:#85B7EB;background:#FAFCFF}
+.opt input{margin-top:3px;accent-color:var(--blue)}
+.opt.sel{border-color:var(--blue);background:var(--blue-bg)}
+.opt.correct{border-color:var(--teal-line);background:var(--teal-bg)}
+.opt.wrong{border-color:var(--red-line);background:var(--red-bg)}
+.ex{font-size:12px;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:none}
+.ex.show{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button{font-family:inherit;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button:hover:not(:disabled){border-color:#85B7EB}
+.msg{margin-top:12px;font-size:13px;border-radius:8px;padding:10px 12px;border:1px solid var(--line);background:#FAFBFC;display:none}
+.msg.show{display:block}
+.msg.ok{border-color:var(--teal-line);background:var(--teal-bg);color:var(--teal)}
+.msg.warn{border-color:var(--red-line);background:var(--red-bg);color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+th{color:var(--sub);font-weight:500}
+.ok-t{color:var(--teal)}.bad-t{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(31,42,68,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:12px;max-width:520px;padding:20px;border-top:4px solid var(--red)}
+.modal h3{margin:0 0 8px;font-size:15px;color:var(--red);font-weight:500}
+.modal p{margin:0 0 14px;font-size:13px}
+footer{font-size:11.5px;color:var(--sub);text-align:center;margin:18px 0 8px}
+
+/* ===== KIT-BAR 课堂计时 / 排行榜 ===== */
+.kitbar{position:sticky;top:0;z-index:6;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(31,42,68,.06)}
+.kitbar .in{max-width:1040px;margin:0 auto;padding:8px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--sub)}
+.kitbar b{color:var(--ink);font-weight:500}
+.kitbar .tm{font-family:Consolas,"Courier New",monospace;font-size:15px;color:var(--blue)}
+.kitbar .tag2{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:#FAFBFC}
+.kitbar .tag2.ok{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.kitbar .tag2.warn{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.board input{font-family:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="kitbar"><div class="in">
+  <span><b>模块十</b> 配套游戏</span>
+  <span>建议时长 <b>8–10 分钟</b></span>
+  <span>难度 <b>★★★★☆</b></span>
+  <span>题量 <b>3 案 × 3 问</b></span>
+  <span>已用 <span class="tm" id="kitTime">00:00</span></span>
+  <span class="tag2" id="kitPace">计时中</span>
+</div></div>
+
+<div class="wrap">
+  <h1>模型审判</h1>
+  <p class="sub">DSDH 模块十 · 机器学习与深度学习基础 — 你是评审：从指标与案例中找出病灶，裁决录用或退回，并给出可追责的理由</p>
+  <div class="badges">
+    <span class="badge b">可复现</span><span class="badge t">案例真实</span><span class="badge r">伦理在场 · 红线卡</span>
+  </div>
+
+  <div class="panel" id="stage"></div>
+  <div class="panel" id="final" style="display:none">
+    <h2>评分量规（Rubric）</h2>
+    <table id="rubric"></table>
+  </div>
+  
+<div class="panel board" id="kitBoard">
+  <h2>课堂排行榜（本机保存）</h2>
+  <p style="font-size:12px;color:#5F6368;margin:0 0 10px" id="kitHint">完成本局后，输入姓名即可把成绩存入本机排行榜（数据只保存在本机浏览器，不上传）。</p>
+  <div class="row" style="margin-top:0">
+    <input id="kitName" placeholder="姓名 / 昵称" maxlength="12">
+    <button id="kitSave">保存成绩</button>
+    <button id="kitClear">清空排行榜</button>
+  </div>
+  <table id="kitTable"></table>
+</div>
+<footer>单文件 HTML5 · 零依赖 · 双击即开 ｜ DSDH 课程游戏</footer>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>触碰伦理红线</h3>
+    <p id="modalText"></p>
+    <button onclick="document.getElementById('modal').classList.remove('show')">我知道了</button>
+  </div>
+</div>
+
+<script>
+var CASES = [
+  {
+    name:"模型 A · 古籍版本分类器",
+    metrics:[["训练准确率","0.99"],["测试准确率","0.62"],["召回率","0.60"],["样本量","800"],
+             ["数据来源","单一馆藏，未做年代分层"],["测试集隔离","已隔离"]],
+    qs:[
+      {kind:"病灶", q:"指标最可能暴露的问题是什么？",
+       opts:["过拟合：训练 0.99 / 测试 0.62，泛化能力差","样本量不足","类别不平衡","没有明显问题"],
+       a:0, ex:"训练远高于测试，是过拟合的典型指纹；模型记住了训练样本而非学到规律。"},
+      {kind:"裁决", q:"你的裁决是？",
+       opts:["退回：重训并扩充 / 分层采样后再评审","直接录用","录用但仅用于内部演示","换一个任务再训练"],
+       a:0, ex:"测试准确率 0.62 不足以支撑研究结论，应退回重训。"},
+      {kind:"理由", q:"裁决理由应怎么写？",
+       opts:["训练与测试差距 0.37，泛化不足；需扩充样本并按年代分层后重新评估",
+             "黑箱模型结果可以直接作为结论，无需额外解释",
+             "指标看起来已经不错，可以直接写进论文",
+             "只要训练准确率高就说明模型可靠"],
+       a:0, red:1, ex:"可追责的评审必须寫清「哪个指标、差多少、下一步怎么做」。拿黑箱结果直接当结论触碰红线。"}
+    ]
+  },
+  {
+    name:"模型 B · 近代报刊主题分类器",
+    metrics:[["整体准确率","0.92"],["多数类召回","0.96"],["少数类召回","0.31"],["类别分布","9 : 1"],
+             ["F1（宏平均）","0.58"],["测试集隔离","已隔离"]],
+    qs:[
+      {kind:"病灶", q:"整体准确率 0.92 看起来很好，真正的问题是？",
+       opts:["类别严重不平衡，少数类召回仅 0.31，宏平均 F1 只有 0.58",
+             "样本量太大","测试集被污染","模型太简单"],
+       a:0, ex:"准确率会被多数类拉高；必须看各类召回与宏平均 F1，否则少数议题会被系统性漏掉。"},
+      {kind:"裁决", q:"你的裁决是？",
+       opts:["退回：做重采样 / 类别加权，并把少数类召回纳入验收标准",
+             "直接录用，整体准确率已达标","录用，但不再统计少数类","删除少数类样本后重训"],
+       a:0, ex:"验收标准必须包含少数类表现；删掉少数类是掩盖问题而非解决问题。"},
+      {kind:"理由", q:"裁决理由应怎么写？",
+       opts:["少数类召回 0.31、宏平均 F1 0.58，模型对少数议题不可靠；须先修正不平衡再验收",
+             "黑箱模型结果可以直接作为结论，无需额外解释",
+             "整体准确率 0.92 已经够高，不必深究",
+             "少数类本来就不重要，可以忽略"],
+       a:0, red:1, ex:"在人文研究中，被漏掉的往往正是边缘议题——这与「谁被算、谁被漏」是同一个问题。"}
+    ]
+  },
+  {
+    name:"模型 C · 碑志文字识别（OCR 后校验）",
+    metrics:[["测试准确率","0.86"],["召回率","0.85"],["宏平均 F1","0.85"],["样本量","2,400"],
+             ["数据来源","多馆藏、公开授权"],["测试集隔离","已隔离，且按碑分别划分"]],
+    qs:[
+      {kind:"病灶", q:"这个模型存在什么明显问题？",
+       opts:["未发现明显问题：指标均衡、来源合规、测试集按碑划分避免了泄漏",
+             "过拟合","样本量不足","数据泄露"],
+       a:0, ex:"训练/测试接近、召回与 F1 均衡、来源合规且按碑划分（避免同一碑同时进训练与测试）——可以录用。"},
+      {kind:"裁决", q:"你的裁决是？",
+       opts:["录用：但在成果中标注误差范围与人工抽检比例","直接录用，无需任何标注","退回重训","无限期搁置"],
+       a:0, ex:"即便录用也要标注误差边界与抽检比例——这是可复现与可追责的要求。"},
+      {kind:"理由", q:"裁决理由应怎么写？",
+       opts:["指标均衡且测试集按碑划分，可录用；须标注识别误差与人工抽检比例后使用",
+             "黑箱模型结果可以直接作为结论，无需额外解释",
+             "模型既然能跑出结果，就说明结论成立",
+             "只要准确率过 0.8 就不必说明局限"],
+       a:0, red:1, ex:"人文研究里，模型的输出是「待考的证据」而非「结论」；必须写明局限与人工核验。"}
+    ]
+  }
+];
+
+var answers = [];   // answers[caseIdx][qIdx]
+var redlines = 0, done = false;
+
+function render(){
+  var html = "";
+  CASES.forEach(function(c, ci){
+    html += '<div class="case"><h3>'+c.name+'</h3>';
+    html += '<table class="metrics">';
+    c.metrics.forEach(function(m){ html += '<tr><th>'+m[0]+'</th><td>'+m[1]+'</td></tr>'; });
+    html += '</table>';
+    c.qs.forEach(function(t, qi){
+      var chosen = (answers[ci] || {})[qi];
+      html += '<div class="q"><div class="qt"><span class="kind">'+t.kind+'</span>'+t.q+'</div><div class="opts">';
+      t.opts.forEach(function(o, oi){
+        var cls = "opt", tag = "";
+        if(done){
+          if(oi === t.a){ cls += " correct"; tag = ' <span style="font-size:11px;color:#0F6E56">正确</span>'; }
+          else if(chosen === oi){ cls += " wrong"; tag = ' <span style="font-size:11px;color:#A32D2D">你的选择</span>'; }
+        } else if(chosen === oi) cls += " sel";
+        html += '<label class="'+cls+'"><input type="radio" name="c'+ci+'q'+qi+'" value="'+oi+'"'
+             + (chosen===oi?" checked":"") + (done?" disabled":"") + '><span>'+o+tag+'</span></label>';
+      });
+      html += '</div>';
+      if(done) html += '<div class="ex show">'+t.ex+'</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  if(done){
+    html += '<div class="msg show '+(redlines===0?'ok':'warn')+'">评审完成，踩线 '+redlines+' 次。</div>';
+  }
+  html += '<div class="row">';
+  html += done ? '<button class="primary" id="btnScore">查看评分量规</button>'
+               : '<button class="primary" id="btnSubmit">提交评审意见</button>';
+  html += '<button id="btnAgain">重开一局</button></div>';
+  document.getElementById("stage").innerHTML = html;
+  bind();
+}
+
+function bind(){
+  var els = document.querySelectorAll("#stage input[type=radio]");
+  for(var i=0;i<els.length;i++){
+    els[i].onchange = function(){
+      var m = /^c(\d+)q(\d+)$/.exec(this.name);
+      var ci = +m[1], qi = +m[2];
+      if(!answers[ci]) answers[ci] = {};
+      answers[ci][qi] = +this.value;
+      render();
+    };
+  }
+  var bs = document.getElementById("btnSubmit");
+  if(bs) bs.onclick = submit;
+  var bf = document.getElementById("btnScore");
+  if(bf) bf.onclick = finish;
+  var ba = document.getElementById("btnAgain");
+  if(ba) ba.onclick = reset;
+}
+
+function submit(){
+  for(var ci=0; ci<CASES.length; ci++){
+    for(var qi=0; qi<CASES[ci].qs.length; qi++){
+      var v = (answers[ci]||{})[qi];
+      if(v === undefined){ alert("「" + CASES[ci].name + "」第 " + (qi+1) + " 题还没选。"); return; }
+      if(CASES[ci].qs[qi].red !== undefined && v === CASES[ci].qs[qi].red) redlines++;
+    }
+  }
+  done = true; render();
+  if(redlines > 0){
+    document.getElementById("modalText").textContent =
+      "把黑箱模型的输出直接当作人文结论、并拒绝提供解释 —— 触碰可解释性与可追责红线。"
+      + "方法再炫，也要能向一位历史学者说清「为什么得出这个结论」。本次踩线 " + redlines + " 次，每次扣 3 分。";
+    document.getElementById("modal").classList.add("show");
+  }
+}
+
+function reset(){ answers = []; redlines = 0; done = false;
+  document.getElementById("final").style.display = "none"; render(); }
+
+function finish(){
+  var okProblem = 0, okVerdict = 0, okReason = 0;
+  CASES.forEach(function(c, ci){
+    c.qs.forEach(function(t, qi){
+      var v = (answers[ci]||{})[qi];
+      if(v === t.a){
+        if(qi === 0) okProblem++;
+        else if(qi === 1) okVerdict++;
+        else okReason++;
+      }
+    });
+  });
+  var score = Math.max(0, okProblem*15 + okVerdict*10 + okReason*5 + (redlines===0?10:0) - redlines*3);
+  var rows = [
+    ["问题识别（过拟合/不平衡/合规）", okProblem + " / 3", okProblem === 3],
+    ["裁决（录用 / 退回）", okVerdict + " / 3", okVerdict === 3],
+    ["理由陈述（可追责）", okReason + " / 3", okReason === 3],
+    ["伦理红线（可解释性）", redlines === 0 ? "全程未踩线 ✓（+10）" : ("踩线 " + redlines + " 次（−" + redlines*3 + " 分）"), redlines === 0]
+  ];
+  document.getElementById("rubric").innerHTML = '<tr><th>维度</th><th>表现</th></tr>' +
+    rows.map(function(r){ return '<tr><td>'+r[0]+'</td><td class="'+(r[2]?'ok-t':'bad-t')+'">'+r[1]+'</td></tr>'; }).join("") +
+    '<tr><td><b>本局得分</b></td><td><b>'+score+' / 100</b></td></tr>';
+  document.getElementById("final").style.display = "block";
+  document.getElementById("final").scrollIntoView({behavior:"smooth"});
+}
+
+reset();
+
+/* ===== KIT-BAR 课堂计时 / 排行榜（通用组件） ===== */
+(function(){
+  var KEY = "dsdh_game_", LO = 8, HI = 10;
+  var store = (function(){
+    try { if (typeof localStorage !== "undefined" && localStorage) return localStorage; } catch(e){}
+    var m = {};
+    return { getItem:function(k){ return (k in m) ? m[k] : null; },
+             setItem:function(k,v){ m[k] = String(v); },
+             removeItem:function(k){ delete m[k]; } };
+  })();
+  var t0 = Date.now(), stopped = false, finished = false;
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function fmt(s){ return pad(Math.floor(s/60)) + ":" + pad(Math.floor(s % 60)); }
+  function el(id){ return document.getElementById(id); }
+
+  function tick(){
+    var sec = Math.floor((Date.now() - t0) / 1000);
+    var t = el("kitTime"); if (t) t.textContent = fmt(sec);
+    var p = el("kitPace");
+    if (p && !stopped){
+      if (finished){ p.className = "tag2"; p.textContent = "本局用时 " + fmt(sec); }
+      else if (sec < LO * 60){ p.className = "tag2"; p.textContent = "节奏偏快（目标 " + LO + "–" + HI + " 分钟）"; }
+      else if (sec <= HI * 60){ p.className = "tag2 ok"; p.textContent = "节奏合适"; }
+      else { p.className = "tag2 warn"; p.textContent = "已超时（目标 " + LO + "–" + HI + " 分钟）"; }
+    }
+    if (!finished){
+      var f = el("final");
+      var g = el("rubricPanel");
+      if ((f && f.style && f.style.display === "block") || (g && g.style && g.style.display === "block")){
+        finished = true; stopped = true;
+        var h = el("kitHint");
+        if (h) h.textContent = "本局已完成 —— 输入姓名后点「保存成绩」，即可进入排行榜。";
+      }
+    }
+  }
+
+  function parseScore(){
+    var r = el("rubric");
+    if (!r) return 0;
+    var m = /<b>\s*(\d+)\s*\/\s*100\s*<\/b>/.exec(r.innerHTML);
+    return m ? (+m[1]) : 0;
+  }
+  function load(){ try { return JSON.parse(store.getItem(KEY) || "[]"); } catch(e){ return []; } }
+  function render(){
+    var tb = el("kitTable"); if (!tb) return;
+    var rows = load().slice().sort(function(a,b){ return (b.s - a.s) || (a.sec - b.sec); }).slice(0, 10);
+    if (!rows.length){ tb.innerHTML = "<tr><th>暂无记录</th></tr>"; return; }
+    var h = "<tr><th>#</th><th>姓名</th><th>得分</th><th>用时</th><th>日期</th></tr>";
+    rows.forEach(function(r, i){
+      h += "<tr><td>" + (i+1) + "</td><td>" + r.name + "</td><td>" + r.s + " / 100</td><td>"
+         + fmt(r.sec) + "</td><td>" + r.d + "</td></tr>";
+    });
+    tb.innerHTML = h;
+  }
+  function save(){
+    var inp = el("kitName");
+    var n = (inp && inp.value ? inp.value.trim() : "") || "匿名同学";
+    var rec = { name: n, s: parseScore(), sec: Math.floor((Date.now() - t0) / 1000),
+                d: new Date().toLocaleDateString("zh-CN") };
+    var all = load(); all.push(rec);
+    store.setItem(KEY, JSON.stringify(all));
+    render();
+    var h = el("kitHint");
+    if (h) h.textContent = "已保存：" + rec.name + "　" + rec.s + " 分　用时 " + fmt(rec.sec) + "。";
+  }
+
+  var timer = setInterval(tick, 1000);
+  if (timer && typeof timer === "object" && timer.unref) { try { timer.unref(); } catch(e){} }
+  var sb = el("kitSave"); if (sb) sb.onclick = save;
+  var cb = el("kitClear"); if (cb) cb.onclick = function(){ store.removeItem(KEY); render(); };
+  render(); tick();
+})();
+</script>
+</body>
+</html>

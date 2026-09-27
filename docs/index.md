@@ -35,6 +35,17 @@
 | :material-progress-clock: | 十二 · 人工智能前沿进展 | 追踪推理模型、智能体、多模态与治理 |
 | :material-progress-clock: | 综合 · 综合项目与课程反思 | 用 ≥2 种方法回答一个真问题并答辩 |
 
+## 配套课堂游戏
+
+模块二–十各配一款 **单文件 HTML5 小游戏**（零依赖、双击即开），每款 5–10 分钟，内置实时计时与本机排行榜，并都设有「伦理红线」机制。
+
+<div class="grid cards" markdown>
+
+- :material-gamepad-variant: **课堂游戏（模块二–十）**
+  [:octicons-arrow-right-24: 进入游戏中心](games/)
+
+</div>
+
 ## 怎样使用本教材
 
 - **可复现**：每个模块的代码片段都可在统一预部署环境中一键运行；数据、环境、步骤公开。

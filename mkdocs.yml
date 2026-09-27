@@ -58,3 +58,4 @@ plugins:
 nav:
   - 首页: index.md
   - 模块一 · 导论：当数据科学遇见数字人文: 模块一.md
+  - 课堂游戏: games.md

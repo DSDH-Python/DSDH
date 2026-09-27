@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>关系织网 · DSDH 模块六</title>
+<style>
+:root{--ink:#1F2A44;--sub:#5F6368;--line:#DDE1E8;--bg:#F6F7F9;--card:#fff;
+--blue:#185FA5;--blue-bg:#E6F1FB;--blue-line:#B5D4F4;
+--teal:#0F6E56;--teal-bg:#E1F5EE;--teal-line:#9FE1CB;
+--red:#A32D2D;--red-bg:#FCEBEB;--red-line:#F09595;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:20px;margin:0 0 4px;font-weight:500}
+.sub{font-size:13px;color:var(--sub);margin:0}
+.badges{margin:12px 0 18px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--sub)}
+.badge.b{color:var(--blue);border-color:var(--blue-line);background:var(--blue-bg)}
+.badge.t{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.badge.r{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+h2{font-size:15px;margin:0 0 10px;font-weight:500}
+.hint{font-size:12px;color:var(--sub);margin:-4px 0 10px}
+.task{font-size:13.5px;font-weight:500;padding:10px 12px;background:var(--blue-bg);border:1px solid var(--blue-line);border-radius:8px;margin-bottom:10px}
+.task .lab{font-size:11px;color:var(--blue);border:1px solid var(--blue-line);border-radius:4px;padding:0 6px;margin-right:6px}
+.node{cursor:pointer}
+.node circle{stroke-width:2}
+.node text{font-size:13px;text-anchor:middle;pointer-events:none}
+.node.sel circle{stroke:var(--blue);stroke-width:3}
+.node.hit circle{fill:#E1F5EE}
+.q{background:#FAFBFC;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.q .qt{font-size:13.5px;font-weight:500;margin-bottom:8px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px;background:#fff}
+.opt:hover{border-color:#85B7EB;background:#FAFCFF}
+.opt input{margin-top:3px;accent-color:var(--blue)}
+.opt.sel{border-color:var(--blue);background:var(--blue-bg)}
+.opt.correct{border-color:var(--teal-line);background:var(--teal-bg)}
+.opt.wrong{border-color:var(--red-line);background:var(--red-bg)}
+.ex{font-size:12px;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:none}
+.ex.show{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button{font-family:inherit;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:hover:not(:disabled){border-color:#85B7EB}
+.msg{margin-top:12px;font-size:13px;border-radius:8px;padding:10px 12px;border:1px solid var(--line);background:#FAFBFC;display:none}
+.msg.show{display:block}
+.msg.ok{border-color:var(--teal-line);background:var(--teal-bg);color:var(--teal)}
+.msg.warn{border-color:var(--red-line);background:var(--red-bg);color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+th{color:var(--sub);font-weight:500}
+.ok-t{color:var(--teal)}.bad-t{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(31,42,68,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:12px;max-width:520px;padding:20px;border-top:4px solid var(--red)}
+.modal h3{margin:0 0 8px;font-size:15px;color:var(--red);font-weight:500}
+.modal p{margin:0 0 14px;font-size:13px}
+footer{font-size:11.5px;color:var(--sub);text-align:center;margin:18px 0 8px}
+
+/* ===== KIT-BAR 课堂计时 / 排行榜 ===== */
+.kitbar{position:sticky;top:0;z-index:6;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(31,42,68,.06)}
+.kitbar .in{max-width:1040px;margin:0 auto;padding:8px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--sub)}
+.kitbar b{color:var(--ink);font-weight:500}
+.kitbar .tm{font-family:Consolas,"Courier New",monospace;font-size:15px;color:var(--blue)}
+.kitbar .tag2{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:#FAFBFC}
+.kitbar .tag2.ok{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.kitbar .tag2.warn{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.board input{font-family:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="kitbar"><div class="in">
+  <span><b>模块六</b> 配套游戏</span>
+  <span>建议时长 <b>6–8 分钟</b></span>
+  <span>难度 <b>★★★☆☆</b></span>
+  <span>题量 <b>6 边 + 3 问</b></span>
+  <span>已用 <span class="tm" id="kitTime">00:00</span></span>
+  <span class="tag2" id="kitPace">计时中</span>
+</div></div>
+
+<div class="wrap">
+  <h1>关系织网</h1>
+  <p class="sub">DSDH 模块六 · 社会网络分析 — 把史料句子变成节点与边，再从结构里读出中心性、桥与边缘</p>
+  <div class="badges">
+    <span class="badge b">可复现</span><span class="badge t">案例真实</span><span class="badge r">伦理在场 · 红线卡</span>
+  </div>
+
+  <div class="panel">
+    <h2>第一步 · 按史料连边</h2>
+    <div class="task" id="task"></div>
+    <div id="graph"></div>
+    <div class="msg" id="gmsg"></div>
+  </div>
+
+  <div class="panel" id="stage"></div>
+  <div class="panel" id="final" style="display:none">
+    <h2>评分量规（Rubric）</h2>
+    <table id="rubric"></table>
+  </div>
+  
+<div class="panel board" id="kitBoard">
+  <h2>课堂排行榜（本机保存）</h2>
+  <p style="font-size:12px;color:#5F6368;margin:0 0 10px" id="kitHint">完成本局后，输入姓名即可把成绩存入本机排行榜（数据只保存在本机浏览器，不上传）。</p>
+  <div class="row" style="margin-top:0">
+    <input id="kitName" placeholder="姓名 / 昵称" maxlength="12">
+    <button id="kitSave">保存成绩</button>
+    <button id="kitClear">清空排行榜</button>
+  </div>
+  <table id="kitTable"></table>
+</div>
+<footer>单文件 HTML5 · 零依赖 · 双击即开 ｜ DSDH 课程游戏</footer>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>触碰伦理红线</h3>
+    <p id="modalText"></p>
+    <button onclick="document.getElementById('modal').classList.remove('show')">我知道了</button>
+  </div>
+</div>
+
+<script>
+var NODES = [
+  {n:"汤斌",   x:110, y:90,  t:"人物"},
+  {n:"林则徐", x:110, y:215, t:"人物"},
+  {n:"冯桂芬", x:330, y:150, t:"人物"},
+  {n:"苏州府", x:430, y:80,  t:"机构"},
+  {n:"江苏巡抚衙门", x:430, y:225, t:"机构"},
+  {n:"吴中",   x:565, y:150, t:"地点"}
+];
+
+var RELATIONS = [
+  {text:"史料：「汤斌出任苏州知府」", rel:"任职于", a:[0,3]},
+  {text:"史料：「汤斌主持修治吴中水利」", rel:"修治",   a:[0,5]},
+  {text:"史料：「林则徐任江苏巡抚」",   rel:"任职于", a:[1,4]},
+  {text:"史料：「林则徐在吴中一带兴修水利」", rel:"兴修", a:[1,5]},
+  {text:"史料：「冯桂芬长期活动于苏州府」", rel:"活动于", a:[2,3]},
+  {text:"史料：「冯桂芬与林则徐有师友之谊」", rel:"师友", a:[2,1]}
+];
+
+var ANALYSIS = [
+  {q:"网络建成后，度中心性（连接数）最高的节点是？",
+   opts:["汤斌","林则徐","冯桂芬","吴中"], a:1,
+   ex:"林则徐连出 3 条边（衙门、吴中、冯桂芬），是网络的中心人物。"},
+  {q:"哪个节点充当「桥」，把两个原本分立的小圈子连了起来？",
+   opts:["苏州府","吴中","江苏巡抚衙门","冯桂芬"], a:1,
+   ex:"吴中同时连接汤斌与林则徐两条脉络，是典型的结构洞 / 桥节点。"},
+  {q:"关于网络边缘的「江苏巡抚衙门」（只连着林则徐），正确的解读是？",
+   opts:["它度数为 1、处于边缘，相关史料可能尚未数字化或被遗漏",
+         "它在历史上不重要，可以直接从研究中剔除",
+         "数据里没有它的其他关系，说明它当时并不存在",
+         "边缘节点无需标注，忽略即可"],
+   a:0, red:2,
+   ex:"度数为 1 只说明「现有数据中关系少」，不等于历史上不存在——把数据缺失当成事实，是最典型的代表性谬误。"}
+];
+
+var edges = [];        // {i,j,rel}
+var clicks = [];
+var active = 0;
+var wrongEdges = 0;
+var answers = [];
+var redlines = 0, done = false;
+
+function esc(s){ return String(s).replace(/</g,"&lt;"); }
+
+function renderGraph(){
+  var s = '<svg viewBox="0 0 660 300" width="100%" role="img">';
+  edges.forEach(function(e){
+    var a = NODES[e.i], b = NODES[e.j];
+    s += '<line x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" stroke="#5DCAA5" stroke-width="2"/>';
+    var mx = (a.x+b.x)/2, my = (a.y+b.y)/2;
+    s += '<text x="'+mx+'" y="'+(my-6)+'" font-size="11" fill="#0F6E56" text-anchor="middle">'+esc(e.rel)+'</text>';
+  });
+  NODES.forEach(function(nd, i){
+    var isSel = clicks.indexOf(i) >= 0;
+    var deg = edges.filter(function(e){ return e.i===i || e.j===i; }).length;
+    var fill = nd.t === "人物" ? "#E6F1FB" : "#FAEEDA";
+    var stroke = isSel ? "#185FA5" : (deg > 0 ? "#0F6E56" : "#888780");
+    s += '<g class="node'+(isSel?' sel':'')+'" data-i="'+i+'">'
+       + '<circle cx="'+nd.x+'" cy="'+nd.y+'" r="30" fill="'+fill+'" stroke="'+stroke+'"/>'
+       + '<text x="'+nd.x+'" y="'+(nd.y+3)+'" font-size="13" fill="#1F2A44">'+esc(nd.n)+'</text>'
+       + '<text x="'+nd.x+'" y="'+(nd.y+46)+'" font-size="10" fill="#5F6368">'+nd.t+' · 度 '+deg+'</text>'
+       + '</g>';
+  });
+  s += '</svg>';
+  document.getElementById("graph").innerHTML = s;
+  var gs = document.querySelectorAll("#graph .node");
+  for(var g=0; g<gs.length; g++){
+    gs[g].onclick = function(){ clickNode(+this.getAttribute("data-i")); };
+  }
+}
+
+function renderTask(){
+  var el = document.getElementById("task");
+  if(active >= RELATIONS.length){
+    el.innerHTML = '<span class="lab">完成</span>六条关系已全部连出（错误尝试 ' + wrongEdges + ' 次）。';
+  } else {
+    var r = RELATIONS[active];
+    el.innerHTML = '<span class="lab">任务 ' + (active+1) + ' / ' + RELATIONS.length + '</span>'
+      + esc(r.text) + '　→ 请依次点击「' + esc(r.rel) + '」关系的两个节点'
+      + (clicks.length ? '（已选：' + clicks.map(function(i){return NODES[i].n;}).join(" → ") + '）' : '');
+  }
+}
+
+function clickNode(i){
+  if(done) return;
+  if(active >= RELATIONS.length) return;
+  if(clicks.indexOf(i) >= 0) return;
+  clicks.push(i);
+  if(clicks.length === 2){
+    var r = RELATIONS[active];
+    var ok = (clicks[0]===r.a[0] && clicks[1]===r.a[1]) || (clicks[0]===r.a[1] && clicks[1]===r.a[0]);
+    var m = document.getElementById("gmsg");
+    if(ok){
+      edges.push({i:clicks[0], j:clicks[1], rel:r.rel});
+      active++;
+      clicks = [];
+      m.className = "msg show ok";
+      m.textContent = "连边正确：" + NODES[r.a[0]].n + " — " + r.rel + " — " + NODES[r.a[1]].n;
+    } else {
+      wrongEdges++;
+      clicks = [];
+      m.className = "msg show warn";
+      m.textContent = "这两个节点不构成「" + r.rel + "」关系，再读一遍史料。";
+    }
+  }
+  renderTask(); renderGraph();
+}
+
+function render(){
+  var html = "<h2>第二步 · 结构洞察</h2>";
+  ANALYSIS.forEach(function(t, i){
+    var chosen = answers[i];
+    html += '<div class="q"><div class="qt">'+t.q+'</div><div class="opts">';
+    t.opts.forEach(function(o, j){
+      var cls = "opt", tag = "";
+      if(done){
+        if(j === t.a){ cls += " correct"; tag = ' <span style="font-size:11px;color:#0F6E56">正确</span>'; }
+        else if(chosen === j){ cls += " wrong"; tag = ' <span style="font-size:11px;color:#A32D2D">你的选择</span>'; }
+      } else if(chosen === j) cls += " sel";
+      html += '<label class="'+cls+'"><input type="radio" name="a'+i+'" value="'+j+'"'
+           + (chosen===j?" checked":"") + (done?" disabled":"") + '><span>'+o+tag+'</span></label>';
+    });
+    html += "</div>";
+    if(done) html += '<div class="ex show">'+t.ex+'</div>';
+    html += "</div>";
+  });
+  html += '<div class="row">';
+  html += done ? '<button class="primary" id="btnScore">查看评分量规</button>'
+               : '<button class="primary" id="btnSubmit">提交网络与洞察</button>';
+  html += '<button id="btnAgain">重开一局</button></div>';
+  document.getElementById("stage").innerHTML = html;
+  bind();
+}
+
+function bind(){
+  var els = document.querySelectorAll("#stage input[type=radio]");
+  for(var i=0;i<els.length;i++){
+    els[i].onchange = function(){
+      var m = /^a(\d+)$/.exec(this.name);
+      answers[+m[1]] = +this.value;
+      render();
+    };
+  }
+  var bs = document.getElementById("btnSubmit");
+  if(bs) bs.onclick = submit;
+  var bf = document.getElementById("btnScore");
+  if(bf) bf.onclick = finish;
+  var ba = document.getElementById("btnAgain");
+  if(ba) ba.onclick = reset;
+}
+
+function submit(){
+  if(edges.length < RELATIONS.length){ alert("还有 " + (RELATIONS.length-edges.length) + " 条关系没连出来。"); return; }
+  for(var i=0;i<ANALYSIS.length;i++) if(answers[i] === undefined){ alert("结构洞察第 " + (i+1) + " 题还没选。"); return; }
+  ANALYSIS.forEach(function(t,i){ if(answers[i] === t.red) redlines++; });
+  done = true;
+  renderTask(); renderGraph(); render();
+  if(redlines > 0){
+    document.getElementById("modalText").textContent =
+      "把「数据里没有这条关系」解读成「历史上不存在」——这是社会网络分析中最典型的代表性谬误，会系统性抹去边缘群体。"
+      + "本次踩线 " + redlines + " 次，每次扣 3 分。";
+    document.getElementById("modal").classList.add("show");
+  }
+}
+
+function reset(){
+  edges = []; clicks = []; active = 0; wrongEdges = 0; answers = []; redlines = 0; done = false;
+  document.getElementById("final").style.display = "none";
+  document.getElementById("gmsg").className = "msg";
+  renderTask(); renderGraph(); render();
+}
+
+function finish(){
+  var okRel = RELATIONS.length;
+  var okAna = ANALYSIS.filter(function(t,i){ return answers[i] === t.a; }).length;
+  var acc = wrongEdges === 0 ? 10 : Math.max(0, 10 - wrongEdges*2);
+  var score = Math.max(0, okRel*10 + okAna*10 + acc - redlines*3);
+  var rows = [
+    ["关系抽取（连边）", okRel + " / " + RELATIONS.length, true],
+    ["结构洞察（中心性/桥/边缘）", okAna + " / " + ANALYSIS.length, okAna === ANALYSIS.length],
+    ["连边精准度", wrongEdges === 0 ? "零错误 ✓（+10）" : ("错误尝试 " + wrongEdges + " 次（+" + acc + "）"), wrongEdges === 0],
+    ["伦理红线（代表性）", redlines === 0 ? "全程未踩线 ✓" : ("踩线 " + redlines + " 次（−" + redlines*3 + " 分）"), redlines === 0]
+  ];
+  document.getElementById("rubric").innerHTML = '<tr><th>维度</th><th>表现</th></tr>' +
+    rows.map(function(r){ return '<tr><td>'+r[0]+'</td><td class="'+(r[2]?'ok-t':'bad-t')+'">'+r[1]+'</td></tr>'; }).join("") +
+    '<tr><td><b>本局得分</b></td><td><b>'+score+' / 100</b></td></tr>';
+  document.getElementById("final").style.display = "block";
+  document.getElementById("final").scrollIntoView({behavior:"smooth"});
+}
+
+reset();
+
+/* ===== KIT-BAR 课堂计时 / 排行榜（通用组件） ===== */
+(function(){
+  var KEY = "dsdh_game_", LO = 6, HI = 8;
+  var store = (function(){
+    try { if (typeof localStorage !== "undefined" && localStorage) return localStorage; } catch(e){}
+    var m = {};
+    return { getItem:function(k){ return (k in m) ? m[k] : null; },
+             setItem:function(k,v){ m[k] = String(v); },
+             removeItem:function(k){ delete m[k]; } };
+  })();
+  var t0 = Date.now(), stopped = false, finished = false;
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function fmt(s){ return pad(Math.floor(s/60)) + ":" + pad(Math.floor(s % 60)); }
+  function el(id){ return document.getElementById(id); }
+
+  function tick(){
+    var sec = Math.floor((Date.now() - t0) / 1000);
+    var t = el("kitTime"); if (t) t.textContent = fmt(sec);
+    var p = el("kitPace");
+    if (p && !stopped){
+      if (finished){ p.className = "tag2"; p.textContent = "本局用时 " + fmt(sec); }
+      else if (sec < LO * 60){ p.className = "tag2"; p.textContent = "节奏偏快（目标 " + LO + "–" + HI + " 分钟）"; }
+      else if (sec <= HI * 60){ p.className = "tag2 ok"; p.textContent = "节奏合适"; }
+      else { p.className = "tag2 warn"; p.textContent = "已超时（目标 " + LO + "–" + HI + " 分钟）"; }
+    }
+    if (!finished){
+      var f = el("final");
+      var g = el("rubricPanel");
+      if ((f && f.style && f.style.display === "block") || (g && g.style && g.style.display === "block")){
+        finished = true; stopped = true;
+        var h = el("kitHint");
+        if (h) h.textContent = "本局已完成 —— 输入姓名后点「保存成绩」，即可进入排行榜。";
+      }
+    }
+  }
+
+  function parseScore(){
+    var r = el("rubric");
+    if (!r) return 0;
+    var m = /<b>\s*(\d+)\s*\/\s*100\s*<\/b>/.exec(r.innerHTML);
+    return m ? (+m[1]) : 0;
+  }
+  function load(){ try { return JSON.parse(store.getItem(KEY) || "[]"); } catch(e){ return []; } }
+  function render(){
+    var tb = el("kitTable"); if (!tb) return;
+    var rows = load().slice().sort(function(a,b){ return (b.s - a.s) || (a.sec - b.sec); }).slice(0, 10);
+    if (!rows.length){ tb.innerHTML = "<tr><th>暂无记录</th></tr>"; return; }
+    var h = "<tr><th>#</th><th>姓名</th><th>得分</th><th>用时</th><th>日期</th></tr>";
+    rows.forEach(function(r, i){
+      h += "<tr><td>" + (i+1) + "</td><td>" + r.name + "</td><td>" + r.s + " / 100</td><td>"
+         + fmt(r.sec) + "</td><td>" + r.d + "</td></tr>";
+    });
+    tb.innerHTML = h;
+  }
+  function save(){
+    var inp = el("kitName");
+    var n = (inp && inp.value ? inp.value.trim() : "") || "匿名同学";
+    var rec = { name: n, s: parseScore(), sec: Math.floor((Date.now() - t0) / 1000),
+                d: new Date().toLocaleDateString("zh-CN") };
+    var all = load(); all.push(rec);
+    store.setItem(KEY, JSON.stringify(all));
+    render();
+    var h = el("kitHint");
+    if (h) h.textContent = "已保存：" + rec.name + "　" + rec.s + " 分　用时 " + fmt(rec.sec) + "。";
+  }
+
+  var timer = setInterval(tick, 1000);
+  if (timer && typeof timer === "object" && timer.unref) { try { timer.unref(); } catch(e){} }
+  var sb = el("kitSave"); if (sb) sb.onclick = save;
+  var cb = el("kitClear"); if (cb) cb.onclick = function(){ store.removeItem(KEY); render(); };
+  render(); tick();
+})();
+</script>
+</body>
+</html>

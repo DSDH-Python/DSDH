@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>修辞法庭 · DSDH 模块五</title>
+<style>
+:root{
+  --ink:#1F2A44; --sub:#5F6368; --line:#DDE1E8; --bg:#F6F7F9; --card:#FFFFFF;
+  --blue:#185FA5; --blue-bg:#E6F1FB; --blue-line:#B5D4F4;
+  --teal:#0F6E56; --teal-bg:#E1F5EE; --teal-line:#9FE1CB;
+  --red:#A32D2D;  --red-bg:#FCEBEB;  --red-line:#F09595;
+  --amber:#8A5A00; --amber-bg:#FAEEDA; --amber-line:#EF9F27;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding:24px}
+header h1{font-size:20px;margin:0 0 4px;font-weight:500}
+header .sub{font-size:13px;color:var(--sub);margin:0}
+.badges{margin:12px 0 18px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--sub)}
+.badge.b{color:var(--blue);border-color:var(--blue-line);background:var(--blue-bg)}
+.badge.t{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.badge.r{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+h2{font-size:15px;margin:0 0 10px;font-weight:500}
+.case-no{font-size:12px;color:var(--sub);margin-bottom:4px}
+.case-desc{font-size:13.5px;margin:0 0 14px;padding:10px 12px;background:#FAFBFC;border-left:3px solid var(--blue);border-radius:0 8px 8px 0}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:820px){.charts{grid-template-columns:1fr}}
+.chartbox{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+.chartbox .cap{font-size:12px;color:var(--sub);margin-bottom:6px;display:flex;justify-content:space-between}
+.chartbox.bad{border-color:var(--red-line);background:#FFFCFC}
+.chartbox.good{border-color:var(--teal-line);background:#F9FEFB}
+.tag{font-size:11px;padding:1px 7px;border-radius:4px}
+.tag.bad{color:var(--red);background:var(--red-bg);border:1px solid var(--red-line)}
+.tag.good{color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-line)}
+.q{margin-top:16px}
+.q .qt{font-size:13.5px;font-weight:500;margin-bottom:8px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px;background:#fff}
+.opt:hover{border-color:#85B7EB;background:#FAFCFF}
+.opt input{margin-top:3px;accent-color:var(--blue)}
+.opt.sel{border-color:var(--blue);background:var(--blue-bg)}
+.opt.correct{border-color:var(--teal-line);background:var(--teal-bg)}
+.opt.wrong{border-color:var(--red-line);background:var(--red-bg)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button{font-family:inherit;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:hover:not(:disabled){border-color:#85B7EB}
+.msg{margin-top:12px;font-size:13px;border-radius:8px;padding:10px 12px;border:1px solid var(--line);background:#FAFBFC;display:none}
+.msg.show{display:block}
+.msg.ok{border-color:var(--teal-line);background:var(--teal-bg);color:var(--teal)}
+.msg.bad{border-color:var(--red-line);background:var(--red-bg);color:var(--red)}
+.msg.warn{border-color:var(--amber-line);background:var(--amber-bg);color:var(--amber)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+th{color:var(--sub);font-weight:500}
+.ok-t{color:var(--teal)} .bad-t{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(31,42,68,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:12px;max-width:520px;padding:20px;border-top:4px solid var(--red)}
+.modal h3{margin:0 0 8px;font-size:15px;color:var(--red);font-weight:500}
+.modal p{margin:0 0 14px;font-size:13px}
+footer{font-size:11.5px;color:var(--sub);text-align:center;margin:18px 0 8px}
+
+/* ===== KIT-BAR 课堂计时 / 排行榜 ===== */
+.kitbar{position:sticky;top:0;z-index:6;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(31,42,68,.06)}
+.kitbar .in{max-width:1040px;margin:0 auto;padding:8px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--sub)}
+.kitbar b{color:var(--ink);font-weight:500}
+.kitbar .tm{font-family:Consolas,"Courier New",monospace;font-size:15px;color:var(--blue)}
+.kitbar .tag2{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:#FAFBFC}
+.kitbar .tag2.ok{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.kitbar .tag2.warn{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.board input{font-family:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="kitbar"><div class="in">
+  <span><b>模块五</b> 配套游戏</span>
+  <span>建议时长 <b>8–10 分钟</b></span>
+  <span>难度 <b>★★★☆☆</b></span>
+  <span>题量 <b>3 案 × 3 问</b></span>
+  <span>已用 <span class="tm" id="kitTime">00:00</span></span>
+  <span class="tag2" id="kitPace">计时中</span>
+</div></div>
+
+<div class="wrap">
+  <header>
+    <h1>修辞法庭</h1>
+    <p class="sub">DSDH 模块五 · 数据可视化与视觉修辞 — 你是评审：识破图表的修辞陷阱，给出诚实重绘，并说明理由</p>
+  </header>
+  <div class="badges">
+    <span class="badge b">可复现</span>
+    <span class="badge t">案例真实</span>
+    <span class="badge r">伦理在场 · 红线卡</span>
+  </div>
+
+  <div class="panel" id="stage"></div>
+
+  <div class="panel" id="final" style="display:none">
+    <h2>法庭意见书</h2>
+    <table id="verdicts"></table>
+    <h2 style="margin-top:18px">评分量规（Rubric）</h2>
+    <table id="rubric"></table>
+  </div>
+
+  
+<div class="panel board" id="kitBoard">
+  <h2>课堂排行榜（本机保存）</h2>
+  <p style="font-size:12px;color:#5F6368;margin:0 0 10px" id="kitHint">完成本局后，输入姓名即可把成绩存入本机排行榜（数据只保存在本机浏览器，不上传）。</p>
+  <div class="row" style="margin-top:0">
+    <input id="kitName" placeholder="姓名 / 昵称" maxlength="12">
+    <button id="kitSave">保存成绩</button>
+    <button id="kitClear">清空排行榜</button>
+  </div>
+  <table id="kitTable"></table>
+</div>
+<footer>单文件 HTML5 · 零依赖 · 双击即开 ｜ DSDH 课程游戏</footer>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>触碰伦理红线</h3>
+    <p id="modalText"></p>
+    <button onclick="document.getElementById('modal').classList.remove('show')">我知道了</button>
+  </div>
+</div>
+
+<script>
+/* ---------- 图表：全部内联 SVG 手绘，无任何外部库 ---------- */
+function fmt(v){ return Math.abs(v-Math.round(v))<0.01 ? String(Math.round(v)) : v.toFixed(1); }
+
+function renderBars(cfg){
+  var data=cfg.data, yMin=cfg.yMin, yMax=cfg.yMax, title=cfg.title||"",
+      color=cfg.color||"#185FA5", w=cfg.w||430, h=cfg.h||250;
+  var padL=44,padR=12,padT=26,padB=36;
+  var pw=w-padL-padR, ph=h-padT-padB, n=data.length, bw=Math.min(46, pw/n*0.56);
+  function y(v){ return padT + (yMax-v)/(yMax-yMin)*ph; }
+  var s='<svg viewBox="0 0 '+w+' '+h+'" width="100%" role="img">';
+  if(title) s+='<text x="'+padL+'" y="15" font-size="12" fill="#1F2A44">'+title+'</text>';
+  for(var i=0;i<=4;i++){
+    var v=yMin+(yMax-yMin)*i/4, yy=y(v);
+    s+='<line x1="'+padL+'" y1="'+yy+'" x2="'+(w-padR)+'" y2="'+yy+'" stroke="#E8EBF0"/>';
+    s+='<text x="'+(padL-6)+'" y="'+(yy+4)+'" font-size="10" fill="#5F6368" text-anchor="end">'+fmt(v)+'</text>';
+  }
+  data.forEach(function(d,i){
+    var cx=padL+pw/n*(i+0.5), x=cx-bw/2, yy=y(d.v), bh=Math.max(1,(padT+ph)-yy);
+    s+='<rect x="'+x+'" y="'+yy+'" width="'+bw+'" height="'+bh+'" fill="'+color+'" rx="2"/>';
+    s+='<text x="'+cx+'" y="'+(yy-5)+'" font-size="10" fill="#1F2A44" text-anchor="middle">'+d.v+'</text>';
+    s+='<text x="'+cx+'" y="'+(h-padB+16)+'" font-size="10" fill="#5F6368" text-anchor="middle">'+d.l+'</text>';
+  });
+  s+='<line x1="'+padL+'" y1="'+(padT+ph)+'" x2="'+(w-padR)+'" y2="'+(padT+ph)+'" stroke="#C7CDD6"/>';
+  s+='</svg>';
+  return s;
+}
+
+function renderDual(cfg){
+  var data=cfg.data, w=cfg.w||430, h=cfg.h||250, padL=44, padR=48, padT=26, padB=36;
+  var pw=w-padL-padR, ph=h-padT-padB, n=data.length, bw=Math.min(34, pw/n*0.40);
+  function yL(v){ return padT+(cfg.yMaxL-v)/(cfg.yMaxL-cfg.yMinL)*ph; }
+  function yR(v){ return padT+(cfg.yMaxR-v)/(cfg.yMaxR-cfg.yMinR)*ph; }
+  var s='<svg viewBox="0 0 '+w+' '+h+'" width="100%" role="img">';
+  if(cfg.title) s+='<text x="'+padL+'" y="15" font-size="12" fill="#1F2A44">'+cfg.title+'</text>';
+  for(var i=0;i<=4;i++){
+    var vL=cfg.yMinL+(cfg.yMaxL-cfg.yMinL)*i/4, vR=cfg.yMinR+(cfg.yMaxR-cfg.yMinR)*i/4;
+    var yy=yL(vL);
+    s+='<line x1="'+padL+'" y1="'+yy+'" x2="'+(w-padR)+'" y2="'+yy+'" stroke="#E8EBF0"/>';
+    s+='<text x="'+(padL-6)+'" y="'+(yy+4)+'" font-size="10" fill="#185FA5" text-anchor="end">'+fmt(vL)+'</text>';
+    s+='<text x="'+(w-padR+6)+'" y="'+(yy+4)+'" font-size="10" fill="#D85A30">'+fmt(vR)+'</text>';
+  }
+  var pts=[];
+  data.forEach(function(d,i){
+    var cx=padL+pw/n*(i+0.5), x=cx-bw/2, yy=yL(d.a), bh=Math.max(1,(padT+ph)-yy);
+    s+='<rect x="'+x+'" y="'+yy+'" width="'+bw+'" height="'+bh+'" fill="#185FA5" rx="2"/>';
+    pts.push([cx, yR(d.b)]);
+    s+='<text x="'+cx+'" y="'+(h-padB+16)+'" font-size="10" fill="#5F6368" text-anchor="middle">'+d.l+'</text>';
+  });
+  s+='<polyline points="'+pts.map(function(p){return p[0]+','+p[1];}).join(' ')+
+     '" fill="none" stroke="#D85A30" stroke-width="2"/>';
+  pts.forEach(function(p){ s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3" fill="#D85A30"/>'; });
+  s+='<line x1="'+padL+'" y1="'+(padT+ph)+'" x2="'+(w-padR)+'" y2="'+(padT+ph)+'" stroke="#C7CDD6"/>';
+  s+='</svg>';
+  return s;
+}
+
+function renderGrouped(cfg){
+  var data=cfg.data, yMin=cfg.yMin, yMax=cfg.yMax, w=cfg.w||430, h=cfg.h||250;
+  var padL=44,padR=12,padT=26,padB=36;
+  var pw=w-padL-padR, ph=h-padT-padB, n=data.length;
+  var bw=Math.min(20, pw/n*0.30);
+  function y(v){ return padT+(yMax-v)/(yMax-yMin)*ph; }
+  var s='<svg viewBox="0 0 '+w+' '+h+'" width="100%" role="img">';
+  if(cfg.title) s+='<text x="'+padL+'" y="15" font-size="12" fill="#1F2A44">'+cfg.title+'</text>';
+  for(var i=0;i<=4;i++){
+    var v=yMin+(yMax-yMin)*i/4, yy=y(v);
+    s+='<line x1="'+padL+'" y1="'+yy+'" x2="'+(w-padR)+'" y2="'+yy+'" stroke="#E8EBF0"/>';
+    s+='<text x="'+(padL-6)+'" y="'+(yy+4)+'" font-size="10" fill="#5F6368" text-anchor="end">'+fmt(v)+'</text>';
+  }
+  data.forEach(function(d,i){
+    var cx=padL+pw/n*(i+0.5);
+    [[d.a,"#185FA5",-1],[d.b,"#D85A30",1]].forEach(function(t){
+      var yy=y(t[0]), bh=Math.max(1,(padT+ph)-yy);
+      var x=cx + t[2]*(bw+2) - bw/2;
+      s+='<rect x="'+x+'" y="'+yy+'" width="'+bw+'" height="'+bh+'" fill="'+t[1]+'" rx="2"/>';
+    });
+    s+='<text x="'+cx+'" y="'+(h-padB+16)+'" font-size="10" fill="#5F6368" text-anchor="middle">'+d.l+'</text>';
+  });
+  s+='<line x1="'+padL+'" y1="'+(padT+ph)+'" x2="'+(w-padR)+'" y2="'+(padT+ph)+'" stroke="#C7CDD6"/>';
+  s+='</svg>';
+  return s;
+}
+
+/* ---------- 案件数据 ---------- */
+var CASES = [
+  {
+    no:1,
+    desc:"某馆年报写「数字人文论文数三年翻了近两倍」，并给出下面这张图。请评审：这张图说了实话吗？",
+    bad:{ type:"bars", title:"控方图：论文数（2019–2022）",
+          data:[{l:2019,v:52},{l:2020,v:55},{l:2021,v:58},{l:2022,v:61}], yMin:50, yMax:62 },
+    good:{ type:"bars", title:"诚实重绘：Y 轴从 0 开始",
+          data:[{l:2019,v:52},{l:2020,v:55},{l:2021,v:58},{l:2022,v:61}], yMin:0, yMax:65 },
+    q1:"这张图用了什么修辞陷阱？",
+    a1:["Y 轴未从 0 开始（截断轴），把 3 篇的差距放大成「翻两倍」",
+        "使用了双 Y 轴","样本量太小，不足以下结论","配色对比过强"],
+    q2:"你会怎样诚实重绘？",
+    a2:["Y 轴从 0 开始，让条形长度与数值成正比",
+        "保留截断轴，这样差异更突出、更有说服力",
+        "改成饼图展示占比","给柱子加阴影和渐变装饰"],
+    q3:"为什么这样更诚实？",
+    a3:["条形长度应与数值成正比；不从 0 起会夸大差异，误导读者对「增长幅度」的判断",
+        "截断轴更能突出增长，教学展示时说服力更强",
+        "只要图注里写了刻度范围，就不算误导"],
+    ex1:"截断轴（y 轴起点 50 而非 0）把 52→61 的真实增幅（约 17%）在视觉上拉成了数倍。",
+    ex2:"把 Y 轴起点放回 0，条形长度才与真实数值成正比——读者看到的是 17%，不是「翻两倍」。",
+    ex3:"视觉修辞的责任在于：图形所暗示的量级关系，必须与数据本身一致。"
+  },
+  {
+    no:2,
+    desc:"一份报告用双 Y 轴同时呈现「论文数」与「平均篇幅」，结论是「两者同步大幅上升」。请评审这个结论。",
+    bad:{ type:"dual", title:"控方图：双 Y 轴（左：论文数，右：平均篇幅）",
+          data:[{l:2019,a:20,b:100},{l:2020,a:22,b:102},{l:2021,a:25,b:105},{l:2022,a:30,b:110}],
+          yMinL:0, yMaxL:35, yMinR:90, yMaxR:115 },
+    good:{ type:"grouped", title:"诚实重绘：统一量纲（首年=100）",
+          data:[{l:2019,a:100,b:100},{l:2020,a:110,b:102},{l:2021,a:125,b:105},{l:2022,a:150,b:110}],
+          yMin:0, yMax:160 },
+    q1:"这张图用了什么修辞陷阱？",
+    a1:["双 Y 轴量纲不同，把「+50%」和「+10%」画成了同等幅度的同步上升",
+        "折线太粗，遮挡了柱子","缺少图例说明","年份间隔不均匀"],
+    q2:"你会怎样诚实重绘？",
+    a2:["统一量纲（都指数化为首年=100），画在同一坐标轴上对比",
+        "保留双轴，并强调两者「同步上升」以突出结论",
+        "改成堆叠面积图","删掉平均篇幅那条线，只保留论文数"],
+    q3:"为什么这样更诚实？",
+    a3:["不同量纲不能直接同轴比较；必须统一量纲或分面呈现，否则视觉上会制造虚假相关",
+        "双轴能让两条线都看清楚，读者自己会判断",
+        "只要标注了左右轴的单位就没有问题"],
+    ex1:"双轴各自独立的刻度，让 +50%（20→30）与 +10%（100→110）在画面上看起来「一样陡」。",
+    ex2:"统一为指数（首年=100）后，真实差距一目了然：一个涨到 150，一个只到 110。",
+    ex3:"量纲不同就不可同轴——这是可视化最基本的诚实底线。"
+  },
+  {
+    no:3,
+    desc:"某课题声称「该主题论文数持续高速增长」，只给了四年的图。但数据其实有十年。请评审。",
+    bad:{ type:"bars", title:"控方图：只呈现 2013/2015/2017/2019",
+          data:[{l:2013,v:20},{l:2015,v:22},{l:2017,v:26},{l:2019,v:28}], yMin:0, yMax:32 },
+    good:{ type:"bars", title:"诚实重绘：完整 2013–2022",
+          data:[{l:2013,v:20},{l:2014,v:18},{l:2015,v:22},{l:2016,v:16},{l:2017,v:24},
+                {l:2018,v:14},{l:2019,v:26},{l:2020,v:12},{l:2021,v:28},{l:2022,v:10}],
+          yMin:0, yMax:32 },
+    q1:"这张图用了什么修辞陷阱？",
+    a1:["选择性取样（cherry-pick）：只挑有利年份，隐藏了整体波动与下滑",
+        "纵轴刻度太密","柱间距不均匀","标题用了夸张修辞"],
+    q2:"你会怎样诚实重绘？",
+    a2:["补全完整时间范围（2013–2022），呈现真实趋势",
+        "只保留对结论有利的年份，让趋势更清晰",
+        "换成折线图，但仍然只用那四年","把字号加大、颜色调亮"],
+    q3:"为什么这样更诚实？",
+    a3:["结论必须建立在完整证据上；截取有利区间属于 cherry-pick，是选择性呈现",
+        "只要标注了年份区间，截取就没有问题",
+        "趋势图本来就可以只展示关键年份"],
+    ex1:"只挑 2013/2015/2017/2019 这四年，画面上是漂亮的单调递增；完整序列其实是波动下行，2022 年只剩 10。",
+    ex2:"补全十年后，「持续高速增长」的说法立刻站不住脚。",
+    ex3:"呈现哪些数据，本身就是一种论证——隐藏不利证据即误导。"
+  }
+];
+
+var idx=0, answers=[], redlines=0;
+
+function draw(cfg){
+  if(cfg.type==="bars") return renderBars(cfg);
+  if(cfg.type==="dual") return renderDual(cfg);
+  if(cfg.type==="grouped") return renderGrouped(cfg);
+  return "";
+}
+
+function render(){
+  var c = CASES[idx];
+  var a = answers[idx] || {t:-1,f:-1,r:-1};
+  var html = "";
+  html += '<div class="case-no">案件 '+c.no+' / '+CASES.length+'</div>';
+  html += '<div class="case-desc">'+c.desc+'</div>';
+  html += '<div class="charts">';
+  html +=   '<div class="chartbox bad"><div class="cap"><span>控方图（待评审）</span><span class="tag bad">可疑</span></div>'+draw(c.bad)+'</div>';
+  if(a.done){
+    html += '<div class="chartbox good"><div class="cap"><span>诚实重绘</span><span class="tag good">已修正</span></div>'+draw(c.good)+'</div>';
+  } else {
+    html += '<div class="chartbox"><div class="cap"><span>诚实重绘</span><span class="tag">提交后显示</span></div>'
+         +  '<div style="height:250px;display:flex;align-items:center;justify-content:center;color:#9AA0AA;font-size:12px">完成三项裁决后揭晓</div></div>';
+  }
+  html += '</div>';
+
+  function opts(name, q, arr, chosen){
+    return '<div class="q"><div class="qt">'+q+'</div><div class="opts">'
+      + arr.map(function(t,i){
+          var cls="opt";
+          if(a.done){ if(i===0) cls+=" correct"; else if(chosen===i) cls+=" wrong"; }
+          else if(chosen===i) cls+=" sel";
+          var tag = (a.done && i===0) ? ' <span class="tag good">正确</span>'
+                  : (a.done && chosen===i ? ' <span class="tag bad">你的选择</span>' : '');
+          return '<label class="'+cls+'"><input type="radio" name="'+name+'" value="'+i+'"'
+               + (chosen===i?" checked":"") + (a.done?" disabled":"") + '><span>'+t+tag+'</span></label>';
+        }).join("")
+      + '</div></div>';
+  }
+  html += opts("q1", "① "+c.q1, c.a1, a.t);
+  html += opts("q2", "② "+c.q2, c.a2, a.f);
+  html += opts("q3", "③ "+c.q3, c.a3, a.r);
+
+  if(a.done){
+    var okT = (a.t===0), okF = (a.f===0), okR = (a.r===0);
+    html += '<div class="msg show '+(okT&&okF&&okR?'ok':'warn')+'"><b>裁决结果</b><br>'
+         +  '① 陷阱识别：'+(okT?'✓ 正确':'✗ 应为「'+c.a1[0].split("，")[0]+'」')+'<br>'
+         +  '② 重绘方案：'+(okF?'✓ 诚实':'✗ 你的选择不够诚实')+'<br>'
+         +  '③ 理由陈述：'+(okR?'✓ 到位':'✗ 应为可解释性原则')+'<br>'
+         +  '<div style="margin-top:6px">'+c.ex1+' '+c.ex2+' '+c.ex3+'</div></div>';
+  }
+
+  html += '<div class="row">';
+  if(!a.done){
+    html += '<button class="primary" id="btnSubmit">提交裁决</button>';
+  } else if(idx < CASES.length-1){
+    html += '<button class="primary" id="btnNext">下一案件</button>';
+  } else {
+    html += '<button class="primary" id="btnFinish">查看法庭意见书</button>';
+  }
+  html += '<button id="btnAgain">重开一局</button></div>';
+
+  document.getElementById("stage").innerHTML = html;
+  bind();
+}
+
+function bind(){
+  var els = document.querySelectorAll("#stage input[type=radio]");
+  for(var i=0;i<els.length;i++){
+    els[i].onchange = function(){
+      var a = answers[idx] || (answers[idx]={t:-1,f:-1,r:-1});
+      var n = this.name;
+      if(n==="q1") a.t = +this.value;
+      if(n==="q2") a.f = +this.value;
+      if(n==="q3") a.r = +this.value;
+      render();
+    };
+  }
+  var bs=document.getElementById("btnSubmit");
+  if(bs) bs.onclick = submit;
+  var bn=document.getElementById("btnNext");
+  if(bn) bn.onclick = function(){ idx++; render(); };
+  var bf=document.getElementById("btnFinish");
+  if(bf) bf.onclick = finish;
+  var ba=document.getElementById("btnAgain");
+  if(ba) ba.onclick = reset;
+}
+
+function submit(){
+  var a = answers[idx];
+  if(!a || a.t<0 || a.f<0 || a.r<0){ alert("三项都要选：陷阱 / 重绘 / 理由。"); return; }
+  a.done = true;
+  if(a.f === 1){
+    redlines++;
+    document.getElementById("modalText").textContent =
+      "为证明预设结论而故意歪曲刻度（或只保留有利证据）——这是「图表即论证」的滥用，触碰伦理红线。本次扣 3 分，累计踩线 " + redlines + " 次。";
+    document.getElementById("modal").classList.add("show");
+  }
+  render();
+}
+
+function reset(){
+  idx=0; answers=[]; redlines=0;
+  document.getElementById("final").style.display="none";
+  render();
+}
+
+function finish(){
+  var tOK=0,fOK=0,rOK=0;
+  answers.forEach(function(a){ if(a.t===0)tOK++; if(a.f===0)fOK++; if(a.r===0)rOK++; });
+  var score = tOK*10 + fOK*15 + rOK*(25/3) - redlines*3;
+  score = Math.max(0, Math.round(score));
+
+  var rows = CASES.map(function(c,i){
+    var a=answers[i];
+    var v = (a.t===0 && a.f===0 && a.r===0) ? '<span class="ok-t">裁定成立（诚实）</span>'
+          : (a.f===1 ? '<span class="bad-t">触碰红线</span>' : '<span class="bad-t">需补正</span>');
+    return '<tr><td>案件 '+c.no+'</td><td>'+v+'</td><td>'+c.ex1+'</td></tr>';
+  }).join("");
+  document.getElementById("verdicts").innerHTML =
+    '<tr><th>案件</th><th>裁决</th><th>关键理由</th></tr>'+rows;
+
+  var rub = [
+    ["陷阱识别", tOK+" / 3", tOK===3],
+    ["重绘诚实度", fOK+" / 3", fOK===3],
+    ["可解释性（理由）", rOK+" / 3", rOK===3],
+    ["立场清晰度（伦理红线）", redlines===0 ? "全程未踩线 ✓" : ("踩线 "+redlines+" 次（−"+(redlines*3)+" 分）"), redlines===0]
+  ];
+  document.getElementById("rubric").innerHTML =
+    '<tr><th>维度</th><th>表现</th></tr>' +
+    rub.map(function(r){ return '<tr><td>'+r[0]+'</td><td class="'+(r[2]?'ok-t':'bad-t')+'">'+r[1]+'</td></tr>'; }).join("") +
+    '<tr><td><b>本局得分</b></td><td><b>'+score+' / 100</b></td></tr>';
+
+  document.getElementById("final").style.display="block";
+  document.getElementById("final").scrollIntoView({behavior:"smooth"});
+}
+
+reset();
+
+/* ===== KIT-BAR 课堂计时 / 排行榜（通用组件） ===== */
+(function(){
+  var KEY = "dsdh_game_", LO = 8, HI = 10;
+  var store = (function(){
+    try { if (typeof localStorage !== "undefined" && localStorage) return localStorage; } catch(e){}
+    var m = {};
+    return { getItem:function(k){ return (k in m) ? m[k] : null; },
+             setItem:function(k,v){ m[k] = String(v); },
+             removeItem:function(k){ delete m[k]; } };
+  })();
+  var t0 = Date.now(), stopped = false, finished = false;
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function fmt(s){ return pad(Math.floor(s/60)) + ":" + pad(Math.floor(s % 60)); }
+  function el(id){ return document.getElementById(id); }
+
+  function tick(){
+    var sec = Math.floor((Date.now() - t0) / 1000);
+    var t = el("kitTime"); if (t) t.textContent = fmt(sec);
+    var p = el("kitPace");
+    if (p && !stopped){
+      if (finished){ p.className = "tag2"; p.textContent = "本局用时 " + fmt(sec); }
+      else if (sec < LO * 60){ p.className = "tag2"; p.textContent = "节奏偏快（目标 " + LO + "–" + HI + " 分钟）"; }
+      else if (sec <= HI * 60){ p.className = "tag2 ok"; p.textContent = "节奏合适"; }
+      else { p.className = "tag2 warn"; p.textContent = "已超时（目标 " + LO + "–" + HI + " 分钟）"; }
+    }
+    if (!finished){
+      var f = el("final");
+      var g = el("rubricPanel");
+      if ((f && f.style && f.style.display === "block") || (g && g.style && g.style.display === "block")){
+        finished = true; stopped = true;
+        var h = el("kitHint");
+        if (h) h.textContent = "本局已完成 —— 输入姓名后点「保存成绩」，即可进入排行榜。";
+      }
+    }
+  }
+
+  function parseScore(){
+    var r = el("rubric");
+    if (!r) return 0;
+    var m = /<b>\s*(\d+)\s*\/\s*100\s*<\/b>/.exec(r.innerHTML);
+    return m ? (+m[1]) : 0;
+  }
+  function load(){ try { return JSON.parse(store.getItem(KEY) || "[]"); } catch(e){ return []; } }
+  function render(){
+    var tb = el("kitTable"); if (!tb) return;
+    var rows = load().slice().sort(function(a,b){ return (b.s - a.s) || (a.sec - b.sec); }).slice(0, 10);
+    if (!rows.length){ tb.innerHTML = "<tr><th>暂无记录</th></tr>"; return; }
+    var h = "<tr><th>#</th><th>姓名</th><th>得分</th><th>用时</th><th>日期</th></tr>";
+    rows.forEach(function(r, i){
+      h += "<tr><td>" + (i+1) + "</td><td>" + r.name + "</td><td>" + r.s + " / 100</td><td>"
+         + fmt(r.sec) + "</td><td>" + r.d + "</td></tr>";
+    });
+    tb.innerHTML = h;
+  }
+  function save(){
+    var inp = el("kitName");
+    var n = (inp && inp.value ? inp.value.trim() : "") || "匿名同学";
+    var rec = { name: n, s: parseScore(), sec: Math.floor((Date.now() - t0) / 1000),
+                d: new Date().toLocaleDateString("zh-CN") };
+    var all = load(); all.push(rec);
+    store.setItem(KEY, JSON.stringify(all));
+    render();
+    var h = el("kitHint");
+    if (h) h.textContent = "已保存：" + rec.name + "　" + rec.s + " 分　用时 " + fmt(rec.sec) + "。";
+  }
+
+  var timer = setInterval(tick, 1000);
+  if (timer && typeof timer === "object" && timer.unref) { try { timer.unref(); } catch(e){} }
+  var sb = el("kitSave"); if (sb) sb.onclick = save;
+  var cb = el("kitClear"); if (cb) cb.onclick = function(){ store.removeItem(KEY); render(); };
+  render(); tick();
+})();
+</script>
+</body>
+</html>
