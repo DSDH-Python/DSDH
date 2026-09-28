@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第6章 模块六　社会网络分析 · 数字教材</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">《数据科学与数字人文》· 数字教材<small>智能技术实战主线 · 信息资源管理专业</small></div>
+    <nav>
+      <a href="index.html">门户</a>
+      <a href="ch05.html">上一章</a>
+      <a href="ch07.html">下一章</a>
+    </nav>
+  </div>
+</header>
+
+<div class="doc">
+  <aside class="side">
+<h4>第 6 章 目录</h4>
+<a href="#lead" class="cur">导语与学习目标</a>
+<span class="navpart p1">第一部分　课程导学</span>
+<a href="#s66">6.6　伦理坐标：网络也会偏见（本模块核心能力）</a>
+<a href="#s611">6.11　思政融入（课程思政）</a>
+<span class="navpart p2">第二部分　课程内容</span>
+<a href="#s61">6.1　关系即数据</a>
+<a href="#s62">6.2　图的语言：节点、边、度、路径</a>
+<a href="#s63">6.3　中心性：谁是关键节点</a>
+<a href="#s64">6.4　社群发现：凝聚子群</a>
+<a href="#s65">6.5　文本 × 网络：从共现到引文</a>
+<a href="#s67">6.7　第一次动手：建一张人物关系网</a>
+<a href="#s68">6.8　第二次动手：算中心性，找“关键人物”</a>
+<a href="#s610">6.10　思考题</a>
+<span class="navpart p3">第三部分　拓展练习</span>
+<a href="#sec11">模块六·学术前沿：OpenAlex / DBLP / arXiv / CrossRef / CORE 实证文献（V2.1）</a>
+<a href="#sec12">模块六·中文核心期刊文献实证（V2.2·19 种图情档核心期刊）</a>
+<span class="navpart p4">第四部分　本章小结</span>
+<a href="#s69">6.9　本章小结</a>
+  </aside>
+  <main class="content">
+<h1>第 6 章　模块六　社会网络分析</h1>
+<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）用节点与边表示一批人物/机构关系；（2）解释度中心性、介数中心性各自回答什么问题；（3）用社群发现识别凝聚子群；（4）指出网络分析自身可能放大的偏见。</p></div></p>
+<h2 class="part p1" id="lead">第一部分　课程导学</h2>
+<span class="mod mod-lead">导学</span>
+<h3 class="sec-h" id="s66">6.6 伦理坐标：网络也会偏见（本模块核心能力）</h3>
+<ul><li><b>抽样偏差</b>：被数字化、被研究得多的人物更"中心"，沉默者天然边缘；</li><li><b>缺失关系</b>：信件散佚、著者不详，会让真实枢纽"消失"；</li><li><b>被代表</b>：用"中心性高"暗示"更重要"，是把结构当价值。</li></ul>
+<div class="callout quote"><p><b>一条红线</b>：不把"网络中心"直接等同于"历史重要"；呈现中心性时同步说明数据覆盖的局限。</p></div>
+<div class="kbcase"><h4>6.11 思政融入（课程思政）</h4><div class="callout quote"><p><b>思政融入（课程思政）</b>：从师承、交游与民族交往的网络中，常能看到<b>中华民族交往交流交融</b>的历史脉络。用社会网络方法呈现这种“多元一体”的联结，既是对历史的尊重，也有助于今天<b>中华民族共同体意识</b>的培育——方法服务于对团结与统一的深刻理解。</p></div>
+<div class="callout quote"><p><b>思政案例（课程思政示范案例 / AI 思政课 知识库）</b>：可参照《数据结构与算法》课程思政以“队列”类比抗疫秩序的案例——方法的有序，映射着社会对公平与共同体的追求。</p></div></div>
+<h2 class="part p2" id="part2">第二部分　课程内容</h2>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s61">6.1 关系即数据</h3>
+<p>模块二把"关系类"单列，因为它回答的是"谁和谁连在一起"——这是单条记录答不了的。家谱、师承、交游、引文、书信往来，本质都是网络。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s62">6.2 图的语言：节点、边、度、路径</h3>
+<ul><li><b>节点（node）</b>：一个人、一本书、一个机构；</li><li><b>边（edge）</b>：两者间的关系（师—徒、引—被引、寄—信）；</li><li><b>度（degree）</b>：一个节点连了几条边，越高越"活跃"；</li><li><b>路径</b>：两节点间的最短连线，衡量"隔几度"。</li></ul>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s63">6.3 中心性：谁是关键节点</h3>
+<ul><li><b>度中心性</b>：朋友最多者，往往是网络枢纽；</li><li><b>介数中心性</b>：处在"必经之路"上的人，控制信息流转（如串联两个学派的中间人）；</li><li><b>接近中心性</b>：离所有人平均最近者，消息传得最快。</li></ul>
+<p>三种中心性常不一致：一个"朋友多"的人未必是"桥梁"。读网络要先问"你关心的中心性是哪一种"。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s64">6.4 社群发现：凝聚子群</h3>
+<p>社群发现算法把"内部连得密、外部连得疏"的节点聚成一团。对宋代诗人交游网跑社群发现，可能析出"江西诗派""洛党"等隐性圈子——比人工翻文集快得多（见本模块 V2.1 的 <i>Poet-Composer Collaborations in Modern Egyptian Song</i>、<i>Text Mining and Social Network Analysis</i>）。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s65">6.5 文本 × 网络：从共现到引文</h3>
+<p>网络常由文本而来：同一篇文章共现的词→词网；互相引用的文献→引文网；同一信件出现的人名→交游网。文本挖掘（模块四）产出的实体，正是这里节点的原料。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s67">6.7 第一次动手：建一张人物关系网</h3>
+<div class="callout quote"><p><b>小练习 6.1（网络分析）</b>：取模块四 NER 抽出的人物—地点/人物—人物对，用 <code>networkx</code> 建一张小网，计算度中心性，找出前三"枢纽"，并手判它们是否真的重要。本模块 V2.2 的《基于用户关系管理的高校图书馆数字学术服务重塑》《基于开源情报的军事知识图谱问答智能服务研究》展示了"关系数据→服务/问答"的落地，可对照你这张网的潜在用途。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s68">6.8 第二次动手：算中心性，找“关键人物”</h3>
+<ul><li><b>目标</b>：在 6.7 建好的人物关系网上，量化谁最核心。</li><li><b>步骤</b>：<ol><li>用 networkx 计算 degree / betweenness / closeness；</li><li>排序取 Top 5；</li><li>检查“度数最高”是否等于“最关键”，举一个反例；</li><li>做社群发现（community detection）；</li><li>写 150 字结论。</li></ol></li><li><b>工具</b>：networkx。</li><li><b>产出</b>：中心性排序表 + 社群划分 + 结论。</li><li><b>评价量规</b>：三种中心性正确（40%）、反例有见地（30%）、结论清晰（30%）。</li></ul>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s610">6.10 思考题</h3>
+<ol><li>用你专业的某组关系（师承/合作/引用）画成网络，谁的中心性最高？这和你既有认知一致吗？</li><li>"被数字化得多"的人更中心——这会怎样扭曲我们对历史圈子的理解？</li><li>如果一封关键信件散佚，网络分析的结论会怎样改变？这提醒我们什么？</li></ol>
+<h2 class="part p3" id="part3">第三部分　拓展练习</h2>
+<div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
+<table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2018</td><td><a href="https://doi.org/10.4018/978-1-5225-5097-6.ch001">Social Network Analysis</a></td><td>Advances in Business Information Systems and Analytics（被引 10）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.22148/001c.117486">Poet-Composer Collaborations in Modern Egyptian Song:  A Social Network Analysis Approach to Music History</a></td><td>Journal of Cultural Analytics（被引 1）</td></tr><tr><td>CrossRef</td><td>2018</td><td><a href="https://doi.org/10.1007/978-1-4939-7131-2_101435">Visual Social Network Analysis, Visual Analytics</a></td><td>Encyclopedia of Social Network Analysis and Mining</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.4324/9781003507840-8">Relational Analytics and Social Network Analysis</a></td><td>AI, Analytics and Strategic Decision Making</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.3102/ip.25.2184998">Strengthening Educational Research Curriculum through Network Curriculum Analytics &amp;amp;amp; Social Network Analysis</a></td><td>AERA 2025</td></tr><tr><td>CrossRef</td><td>2013</td><td><a href="https://doi.org/10.4135/9781452276311.n196">Network Theory/Social Network Analysis</a></td><td>Theory in Social and Cultural Anthropology: An Encyclopedia</td></tr><tr><td>CrossRef</td><td></td><td><a href="https://doi.org/10.1057/9781137379283.0012">Text Mining and Social Network Analysis</a></td><td>Predictive Analytics, Data Mining and Big Data</td></tr><tr><td>CrossRef</td><td>2017</td><td><a href="https://doi.org/10.4324/9781315640914-14">Network Analysis and Social Network Mapping</a></td><td>Digital Analytics for Marketing</td></tr></tbody></table>
+<p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>
+<pre class="code" data-lang="python"><code>import urllib.request, urllib.parse, json
+q = 'data science digital humanities'
+url = 'https://api.openalex.org/works?search=' + urllib.parse.quote(q) + '&amp;per_page=10&amp;sort=cited_by_count:desc'
+oa = json.loads(urllib.request.urlopen(url, timeout=30).read())
+for w in oa['results']:
+    print(w['publication_year'], w['title'], '-&gt;', (w.get('primary_location') or {}).get('source', {}).get('display_name'))</code></pre>
+<p><b>误用警示</b>：① arXiv 预印本未经同行评审，引用须标 preprint 并追正式版；② 被引数代表影响力非结论正确；③ 商业库（WoS/Scopus/Elsevier/JSTOR/CNKI）本环境无订阅，需机构账号获取后再并入。</p>
+<p><b>与实验衔接</b>：将任一方法对照本模块实验改写数据集或提示词，即可形成有学术依据的结题报告。</p></div>
+<div class="callout src"><h4>模块六·中文核心期刊文献实证（V2.2·19 种图情档核心期刊）</h4><p>下表论文来自 19 种中文图情档核心期刊（中国图书馆学报、情报学报、情报资料工作、档案学通讯、大学图书馆学报、图书情报工作、数据分析与知识发现、情报杂志、情报理论与实践、图书与情报、档案学研究、图书馆杂志、图书情报知识、图书馆论坛、图书馆学研究、图书馆建设、情报科学、现代情报、信息资源管理学报），经 Web 检索（期刊官网 / CNKI 索引 / DOI 溯源）按主题核实得到真实文献（含 DOI/链接）。</p>
+<table class="gtable"><thead><tr><th>来源期刊</th><th>年份</th><th>标题（链接）</th><th>作者</th></tr></thead><tbody><tr><td>图书情报工作</td><td>2023</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2023.13.004">智慧图书馆的全数据体系研究</a></td><td>杨新涯, 文佩丹, 卓应忠</td></tr><tr><td>图书情报工作</td><td>2024</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2024.18.003">面向生成式人工智能(AIGC)的图书馆信息资源建设优化策略研究</a></td><td>丁遒劲, 苏静</td></tr><tr><td>图书情报工作</td><td>2024</td><td><a href="https://www.lis.ac.cn/CN/abstract/abstract25470.shtml">智慧图书馆用户数据合规治理机制研究</a></td><td>张春春, 孙瑞英</td></tr><tr><td>数据分析与知识发现</td><td>2024</td><td><a href="https://doi.org/10.11925/infotech.2096-3467.2023.0422">基于开源情报的军事知识图谱问答智能服务研究</a></td><td>范俊杰, 马海群, 刘兴丽</td></tr><tr><td>情报理论与实践</td><td>2023</td><td><a href="https://doi.org/10.16353/j.cnki.1000-7490.2023.07.002">AIGC驱动的智慧图书馆转型:框架、路径与挑战</a></td><td>赵杨, 张雪, 范圣悦</td></tr><tr><td>图书与情报</td><td>2023</td><td><a href="https://doi.org/10.11968/tsyqb.1003-6938.2023027">数智驱动下智慧图书馆的场景应用与模型体系建构</a></td><td>于兴尚, 刘月, 谭洪, 徐中阳</td></tr><tr><td>大学图书馆学报</td><td>2024</td><td><a href="https://www.lis.ac.cn">基于用户关系管理的高校图书馆数字学术服务重塑</a></td><td>张更平, 陈红艺, 宁子晨, 慎金花</td></tr><tr><td>大学图书馆学报</td><td>2024</td><td><a href="https://www.lis.ac.cn">发挥学术资源优势,利用人工智能技术提升大学图书馆支撑个性化学习的能力</a></td><td>刘宏伟, 季莹, 高雨, 王晓丹</td></tr></tbody></table>
+<p><b>课堂复现（中文文献检索）</b>：这些期刊正式全文多见于 CNKI/万方/维普（本环境无订阅）。可在机构网络以「期刊名 + 主题词」检索，导出 BibTeX/RIS 后交我并入；DOI 可在 https://doi.org/&lt;DOI&gt; 溯源摘要。</p>
+<p><b>误用警示</b>：① 引用以期刊正式版本为准（年/卷/期/页）；② 回到原文核对方法与数据；③ 与本节实验的映射是"启发"而非"背书"。</p>
+<p><b>与实验衔接</b>：将上表任一中文方法（如中文知识图谱、机器学习人文应用）对照本模块实验改写，即可形成有本土学术依据的结题报告。</p></div>
+<h2 class="part p4" id="part4">第四部分　本章小结</h2>
+<span class="mod mod-ideo">小结</span>
+<h3 class="sec-h" id="s69">6.9 本章小结</h3>
+<p>带走三件事：<b>图的语言</b>（节点/边/度/路径）、<b>三种中心性</b>（度/介数/接近，答不同问题）、<b>社群发现 + 偏见自觉</b>。网络让你看见"结构"，但结构不等于价值。</p>
+<div class="readbox"><button class="btn" id="markRead" data-ch="6">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+  </main>
+</div>
+<div id="termtip"></div>
+<script src="app.js"></script>
+</body>
+</html>

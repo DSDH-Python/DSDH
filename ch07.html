@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第7章 模块七　空间人文与 GIS · 数字教材</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">《数据科学与数字人文》· 数字教材<small>智能技术实战主线 · 信息资源管理专业</small></div>
+    <nav>
+      <a href="index.html">门户</a>
+      <a href="ch06.html">上一章</a>
+      <a href="ch08.html">下一章</a>
+    </nav>
+  </div>
+</header>
+
+<div class="doc">
+  <aside class="side">
+<h4>第 7 章 目录</h4>
+<a href="#lead" class="cur">导语与学习目标</a>
+<span class="navpart p1">第一部分　课程导学</span>
+<a href="#s76">7.6　伦理坐标：地图即权力（本模块核心能力）</a>
+<a href="#s711">7.11　思政融入（课程思政）</a>
+<span class="navpart p2">第二部分　课程内容</span>
+<a href="#s71">7.1　给人文加一个坐标</a>
+<a href="#s72">7.2　空间数据：点、线、面与格式</a>
+<a href="#s73">7.3　历史 GIS：时间 + 空间</a>
+<a href="#s74">7.4　空间分析：密度、邻近与扩散</a>
+<a href="#s75">7.5　地理编码：把地名变成坐标</a>
+<a href="#s77">7.7　第一次动手：把一批点位落图</a>
+<a href="#s78">7.8　第二次动手：做一张“时间切片”历史地图</a>
+<a href="#s710">7.10　思考题</a>
+<span class="navpart p3">第三部分　拓展练习</span>
+<a href="#sec11">模块七·学术前沿：OpenAlex / DBLP / arXiv / CrossRef / CORE 实证文献（V2.1）</a>
+<span class="navpart p4">第四部分　本章小结</span>
+<a href="#s79">7.9　本章小结</a>
+  </aside>
+  <main class="content">
+<h1>第 7 章　模块七　空间人文与 GIS</h1>
+<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）区分点、线、面三类空间数据；（2）说明"历史 GIS"为何要把时间叠在空间上；（3）用地理编码把一批地名变成坐标并落图；（4）指出地图本身可能承载的权力预设。</p></div></p>
+<h2 class="part p1" id="lead">第一部分　课程导学</h2>
+<span class="mod mod-lead">导学</span>
+<h3 class="sec-h" id="s76">7.6 伦理坐标：地图即权力（本模块核心能力）</h3>
+<ul><li><b>投影即立场</b>：同一地球，不同投影夸大或缩小不同地区，默卡托投影曾服务于航海霸权；</li><li><b>边界即叙事</b>：画哪条界，就默认了哪方的主权；</li><li><b>被抹去的地点</b>：少数族群的栖居地、消失的村落，常在标准图上"不存在"。</li></ul>
+<div class="callout quote"><p><b>一条红线</b>：不在地图上替争议领土/族群"做主"；标注坐标系与资料来源，让观者知道"这是哪一年的哪张图"。</p></div>
+<div class="kbcase"><h4>7.11 思政融入（课程思政）</h4><div class="callout quote"><p><b>思政融入（课程思政）</b>：历史地理印证了<b>统一多民族国家</b>的形成与疆域变迁。在地图上呈现历代政区与疆界时，须以严谨史料为依据，捍卫国家领土完整的表述，不被错误边界误导。空间人文让我们“看见”祖国的辽阔与历史的纵深，这是<b>家国情怀</b>最具体的训练。</p></div>
+<div class="callout quote"><p><b>思政案例（课程思政示范案例 / AI 思政课 知识库）</b>：可参照《数字化测图》课程思政以无人机航测、GNSS 服务智慧城市与国家建设的案例——空间技术亦可报国，历史地理研究同样连着家国。</p></div></div>
+<h2 class="part p2" id="part2">第二部分　课程内容</h2>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s71">7.1 给人文加一个坐标</h3>
+<p>地点是人文材料的隐形骨架：地契的四至、游记的路线、人物的籍贯、事件的发生地。加上坐标，静态文本就活成可叠加、可计量的空间。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s72">7.2 空间数据：点、线、面与格式</h3>
+<ul><li><b>点</b>：一个坐标（某书院、某墓）；</li><li><b>线</b>：一连串坐标（驿道、河流、游记路线）；</li><li><b>面</b>：闭合区域（政区、田界、流域）；</li><li><b>格式</b>：<code>shapefile</code>、<code>GeoJSON</code> 是开放常用格式，pandas 读不了，要用 <code>geopandas</code>。</li></ul>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s73">7.3 历史 GIS：时间 + 空间</h3>
+<p>今天的地图是"此刻"的。历史 GIS 要把<b>变迁</b>叠进去：同一块地，汉属某郡、唐属某道、今属某省。政区变了，坐标的含义也变（见本模块 V2.1 的 <i>Toward Spatial Humanities</i>、<i>GIS and Literary History</i>、<i>The Potential of Historical GIS and Spatial Analysis in the Humanities</i>）。所以空间人文的第一个难题，是"坐标系随时间漂移"。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s74">7.4 空间分析：密度、邻近与扩散</h3>
+<ul><li><b>密度</b>：某类遗址在哪些区域密集（如窑址分布）；</li><li><b>邻近</b>：事件是否围绕某中心聚集（如农民起义与粮仓距离）；</li><li><b>扩散</b>：技术/疫疾沿驿道如何传播。</li></ul>
+<p>这些问题的前提，是先有干净的坐标。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s75">7.5 地理编码：把地名变成坐标</h3>
+<p><b>地理编码（geocoding）</b> 把"杭州""汴京"映射到经纬度。难点在古今地名错位：用今图搜古名会落错点。CHGIS（中国历史地理信息系统）正是为解决这个问题而建——它给出历史政区的时空对应，是本课程推荐的时空数据源（模块二已列入开放门户表）。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s77">7.7 第一次动手：把一批点位落图</h3>
+<div class="callout quote"><p><b>小练习 7.1（空间人文）</b>：取 10–30 个你关心的地点（地契四至、游记经停、人物籍贯），查其古今坐标（可用 CHGIS / OpenStreetMap），用 <code>geopandas</code> 落在一张底图上，观察它们的聚集或迁移规律，并注明"坐标基于哪一年的政区"。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s78">7.8 第二次动手：做一张“时间切片”历史地图</h3>
+<ul><li><b>目标</b>：把同一批地名按不同朝代落图，看空间格局如何变化。</li><li><b>步骤</b>：<ol><li>取一批带朝代字段的地名点位；</li><li>按朝代分组；</li><li>用不同颜色 / 图层画出 2–3 个时期；</li><li>标注每个时期的政治中心；</li><li>写 150 字：格局变化说明了什么。</li></ol></li><li><b>工具</b>：QGIS 或 folium（Python）。</li><li><b>产出</b>：2–3 张时期地图 + 说明。</li><li><b>评价量规</b>：地理编码准确（30%）、分期合理（30%）、解读有据（40%）。</li></ul>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s710">7.10 思考题</h3>
+<ol><li>选一组古今同名的地名，它们在今天的地图与历史地图里位置一致吗？不一致会带来什么研究风险？</li><li>地图的"投影"如何影响我们对"大小/远近"的感知？举一个你注意到的例子。</li><li>如果一份史料里的地点今天已不存在于标准地图，你该如何诚实地呈现它？</li></ol>
+<h2 class="part p3" id="part3">第三部分　拓展练习</h2>
+<div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
+<table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2014</td><td><a href="https://doi.org/10.2979/6100.0">Toward Spatial Humanities</a></td><td>（被引 45）</td></tr><tr><td>CrossRef</td><td>2016</td><td><a href="https://doi.org/10.63744/j4zd5gkttdny">GIS and Literary History: Advancing Digital Humanities research through the Spatial Analysis of historical travel writing and topographical literature</a></td><td>Digital Humanities Quarterly（被引 3）</td></tr><tr><td>CrossRef</td><td>2018</td><td><a href="https://doi.org/10.1007/978-3-319-89818-6_2">Spatial Humanities GIS: The City As a Literary, Historical, and Cultural STEAM Lifeworld Laboratory</a></td><td>The STEAM Revolution（被引 2）</td></tr><tr><td>CrossRef</td><td>2014</td><td><a href="https://doi.org/10.18737/m7k30v">Has Historical GIS Arrived?: A Review of Toward Spatial Humanities</a></td><td>Southern Spaces（被引 1）</td></tr><tr><td>CrossRef</td><td>2015</td><td><a href="https://doi.org/10.1080/14649365.2015.1104884">Toward spatial humanities: historical GIS &amp;amp; spatial history</a></td><td>Social &amp;amp; Cultural Geography（被引 1）</td></tr><tr><td>CrossRef</td><td>2016</td><td><a href="https://doi.org/10.1016/j.jhg.2015.06.004">Toward Spatial Humanities: Historical GIS and Spatial History</a></td><td>Journal of Historical Geography</td></tr><tr><td>CrossRef</td><td>2017</td><td><a href="https://doi.org/10.18737/m7jt3x">The Potential of Historical GIS and Spatial Analysis in the Humanities</a></td><td>Southern Spaces</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.1007/978-981-95-0117-5_6">Unearthing the Past: Finding Ancient Kannauj Through Remote Sensing and GIS</a></td><td>Spatial Narratives of India's Heritage: Integrating Geospatial Analysis in the Humanities</td></tr></tbody></table>
+<p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>
+<pre class="code" data-lang="python"><code>import urllib.request, urllib.parse, json
+q = 'data science digital humanities'
+url = 'https://api.openalex.org/works?search=' + urllib.parse.quote(q) + '&amp;per_page=10&amp;sort=cited_by_count:desc'
+oa = json.loads(urllib.request.urlopen(url, timeout=30).read())
+for w in oa['results']:
+    print(w['publication_year'], w['title'], '-&gt;', (w.get('primary_location') or {}).get('source', {}).get('display_name'))</code></pre>
+<p><b>误用警示</b>：① arXiv 预印本未经同行评审，引用须标 preprint 并追正式版；② 被引数代表影响力非结论正确；③ 商业库（WoS/Scopus/Elsevier/JSTOR/CNKI）本环境无订阅，需机构账号获取后再并入。</p>
+<p><b>与实验衔接</b>：将任一方法对照本模块实验改写数据集或提示词，即可形成有学术依据的结题报告。</p></div>
+<h2 class="part p4" id="part4">第四部分　本章小结</h2>
+<span class="mod mod-ideo">小结</span>
+<h3 class="sec-h" id="s79">7.9 本章小结</h3>
+<p>带走三件事：<b>点线面 + 格式</b>（GeoJSON/shapefile）、<b>历史 GIS 的时间叠加</b>、<b>地理编码与批判</b>（投影/边界/被抹去）。坐标让人文"可叠加"，但坐标本身带着年代与立场。</p>
+<div class="readbox"><button class="btn" id="markRead" data-ch="7">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+  </main>
+</div>
+<div id="termtip"></div>
+<script src="app.js"></script>
+</body>
+</html>

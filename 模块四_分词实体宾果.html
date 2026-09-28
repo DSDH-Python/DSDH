@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>分词实体宾果 · DSDH 模块四</title>
+<style>
+:root{--ink:#1F2A44;--sub:#5F6368;--line:#DDE1E8;--bg:#F6F7F9;--card:#fff;
+--blue:#185FA5;--blue-bg:#E6F1FB;--blue-line:#B5D4F4;
+--teal:#0F6E56;--teal-bg:#E1F5EE;--teal-line:#9FE1CB;
+--red:#A32D2D;--red-bg:#FCEBEB;--red-line:#F09595;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:20px;margin:0 0 4px;font-weight:500}
+.sub{font-size:13px;color:var(--sub);margin:0}
+.badges{margin:12px 0 18px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--sub)}
+.badge.b{color:var(--blue);border-color:var(--blue-line);background:var(--blue-bg)}
+.badge.t{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.badge.r{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+h2{font-size:15px;margin:0 0 10px;font-weight:500}
+.hint{font-size:12px;color:var(--sub);margin:-4px 0 10px}
+.seg{display:flex;flex-wrap:wrap;align-items:center;gap:0;font-size:22px;padding:14px 6px;background:#FAFBFC;border:1px solid var(--line);border-radius:10px;overflow-x:auto}
+.ch{font-family:serif;padding:2px 0}
+.gap{width:14px;height:34px;cursor:pointer;position:relative;flex:0 0 14px}
+.gap::after{content:"";position:absolute;left:6px;top:4px;width:2px;height:26px;background:transparent;border-radius:1px}
+.gap.on::after{background:var(--blue)}
+.gap:hover::after{background:#85B7EB}
+.gap.gold::after{background:var(--teal)}
+.seg-res{font-size:12px;color:var(--sub);margin-top:8px}
+.q{background:#FAFBFC;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.q .qt{font-size:13.5px;font-weight:500;margin-bottom:8px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px;background:#fff}
+.opt:hover{border-color:#85B7EB;background:#FAFCFF}
+.opt input{margin-top:3px;accent-color:var(--blue)}
+.opt.sel{border-color:var(--blue);background:var(--blue-bg)}
+.opt.correct{border-color:var(--teal-line);background:var(--teal-bg)}
+.opt.wrong{border-color:var(--red-line);background:var(--red-bg)}
+.ex{font-size:12px;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:none}
+.ex.show{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button{font-family:inherit;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:hover:not(:disabled){border-color:#85B7EB}
+.msg{margin-top:12px;font-size:13px;border-radius:8px;padding:10px 12px;border:1px solid var(--line);background:#FAFBFC;display:none}
+.msg.show{display:block}
+.msg.ok{border-color:var(--teal-line);background:var(--teal-bg);color:var(--teal)}
+.msg.warn{border-color:var(--red-line);background:var(--red-bg);color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+th{color:var(--sub);font-weight:500}
+.ok-t{color:var(--teal)}.bad-t{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(31,42,68,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:12px;max-width:520px;padding:20px;border-top:4px solid var(--red)}
+.modal h3{margin:0 0 8px;font-size:15px;color:var(--red);font-weight:500}
+.modal p{margin:0 0 14px;font-size:13px}
+footer{font-size:11.5px;color:var(--sub);text-align:center;margin:18px 0 8px}
+
+/* ===== KIT-BAR 课堂计时 / 排行榜 ===== */
+.kitbar{position:sticky;top:0;z-index:6;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(31,42,68,.06)}
+.kitbar .in{max-width:1040px;margin:0 auto;padding:8px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--sub)}
+.kitbar b{color:var(--ink);font-weight:500}
+.kitbar .tm{font-family:Consolas,"Courier New",monospace;font-size:15px;color:var(--blue)}
+.kitbar .tag2{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:#FAFBFC}
+.kitbar .tag2.ok{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.kitbar .tag2.warn{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.board input{font-family:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="kitbar"><div class="in">
+  <span><b>模块四</b> 配套游戏</span>
+  <span>建议时长 <b>8–10 分钟</b></span>
+  <span>难度 <b>★★★★☆</b></span>
+  <span>题量 <b>分词 + 6 题</b></span>
+  <span>已用 <span class="tm" id="kitTime">00:00</span></span>
+  <span class="tag2" id="kitPace">计时中</span>
+</div></div>
+
+<div class="wrap">
+  <h1>分词实体宾果</h1>
+  <p class="sub">DSDH 模块四 · 文本挖掘与 NLP — 先给古文断词，再标命名实体，最后做主题归类</p>
+  <div class="badges">
+    <span class="badge b">可复现</span><span class="badge t">案例真实</span><span class="badge r">伦理在场 · 红线卡</span>
+  </div>
+
+  <div class="panel" id="segPanel">
+    <h2>第一轮 · 中文分词</h2>
+    <p class="hint">点击字与字之间的空隙，插入 / 取消分词边界。切完后点「提交分词」。</p>
+    <div class="seg" id="seg"></div>
+    <div class="seg-res" id="segRes"></div>
+  </div>
+
+  <div class="panel" id="stage"></div>
+  <div class="panel" id="final" style="display:none">
+    <h2>评分量规（Rubric）</h2>
+    <table id="rubric"></table>
+  </div>
+  
+<div class="panel board" id="kitBoard">
+  <h2>课堂排行榜（本机保存）</h2>
+  <p style="font-size:12px;color:#5F6368;margin:0 0 10px" id="kitHint">完成本局后，输入姓名即可把成绩存入本机排行榜（数据只保存在本机浏览器，不上传）。</p>
+  <div class="row" style="margin-top:0">
+    <input id="kitName" placeholder="姓名 / 昵称" maxlength="12">
+    <button id="kitSave">保存成绩</button>
+    <button id="kitClear">清空排行榜</button>
+  </div>
+  <table id="kitTable"></table>
+</div>
+<footer>单文件 HTML5 · 零依赖 · 双击即开 ｜ DSDH 课程游戏</footer>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>触碰伦理红线</h3>
+    <p id="modalText"></p>
+    <button onclick="document.getElementById('modal').classList.remove('show')">我知道了</button>
+  </div>
+</div>
+
+<script>
+var TEXT = "汤斌任苏州知府时修吴中水利";
+var GOLD_TOKENS = ["汤斌","任","苏州","知府","时","修","吴中","水利"];
+var GOLD_BOUND = {};   // 边界：在第 i 字之后切分
+(function(){
+  var pos = -1;
+  for(var k=0;k<GOLD_TOKENS.length-1;k++){ pos += GOLD_TOKENS[k].length; GOLD_BOUND[pos] = 1; }
+})();
+var GOLD_N = Object.keys(GOLD_BOUND).length;
+
+var bound = {};        // 玩家设置的边界
+
+var NER_TASKS = [
+  {q:"「汤斌」应标注为哪一类命名实体？", opts:["人物","地名","机构","时间","非实体"], a:0,
+   ex:"人名是 NER 最基础的一类；注意古籍中常以字号、官职代称出现。"},
+  {q:"「苏州」应标注为哪一类命名实体？", opts:["人物","地名","机构","时间","非实体"], a:1,
+   ex:"地名需注意沿革：同一地名在不同朝代辖区不同，直接套用现代区划会出错。"},
+  {q:"「水利」应标注为哪一类命名实体？", opts:["人物","地名","机构","时间","非实体"], a:4,
+   ex:"「水利」是主题词而非命名实体，不应硬标为实体——这正是算法的常见误标。"}
+];
+
+var TOPIC_TASKS = [
+  {q:"文档①：《申报》1902 年论「兴女学以强国」——归到哪个主题？",
+   opts:["教育与女学","水利与赈灾","洋务与工业","统一归入「社会变革」以简化分析"], a:0, red:3,
+   ex:"近代报刊中的女子教育议题，属于教育与女学主题。"},
+  {q:"文档②：《吴中水利书》论「疏浚河道以利灌溉」——归到哪个主题？",
+   opts:["教育与女学","水利与赈灾","洋务与工业","统一归入「社会变革」以简化分析"], a:1, red:3,
+   ex:"方志与水利专书构成独立的「水利与赈灾」主题簇。"},
+  {q:"文档③：江南制造局「购机器、雇洋匠」——归到哪个主题？",
+   opts:["教育与女学","水利与赈灾","洋务与工业","统一归入「社会变革」以简化分析"], a:2, red:3,
+   ex:"洋务运动的机器与洋匠记载，属于洋务与工业主题。"}
+];
+
+var answers = [];      // 索引 0..2 = NER，3..5 = 主题
+var redlines = 0, done = false, segDone = false, segScore = 0;
+
+function renderSeg(){
+  var html = "";
+  for(var i=0;i<TEXT.length;i++){
+    html += '<span class="ch">'+TEXT[i]+'</span>';
+    if(i < TEXT.length-1){
+      var cls = "gap" + (bound[i] ? " on" : "") + (segDone && GOLD_BOUND[i] ? " gold" : "");
+      html += '<div class="'+cls+'" data-i="'+i+'" title="点击切换分词边界"></div>';
+    }
+  }
+  var el = document.getElementById("seg");
+  el.innerHTML = html;
+  var gaps = el.querySelectorAll(".gap");
+  for(var g=0;g<gaps.length;g++){
+    gaps[g].onclick = function(){
+      if(segDone) return;
+      var i = +this.getAttribute("data-i");
+      if(bound[i]) delete bound[i]; else bound[i] = 1;
+      renderSeg(); updateSegRes();
+    };
+  }
+}
+
+function updateSegRes(){
+  var chosen = Object.keys(bound).map(Number);
+  document.getElementById("segRes").textContent =
+    "已切出 " + (chosen.length + 1) + " 个词（标准答案 " + GOLD_TOKENS.length + " 个）";
+}
+
+function f1(){
+  var chosen = Object.keys(bound).map(Number);
+  var c = chosen.filter(function(i){ return GOLD_BOUND[i]; }).length;
+  if(chosen.length === 0 || c === 0) return 0;
+  var p = c / chosen.length, r = c / GOLD_N;
+  return 2*p*r/(p+r);
+}
+
+function render(){
+  var all = NER_TASKS.concat(TOPIC_TASKS);
+  var html = "<h2>第二轮 · 命名实体标注</h2>";
+  for(var i=0;i<NER_TASKS.length;i++) html += qHTML(all[i], i, "实体");
+  html += "<h2 style='margin-top:18px'>第三轮 · 主题模型归类</h2>";
+  for(var j=0;j<TOPIC_TASKS.length;j++) html += qHTML(all[NER_TASKS.length+j], NER_TASKS.length+j, "主题");
+
+  if(done){
+    var okN = 0;
+    NER_TASKS.forEach(function(t,i){ if(answers[i] === t.a) okN++; });
+    html += '<div class="msg show '+(okN===3?'ok':'warn')+'">标注完成，详见下方量规（踩线 '+redlines+' 次）。</div>';
+  }
+  html += '<div class="row">';
+  html += done ? '<button class="primary" id="btnScore">查看评分量规</button>'
+               : '<button class="primary" id="btnSubmit">提交标注与归类</button>';
+  html += '<button id="btnAgain">重开一局</button></div>';
+  document.getElementById("stage").innerHTML = html;
+  bind();
+}
+
+function qHTML(t, idx, kind){
+  var chosen = answers[idx];
+  var s = '<div class="q"><div class="qt"><span class="kind" style="font-size:11px;color:#185FA5;border:1px solid #B5D4F4;border-radius:4px;padding:0 6px;margin-right:6px">'+kind+'</span>'+t.q+'</div><div class="opts">';
+  t.opts.forEach(function(o, j){
+    var cls = "opt", tag = "";
+    if(done){
+      if(j === t.a){ cls += " correct"; tag = ' <span style="font-size:11px;color:#0F6E56">正确</span>'; }
+      else if(chosen === j){ cls += " wrong"; tag = ' <span style="font-size:11px;color:#A32D2D">你的选择</span>'; }
+    } else if(chosen === j) cls += " sel";
+    s += '<label class="'+cls+'"><input type="radio" name="q'+idx+'" value="'+j+'"'
+       + (chosen===j?" checked":"") + (done?" disabled":"") + '><span>'+o+tag+'</span></label>';
+  });
+  s += "</div>";
+  if(done) s += '<div class="ex show">'+t.ex+'</div>';
+  return s + "</div>";
+}
+
+function bind(){
+  var els = document.querySelectorAll("#stage input[type=radio]");
+  for(var i=0;i<els.length;i++){
+    els[i].onchange = function(){
+      var m = /^q(\d+)$/.exec(this.name);
+      answers[+m[1]] = +this.value;
+      render();
+    };
+  }
+  var bs = document.getElementById("btnSubmit");
+  if(bs) bs.onclick = submit;
+  var bf = document.getElementById("btnScore");
+  if(bf) bf.onclick = finish;
+  var ba = document.getElementById("btnAgain");
+  if(ba) ba.onclick = reset;
+}
+
+function submit(){
+  if(!segDone){
+    segScore = f1();
+    segDone = true;
+    renderSeg();
+    document.getElementById("segRes").textContent =
+      "分词得分 " + Math.round(segScore*100) + " / 100（按 F1 计：切对 " +
+      Object.keys(bound).map(Number).filter(function(i){return GOLD_BOUND[i];}).length +
+      " / " + GOLD_N + " 个标准边界）　标准分词：" + GOLD_TOKENS.join(" / ");
+  }
+  for(var i=0;i<3;i++) if(answers[i] === undefined){ alert("实体标注第 " + (i+1) + " 题还没选。"); return; }
+  for(var j=0;j<3;j++) if(answers[3+j] === undefined){ alert("主题归类第 " + (j+1) + " 题还没选。"); return; }
+  TOPIC_TASKS.forEach(function(t, j){
+    if(answers[3+j] === t.red) redlines++;
+  });
+  done = true;
+  render();
+  if(redlines > 0){
+    document.getElementById("modalText").textContent =
+      "把多元、模糊的人文文本强行统一归入一个大标签（「标签的暴力」）——这会消解文本的复杂性与多义性，触碰伦理红线。"
+      + "本次踩线 " + redlines + " 次，每次扣 3 分。";
+    document.getElementById("modal").classList.add("show");
+  }
+}
+
+function reset(){
+  answers = []; redlines = 0; done = false; segDone = false; segScore = 0; bound = {};
+  document.getElementById("final").style.display = "none";
+  renderSeg(); updateSegRes(); render();
+}
+
+function finish(){
+  var okNer = 0, okTopic = 0;
+  NER_TASKS.forEach(function(t,i){ if(answers[i] === t.a) okNer++; });
+  TOPIC_TASKS.forEach(function(t,j){ if(answers[3+j] === t.a) okTopic++; });
+  var segPts = Math.round(segScore * 40);
+  var nerPts = okNer * 8;
+  var topicPts = okTopic * 12;
+  var score = Math.max(0, segPts + nerPts + topicPts - redlines * 3);
+
+  var rows = [
+    ["分词正确率（F1）", segPts + " / 40", segScore >= 0.85],
+    ["实体标注（NER）", okNer + " / 3", okNer === 3],
+    ["主题模型归类", okTopic + " / 3", okTopic === 3],
+    ["伦理红线（标签的暴力）", redlines === 0 ? "全程未踩线 ✓" : ("踩线 " + redlines + " 次（−" + redlines*3 + " 分）"), redlines === 0]
+  ];
+  document.getElementById("rubric").innerHTML = '<tr><th>维度</th><th>表现</th></tr>' +
+    rows.map(function(r){ return '<tr><td>'+r[0]+'</td><td class="'+(r[2]?'ok-t':'bad-t')+'">'+r[1]+'</td></tr>'; }).join("") +
+    '<tr><td><b>本局得分</b></td><td><b>'+score+' / 100</b></td></tr>';
+  document.getElementById("final").style.display = "block";
+  document.getElementById("final").scrollIntoView({behavior:"smooth"});
+}
+
+reset();
+
+/* ===== KIT-BAR 课堂计时 / 排行榜（通用组件） ===== */
+(function(){
+  var KEY = "dsdh_game_", LO = 8, HI = 10;
+  var store = (function(){
+    try { if (typeof localStorage !== "undefined" && localStorage) return localStorage; } catch(e){}
+    var m = {};
+    return { getItem:function(k){ return (k in m) ? m[k] : null; },
+             setItem:function(k,v){ m[k] = String(v); },
+             removeItem:function(k){ delete m[k]; } };
+  })();
+  var t0 = Date.now(), stopped = false, finished = false;
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function fmt(s){ return pad(Math.floor(s/60)) + ":" + pad(Math.floor(s % 60)); }
+  function el(id){ return document.getElementById(id); }
+
+  function tick(){
+    var sec = Math.floor((Date.now() - t0) / 1000);
+    var t = el("kitTime"); if (t) t.textContent = fmt(sec);
+    var p = el("kitPace");
+    if (p && !stopped){
+      if (finished){ p.className = "tag2"; p.textContent = "本局用时 " + fmt(sec); }
+      else if (sec < LO * 60){ p.className = "tag2"; p.textContent = "节奏偏快（目标 " + LO + "–" + HI + " 分钟）"; }
+      else if (sec <= HI * 60){ p.className = "tag2 ok"; p.textContent = "节奏合适"; }
+      else { p.className = "tag2 warn"; p.textContent = "已超时（目标 " + LO + "–" + HI + " 分钟）"; }
+    }
+    if (!finished){
+      var f = el("final");
+      var g = el("rubricPanel");
+      if ((f && f.style && f.style.display === "block") || (g && g.style && g.style.display === "block")){
+        finished = true; stopped = true;
+        var h = el("kitHint");
+        if (h) h.textContent = "本局已完成 —— 输入姓名后点「保存成绩」，即可进入排行榜。";
+      }
+    }
+  }
+
+  function parseScore(){
+    var r = el("rubric");
+    if (!r) return 0;
+    var m = /<b>\s*(\d+)\s*\/\s*100\s*<\/b>/.exec(r.innerHTML);
+    return m ? (+m[1]) : 0;
+  }
+  function load(){ try { return JSON.parse(store.getItem(KEY) || "[]"); } catch(e){ return []; } }
+  function render(){
+    var tb = el("kitTable"); if (!tb) return;
+    var rows = load().slice().sort(function(a,b){ return (b.s - a.s) || (a.sec - b.sec); }).slice(0, 10);
+    if (!rows.length){ tb.innerHTML = "<tr><th>暂无记录</th></tr>"; return; }
+    var h = "<tr><th>#</th><th>姓名</th><th>得分</th><th>用时</th><th>日期</th></tr>";
+    rows.forEach(function(r, i){
+      h += "<tr><td>" + (i+1) + "</td><td>" + r.name + "</td><td>" + r.s + " / 100</td><td>"
+         + fmt(r.sec) + "</td><td>" + r.d + "</td></tr>";
+    });
+    tb.innerHTML = h;
+  }
+  function save(){
+    var inp = el("kitName");
+    var n = (inp && inp.value ? inp.value.trim() : "") || "匿名同学";
+    var rec = { name: n, s: parseScore(), sec: Math.floor((Date.now() - t0) / 1000),
+                d: new Date().toLocaleDateString("zh-CN") };
+    var all = load(); all.push(rec);
+    store.setItem(KEY, JSON.stringify(all));
+    render();
+    var h = el("kitHint");
+    if (h) h.textContent = "已保存：" + rec.name + "　" + rec.s + " 分　用时 " + fmt(rec.sec) + "。";
+  }
+
+  var timer = setInterval(tick, 1000);
+  if (timer && typeof timer === "object" && timer.unref) { try { timer.unref(); } catch(e){} }
+  var sb = el("kitSave"); if (sb) sb.onclick = save;
+  var cb = el("kitClear"); if (cb) cb.onclick = function(){ store.removeItem(KEY); render(); };
+  render(); tick();
+})();
+</script>
+</body>
+</html>

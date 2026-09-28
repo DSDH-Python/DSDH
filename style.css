@@ -1,0 +1,375 @@
+/* ===========================================================
+   《信息系统分析与设计》配套数字教材 · 全局样式
+   配色沿用课程 PPT：DARK 深青 / TEAL 主青 / ACCENT 橙 / GOLD 金
+   主题：浅色（适配 IDE light theme，印刷友好）
+   =========================================================== */
+:root{
+  --dark:#0E2F3A; --teal:#0F6E8C; --teal2:#1497A8; --accent:#F27A4E;
+  --gold:#E0A82E; --light:#F2F7F8; --card:#FFFFFF; --ink:#1B2B32;
+  --mute:#5A6B73; --line:#D5E2E6; --ok:#2E8B57; --bad:#C0392B;
+  --maxw:980px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"微软雅黑","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  color:var(--ink); background:var(--light); line-height:1.85; font-size:16px;
+}
+a{color:var(--teal); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+
+/* ---------- 顶部条 ---------- */
+.topbar{background:linear-gradient(120deg,var(--dark),var(--teal)); color:#fff;
+  padding:10px 0; position:sticky; top:0; z-index:50; box-shadow:0 2px 10px rgba(14,47,58,.18)}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px}
+.brand{font-weight:700; letter-spacing:.5px; font-size:15px}
+.brand small{display:block; font-weight:400; opacity:.8; font-size:12px}
+.topbar nav a{color:#eaf4f6; margin-left:16px; font-size:14px}
+.topbar nav a:hover{color:#fff; text-decoration:none}
+
+/* ---------- 门户首页 ---------- */
+.hero{background:linear-gradient(120deg,var(--dark),var(--teal));
+  color:#fff; padding:54px 0 46px}
+.hero h1{font-size:30px; margin:0 0 10px}
+.hero p{opacity:.92; max-width:760px; font-size:15.5px}
+.kicker{display:inline-block; font-size:12px; letter-spacing:2px; color:var(--gold);
+  border:1px solid rgba(224,168,46,.5); padding:3px 10px; border-radius:20px; margin-bottom:14px}
+.section-title{font-size:21px; color:var(--dark); margin:38px 0 14px;
+  border-left:5px solid var(--accent); padding-left:12px}
+.grid9{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+.ch-card{background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 16px 14px; transition:.18s; position:relative; overflow:hidden}
+.ch-card:hover{box-shadow:0 6px 20px rgba(15,110,140,.15); transform:translateY(-2px)}
+.ch-card .no{font-size:13px; color:var(--teal); font-weight:700}
+.ch-card h3{margin:6px 0 8px; font-size:16px; color:var(--dark)}
+.ch-card p{font-size:13px; color:var(--mute); margin:0}
+.ch-card.ready{border-color:var(--teal2)}
+.ch-card.ready::after{content:"✓ 可阅读"; position:absolute; top:10px; right:10px;
+  font-size:11px; color:#fff; background:var(--teal2); padding:2px 8px; border-radius:10px}
+.ch-card.soon::after{content:"建设中"; position:absolute; top:10px; right:10px;
+  font-size:11px; color:var(--mute); background:var(--light); padding:2px 8px; border-radius:10px}
+.feature-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:8px}
+.feature{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px}
+.feature b{color:var(--teal)}
+.note{background:#fff; border:1px dashed var(--line); border-left:4px solid var(--gold);
+  border-radius:8px; padding:14px 16px; color:var(--mute); font-size:14px; margin-top:14px}
+.progress-shell{height:14px; background:var(--line); border-radius:8px; overflow:hidden; margin:10px 0 4px}
+.progress-fill{height:100%; width:0; background:linear-gradient(90deg,var(--teal),var(--teal2)); transition:.5s}
+.progress-txt{font-size:13px; color:var(--mute)}
+
+/* ---------- 章节页布局 ---------- */
+.doc{display:grid; grid-template-columns:240px 1fr; gap:0; align-items:start}
+.side{position:sticky; top:56px; align-self:start; height:calc(100vh - 56px);
+  overflow:auto; background:#fff; border-right:1px solid var(--line); padding:18px 14px}
+.side h4{font-size:12px; color:var(--mute); letter-spacing:1px; margin:14px 0 8px}
+.side a{display:block; font-size:13.5px; color:var(--ink); padding:5px 8px; border-radius:6px}
+.side a:hover{background:var(--light); text-decoration:none}
+.side a.cur{background:var(--teal); color:#fff}
+.content{padding:30px 34px 80px; min-width:0}
+.content h1{font-size:26px; color:var(--dark); margin:0 0 4px}
+.content h2{font-size:20px; color:var(--dark); margin:34px 0 10px;
+  border-left:5px solid var(--accent); padding-left:12px}
+.content h3{font-size:16.5px; color:var(--teal); margin:22px 0 6px}
+.content p{margin:10px 0}
+.content p.lead{font-size:15px; color:var(--mute); background:#fff; border:1px solid var(--line);
+  border-left:4px solid var(--teal); border-radius:8px; padding:12px 16px}
+.content ul,.content ol{margin:8px 0; padding-left:22px}
+.content li{margin:5px 0}
+
+/* 模块标签（kicker） */
+.mod{display:inline-block; font-size:12px; letter-spacing:1.5px; font-weight:700;
+  padding:3px 12px; border-radius:20px; margin:26px 0 8px}
+.mod-lead{background:#eaf4f6; color:var(--teal)}
+.mod-theory{background:#fdf3e3; color:#b9841b}
+.mod-lab{background:#eaf7ef; color:var(--ok)}
+.mod-kb{background:#eef0fb; color:#5b54c9}
+.mod-gov{background:#e3eef3; color:#0F6E8C}
+.mod-ideo{background:#fdecec; color:var(--bad)}
+.mod-exp{background:#eef2f3; color:var(--mute)}
+
+/* 卡片 / 提示框 */
+.callout{border-radius:10px; padding:14px 16px; margin:14px 0; font-size:14.5px}
+.callout.quote{background:#fdf3e3; border-left:4px solid var(--gold); font-style:italic}
+.callout.tip{background:#eaf7ef; border-left:4px solid var(--ok)}
+.callout.warn{background:#fdecec; border-left:4px solid var(--bad)}
+.callout.src{background:#eef0fb; border-left:4px solid #5b54c9; font-size:13px; color:var(--mute)}
+.callout.frontier{background:#eaf6f9; border-left:4px solid var(--teal); font-size:14px; line-height:1.75; margin:16px 0}
+.callout.frontier .f-tag{display:inline-block; background:var(--accent); color:#fff; font-size:11px; font-weight:700; padding:1px 9px; border-radius:10px; margin-bottom:8px}
+.callout.frontier b{color:var(--teal)}
+
+/* 理论图形（矢量 SVG） */
+.figure{margin:16px 0; background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px 14px; text-align:center}
+.figure svg{width:100%; height:auto; max-width:680px; display:inline-block}
+.figure .cap{display:block; margin-top:10px; font-size:13px; color:var(--mute)}
+.figure .cap b{color:var(--teal)}
+.qtag{display:inline-block; font-size:11px; background:var(--light); color:var(--teal);
+  border:1px solid var(--line); border-radius:10px; padding:1px 8px; margin-right:8px; vertical-align:middle}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px}
+.card b{color:var(--dark)}
+.casebox{background:#eef6f8; border:1px solid var(--teal2); border-left:5px solid var(--teal); border-radius:10px; padding:14px 16px; margin:12px 0}
+.casebox h4{margin:0 0 8px; font-size:15px; color:var(--teal)}
+.casebox ul{margin:6px 0 0; padding-left:20px}
+.casebox li{margin:5px 0; font-size:13.5px; line-height:1.6}
+.casebox b{color:var(--dark)}
+/* IMA 知识库课程思政案例块（金色，区别于技术案例 .casebox 的青色） */
+.kbcase{background:#fbf6ea; border:1px solid var(--gold); border-left:5px solid var(--gold); border-radius:10px; padding:14px 16px; margin:14px 0}
+.kbcase h4{margin:0 0 8px; font-size:14.5px; color:#9a6b00}
+.kbcase ul{margin:6px 0 0; padding-left:20px}
+.kbcase li{margin:5px 0; font-size:13.5px; line-height:1.7}
+.kbcase b{color:var(--dark)}
+.kbcase .src{display:block; margin-top:9px; font-size:12px; color:#8a7a55; font-style:italic}
+.kbcase .think{display:block; margin-top:9px; padding-top:8px; border-top:1px dashed #e3d6a8; font-size:13px; color:#6b5a2c}
+.kbcase .think b{color:#9a6b00}
+/* 核心术语速览框（术语浮窗 .term 的聚合呈现，紫色调区别于案例/思政） */
+.termbox{background:#f3eef9; border:1px solid #cdbce6; border-left:5px solid #7b4fb5; border-radius:10px; padding:13px 16px; margin:14px 0}
+.termbox h4{margin:0 0 9px; font-size:14px; color:#5e3a93}
+.termbox ul{display:flex; flex-wrap:wrap; gap:8px 10px; list-style:none; margin:0; padding:0}
+.termbox li{margin:0}
+.termbox .term{background:#fff; border:1px solid #cdbce6; border-radius:14px; padding:3px 11px; font-size:13px; cursor:help}
+.termbox .term:hover{border-color:#7b4fb5; box-shadow:0 2px 8px rgba(123,79,181,.20)}
+/* 附录下载链接（孤儿源文件 .docx / .md 的入口） */
+.dl{display:inline-block; margin:4px 0; padding:9px 14px; background:var(--teal); color:#fff;
+  border-radius:8px; text-decoration:none; font-size:13.5px; font-weight:600}
+.dl:hover{background:#0c5b74}
+.hero-cta{margin-top:18px}
+
+/* 微课视频导学（占位 + 二维码） */
+.micro{margin:22px 0 6px}
+.micro-box{display:flex; gap:18px; flex-wrap:wrap; align-items:stretch; margin-top:10px}
+.video-card{flex:1 1 320px; min-height:172px; border:1px dashed var(--teal2); border-radius:12px;
+  background:linear-gradient(135deg,#eaf4f6,#f2f7f8); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; padding:24px}
+.video-card .play{width:54px; height:54px; border-radius:50%; background:var(--teal); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:12px;
+  box-shadow:0 4px 14px rgba(15,110,140,.30)}
+.video-card .vcap{margin:0; color:var(--dark); font-weight:600; font-size:15px}
+.video-card .vcap small{display:block; margin-top:8px; font-weight:400; font-size:13px; color:var(--mute)}
+.qr-box{flex:0 0 210px; background:#fff; border:1px solid var(--line); border-radius:12px;
+  padding:16px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center}
+/* 微课真实视频（替换占位后） */
+.video-card.live{border:0; background:transparent; padding:0; min-height:0; justify-content:flex-start; align-items:stretch}
+.weike-video,.weike-iframe{width:100%; aspect-ratio:16/9; border:0; border-radius:10px; background:#0E2F3A}
+/* 微信文章插图（.wxfig） */
+.wxfig{margin:20px 0; padding:0; text-align:center; border-radius:10px; overflow:hidden;
+  background:#fafbfd; border:1px solid #e2e8f0}
+.wxfig img{max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px}
+.wxfig figcaption{padding:12px 16px 14px; font-size:13px; color:#4a5568; line-height:1.55;
+  text-align:left; background:#f0f4f8; border-top:1px solid #e2e8f0}
+.wxfig figcaption strong{color:#0E2F3A; font-size:14px}
+.wxfig .src{float:right; font-size:11.5px; color:#a0aec0; font-style:normal}
+.qr-box .qr{width:158px; height:158px}
+.qr-box .qr svg{width:100%; height:100%; display:block}
+.qr-box .qrcap{margin:10px 0 0; font-size:13px; color:var(--dark); font-weight:600}
+.qr-box .qrcap small{display:block; margin-top:6px; font-weight:400; color:var(--mute)}
+/* 附录表格（.gtable：teal 表头，用于 A–G 各表） */
+.gtable{border-collapse:collapse; width:100%; margin:14px 0; font-size:13.5px}
+.gtable th{background:var(--teal); color:#fff; text-align:left; padding:8px 10px; font-weight:600}
+.gtable td{border:1px solid var(--line); padding:7px 10px; vertical-align:top}
+.gtable tbody tr:nth-child(even){background:#f3f8f9}
+.gtable tbody tr:hover{background:#e7f1f3}
+table{border-collapse:collapse; width:100%; margin:14px 0; font-size:14px}
+th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top}
+th{background:var(--light); color:var(--dark)}
+
+/* 三维目标 */
+.goals{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0}
+.goal{background:#fff; border:1px solid var(--line); border-top:4px solid var(--teal);
+  border-radius:10px; padding:12px 14px}
+.goal b{color:var(--teal)}
+
+/* 术语浮窗 */
+.term{border-bottom:1px dotted var(--teal); cursor:help; color:var(--teal); font-weight:600}
+#termtip{position:fixed; z-index:200; max-width:320px; background:var(--dark); color:#fff;
+  font-size:13px; line-height:1.6; padding:10px 12px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,.25);
+  display:none; pointer-events:none}
+#termtip::after{content:""; position:absolute; bottom:-6px; left:18px; border:6px solid transparent;
+  border-top-color:var(--dark); border-bottom:0}
+
+/* 可折叠延伸卡 */
+details.fold{background:#fff; border:1px solid var(--line); border-radius:8px; padding:0 14px; margin:12px 0}
+details.fold summary{cursor:pointer; font-weight:600; color:var(--teal); padding:12px 0; outline:none}
+details.fold[open] summary{border-bottom:1px solid var(--line); margin-bottom:10px}
+
+.btn{display:inline-block; background:var(--teal); color:#fff; border:none; border-radius:8px;
+  padding:9px 18px; font-size:14px; cursor:pointer; font-family:inherit}
+.btn:hover{background:var(--teal2)}
+.btn.ghost{background:#fff; color:var(--teal); border:1px solid var(--teal)}
+.btnrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:18px 0}
+
+/* 实验任务书 */
+.labtask{background:#eaf7ef; border:1px solid #bfe3cd; border-radius:10px; padding:16px 18px}
+.labtask h3{color:var(--ok); margin-top:0}
+/* 学习方法 callout（费曼等） */
+.callout.method{background:#f3eef9; border-left:4px solid #7b4fb5; font-size:14px; line-height:1.75; margin:16px 0}
+.callout.method .m-tag{display:inline-block; background:#7b4fb5; color:#fff; font-size:11px; font-weight:700; padding:1px 9px; border-radius:10px; margin-bottom:8px}
+.callout.method b{color:#5e3a93}
+/* 扩展实验卡片 */
+.expext{background:#eef6fb; border:1px solid #cfe3ec; border-left:4px solid var(--teal2); border-radius:10px; padding:14px 16px; margin:12px 0}
+.expext h4{margin:0 0 6px; color:var(--teal); font-size:15px}
+.expext .tag{display:inline-block; font-size:11px; background:#dceef5; color:var(--teal); border-radius:8px; padding:1px 8px; margin-left:6px}
+.exp-h{margin:22px 0 4px; font-size:16px; color:var(--teal); border-bottom:2px solid var(--teal2); padding-bottom:6px}
+/* 学生录制实验录屏（费曼式） */
+.recframe{display:flex; gap:18px; flex-wrap:wrap; align-items:stretch; margin:14px 0}
+.recframe .rec-card{flex:1 1 300px; border:1px dashed var(--accent); border-radius:12px; background:#fff7f2; padding:16px 18px}
+.recframe .rec-card h4{margin:0 0 8px; color:var(--accent); font-size:15px}
+.recframe .rec-card p{font-size:13.5px; color:var(--dark); line-height:1.6; margin:6px 0}
+
+/* 标记已读 / 进度 */
+.readbox{position:sticky; bottom:18px; display:flex; gap:10px; align-items:center;
+  background:#fff; border:1px solid var(--line); border-radius:30px; padding:8px 14px;
+  box-shadow:0 4px 16px rgba(0,0,0,.08); width:fit-content; margin:30px auto 0}
+.readbox .dot{width:10px; height:10px; border-radius:50%; background:var(--line)}
+.readbox .dot.on{background:var(--teal2)}
+
+/* 小结 */
+.summary{background:var(--light); border:1px solid var(--line); border-radius:10px; padding:16px 18px}
+.summary h2{margin-top:0; border:none; padding:0}
+
+/* 响应式 */
+@media (max-width:780px){
+  .doc{grid-template-columns:1fr}
+  .side{display:none}
+  .grid9,.goals,.feature-list,.two{grid-template-columns:1fr}
+  .qr-box{flex:1 1 100%}
+  .content{padding:22px 16px 70px}
+}
+/* 打印 / 导出 PDF */
+@media print{
+  .topbar,.side,.readbox,.btnrow{display:none !important}
+  body{background:#fff}
+  .doc{grid-template-columns:1fr}
+  .content{padding:0}
+  .callout,.card,.labtask{break-inside:avoid}
+  a{color:var(--ink); text-decoration:none}
+}
+
+/* 前沿文献清单（知识拓展与前沿模块内） */
+.lit-list{list-style:none;margin:.5rem 0 0;padding:0;}
+.lit-list li{padding:.55rem .75rem;margin:.5rem 0;border-left:3px solid var(--teal2,#1497A8);background:var(--light,#F2F7F8);border-radius:0 8px 8px 0;}
+.lit-list a{font-weight:600;color:var(--teal,#0F6E8C);text-decoration:none;word-break:break-word;}
+.lit-list a:hover{text-decoration:underline;}
+.lit-meta{font-size:.82rem;color:var(--mute,#5A6B73);margin-top:.2rem;}
+.lit-note{font-size:.85rem;color:var(--ink,#1B2B32);margin-top:.25rem;line-height:1.6;}
+
+/* 课件页图网格（Coze 慕课版插图）：一排两张 */
+.pptgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:18px 0}
+.pptgrid .wxfig{margin:0}
+.pptgrid .wxfig img{width:100%;height:auto;display:block;border-radius:6px}
+@media(max-width:760px){.pptgrid{grid-template-columns:1fr}}
+
+/* ===== 四部分结构：分部色块标题 ===== */
+.content h2.part{font-size:19px;color:#fff;margin:42px 0 18px;padding:13px 20px;
+  border-radius:10px;letter-spacing:1px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.content h2.part.p1{background:linear-gradient(90deg,#0F6E8C,#1497A8)}
+.content h2.part.p2{background:linear-gradient(90deg,#F27A4E,#FF9A6E)}
+.content h2.part.p3{background:linear-gradient(90deg,#3FA796,#5CC0B0)}
+.content h2.part.p4{background:linear-gradient(90deg,#E0A82E,#F0C463);color:#3A2A05}
+.content h3.sec-h{font-size:20px;color:var(--dark);margin:30px 0 10px;
+  border-left:5px solid var(--accent);padding-left:12px}
+.summary h4{font-size:16px;color:var(--dark);margin:0 0 8px;border:none;padding:0}
+/* 侧栏分部标签 */
+.side .navpart{display:block;margin:14px 0 4px;padding:5px 9px;border-radius:6px;
+  font-size:12px;font-weight:800;color:#fff;letter-spacing:.5px}
+.side .navpart.p1{background:#0F6E8C}
+.side .navpart.p2{background:#F27A4E}
+.side .navpart.p3{background:#3FA796}
+.side .navpart.p4{background:#E0A82E;color:#3A2A05}
+
+/* ===== 案例导入 / 拓展案例模块（各章第一部分、第四部分） ===== */
+.casebox .tagx{display:inline-block;background:var(--teal);color:#fff;font-size:12px;
+  font-weight:700;padding:2px 9px;border-radius:10px;margin-right:8px;letter-spacing:.5px}
+.casebox .cunit{font-size:12.5px;color:var(--mute)}
+.casebox p{font-size:14.5px;line-height:1.85;margin:9px 0}
+.casebox ol{margin:6px 0 0;padding-left:22px}
+.casebox ol li{margin:7px 0;font-size:14px;line-height:1.75}
+.casebox .src{display:block;margin-top:10px;padding-top:8px;border-top:1px dashed #cfe3e8;
+  font-size:12px;color:#8a9aa0;font-style:italic}
+/* ===== 附录 G · 智能体创新实践案例库 ===== */
+.caselist{margin:10px 0 26px}
+.caselist h4{font-size:15.5px;margin:16px 0 6px;color:var(--teal);
+  border-left:4px solid var(--teal);padding-left:10px;font-weight:700}
+.caselist h4 code{background:#eef6f8;color:var(--teal);font-size:12.5px;
+  padding:1px 6px;border-radius:4px;margin-right:6px}
+.caselist h4 small{display:block;font-weight:400;font-size:12.5px;color:var(--mute);margin-top:3px}
+.caselist p{margin:6px 0 6px 14px;font-size:14px;line-height:1.78;color:#3b4a50}
+.caselist p b{color:var(--dark)}
+@media print{.caselist{page-break-inside:auto}.caselist h4{page-break-after:avoid}}
+
+/* ===== 原版课件对照画廊（第5版原版课件） ===== */
+.ppt-compare{ margin-top:2.2rem; padding-top:1.4rem; border-top:2px dashed var(--teal); }
+.ppt-compare > .part{ /* 复用 .part 标题样式 */ }
+.ppt-compare-note{ color:#64748b; font-size:.9rem; margin:.3rem 0 1.1rem; line-height:1.6; }
+.ppt-src-h{ font-size:1.05rem; color:var(--teal); margin:1.4rem 0 .7rem; padding-left:.6rem; border-left:4px solid var(--accent); }
+.ppt-gallery{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.ppt-gallery figure{ margin:0; border:1px solid #e2e8f0; border-radius:8px; overflow:hidden; background:#fff;
+  transition:box-shadow .15s, transform .15s; }
+.ppt-gallery figure:hover{ box-shadow:0 4px 16px rgba(15,110,140,.18); transform:translateY(-2px); }
+.ppt-gallery img{ width:100%; height:auto; display:block; cursor:zoom-in; background:#fff; }
+.ppt-gallery figcaption{ font-size:.72rem; color:#475569; text-align:center; padding:5px 2px;
+  background:#f1f5f9; border-top:1px solid #e2e8f0; }
+@media (max-width:980px){ .ppt-gallery{ grid-template-columns:repeat(2,1fr); } }
+#pptLightbox{ position:fixed; inset:0; background:rgba(8,24,32,.88); display:none;
+  align-items:center; justify-content:center; z-index:9999; cursor:zoom-out; padding:2vh; }
+#pptLightbox img{ max-width:94vw; max-height:94vh; box-shadow:0 10px 50px rgba(0,0,0,.55);
+  border-radius:4px; background:#fff; }
+
+/* ===== 原版课件对照 · 内嵌轮播（JS 渐进增强；无 JS 时退回网格） ===== */
+.ppt-gallery.ppt-enhanced,
+.pptgrid.ppt-enhanced{ display:block; }
+.ppt-gallery.ppt-enhanced > figure,
+.pptgrid.ppt-enhanced > figure{ display:none; }              /* 屏幕下由轮播替代 */
+.pptgrid.ppt-single{ grid-template-columns:1fr; }            /* 单图整宽，避免半宽显示 */
+.ppt-carousel{ position:relative; }
+.ppt-carousel:focus{ outline:none; }
+.ppt-carousel:focus-visible{ box-shadow:0 0 0 3px rgba(15,110,140,.25); border-radius:12px; }
+.ppt-stage{ position:relative; width:100%; aspect-ratio:16/9; min-height:200px; display:flex;
+  align-items:center; justify-content:center; background:#eef4f6; border:1px solid var(--line);
+  border-radius:12px; overflow:hidden; }
+.ppt-stage img.ppt-current{ width:100%; height:100%; object-fit:contain; display:block;
+  background:#fff; cursor:zoom-in; }
+.ppt-nav{ position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%;
+  background:rgba(255,255,255,.94); border:1px solid var(--line); color:var(--teal); font-size:22px; line-height:1;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  transition:background .15s, border-color .15s; }
+.ppt-nav:hover:not(:disabled){ background:#fff; border-color:var(--teal); }
+.ppt-nav:disabled{ opacity:.3; cursor:default; }
+.ppt-prev{ left:14px; } .ppt-next{ right:14px; }
+.ppt-count{ position:absolute; top:12px; right:12px; background:var(--dark); color:#fff; font-size:12px;
+  padding:4px 11px; border-radius:999px; letter-spacing:.02em; }
+.ppt-zoombtn{ position:absolute; top:12px; left:12px; background:#fff; color:var(--teal);
+  border:1px solid var(--teal); font-size:12px; padding:4px 11px; border-radius:999px; cursor:pointer; }
+.ppt-zoombtn:hover{ background:var(--teal); color:#fff; }
+.ppt-bar{ display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.ppt-bar button{ background:#fff; border:1px solid var(--line); color:var(--dark); border-radius:8px;
+  padding:6px 14px; font-size:13px; cursor:pointer; transition:border-color .15s, color .15s; }
+.ppt-bar button:hover:not(:disabled){ border-color:var(--teal); color:var(--teal); }
+.ppt-bar button:disabled{ opacity:.35; cursor:default; }
+.ppt-jump{ width:62px; text-align:center; border:1px solid var(--line); border-radius:8px;
+  padding:6px 8px; font-size:13px; }
+.ppt-total{ color:var(--mute); font-size:13px; }
+
+#pptLightbox .lb-count{ position:absolute; top:18px; left:50%; transform:translateX(-50%); color:#fff;
+  font-size:13px; background:rgba(0,0,0,.35); padding:4px 12px; border-radius:999px; }
+#pptLightbox .lb-nav{ position:absolute; top:50%; transform:translateY(-50%); width:52px; height:52px;
+  border-radius:50%; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.42); color:#fff;
+  font-size:26px; line-height:1; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+#pptLightbox .lb-nav:hover{ background:rgba(255,255,255,.3); }
+#pptLightbox .lb-prev{ left:2vw; } #pptLightbox .lb-next{ right:2vw; }
+
+/* 打印 / 导出 PDF：展开全部课件页，隐藏轮播控件，确保不丢页 */
+@media print{
+  .ppt-gallery.ppt-enhanced{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .pptgrid.ppt-enhanced{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .ppt-gallery.ppt-enhanced > figure,
+  .pptgrid.ppt-enhanced > figure{ display:block; }
+  .ppt-carousel{ display:none !important; }
+}
+
+/* ===== 代码块（教材含大量可复现代码） ===== */
+pre.code,pre{background:#0E2F3A;color:#eaf4f6;border-radius:8px;padding:12px 14px;overflow:auto;font-size:13px;line-height:1.55;margin:14px 0}
+pre.code code{font-family:Consolas,Menlo,Monaco,monospace;white-space:pre}
+code{background:#eaf4f6;color:#0F6E8C;padding:1px 5px;border-radius:4px;font-size:.9em}
+figure.figure img{max-width:100%;height:auto}
+.kbcase h4,.casebox h4,.labtask h3{font-weight:700}

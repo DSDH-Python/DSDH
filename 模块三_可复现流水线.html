@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>可复现流水线 · DSDH 模块三</title>
+<style>
+:root{
+  --ink:#1F2A44; --sub:#5F6368; --line:#DDE1E8; --bg:#F6F7F9; --card:#FFFFFF;
+  --blue:#185FA5; --blue-bg:#E6F1FB; --blue-line:#B5D4F4;
+  --teal:#0F6E56; --teal-bg:#E1F5EE; --teal-line:#9FE1CB;
+  --red:#A32D2D;  --red-bg:#FCEBEB;  --red-line:#F09595;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:24px}
+header h1{font-size:20px;margin:0 0 4px;font-weight:500}
+header .sub{font-size:13px;color:var(--sub);margin:0}
+.badges{margin:12px 0 18px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--sub)}
+.badge.b{color:var(--blue);border-color:var(--blue-line);background:var(--blue-bg)}
+.badge.t{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.badge.r{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.grid{display:grid;grid-template-columns:1fr 330px;gap:18px}
+@media(max-width:920px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+h2{font-size:15px;margin:0 0 12px;font-weight:500}
+.hint{font-size:12px;color:var(--sub);margin:-6px 0 12px}
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:760px){.pipe{grid-template-columns:repeat(2,1fr)}}
+.slot{min-height:126px;border:1.5px dashed var(--line);border-radius:10px;padding:10px;cursor:pointer;transition:.15s}
+.slot .st{font-size:11px;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.slot .st b{font-weight:500;color:var(--ink);font-size:12px}
+.slot .ph{font-size:12px;color:#9AA0AA}
+.slot.filled{border-style:solid;border-color:var(--blue-line);background:#F8FBFF}
+.slot.ok{border-color:var(--teal-line);background:#F4FCF9}
+.slot.bad{border-color:var(--red-line);background:#FEF7F7}
+.slot.hot{border-color:var(--blue);background:var(--blue-bg)}
+.cardtitle{font-size:12.5px;font-weight:500;line-height:1.4}
+.cardcode{font-family:Consolas,"Courier New",monospace;font-size:10.5px;color:var(--sub);white-space:pre-wrap;word-break:break-all;margin-top:5px;background:#F8F9FB;border-radius:4px;padding:4px 6px}
+.cardnote{font-size:11px;color:var(--teal);margin-top:4px}
+.cardtrap{font-size:11px;color:var(--red);margin-top:4px}
+.card{border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin-bottom:8px;cursor:grab;background:#fff}
+.card:hover{border-color:#85B7EB}
+.card.sel{outline:2px solid var(--blue);outline-offset:1px}
+.card.red{border-color:var(--red-line);background:var(--red-bg)}
+.chip{font-size:10.5px;color:var(--blue);border:1px solid var(--blue-line);border-radius:4px;padding:0 5px;margin-left:5px;white-space:nowrap}
+.chip.r{color:var(--red);border-color:var(--red-line)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{font-family:inherit;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:hover:not(:disabled){border-color:#85B7EB}
+.msg{margin-top:12px;font-size:13px;border-radius:8px;padding:10px 12px;border:1px solid var(--line);background:#FAFBFC;display:none}
+.msg.show{display:block}
+.msg.ok{border-color:var(--teal-line);background:var(--teal-bg);color:var(--teal)}
+.msg.bad{border-color:var(--red-line);background:var(--red-bg);color:var(--red)}
+pre{background:#F8F9FB;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:12px;overflow:auto;font-family:Consolas,monospace;white-space:pre-wrap}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+th{color:var(--sub);font-weight:500}
+.ok-t{color:var(--teal)} .bad-t{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(31,42,68,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:12px;max-width:520px;padding:20px;border-top:4px solid var(--red)}
+.modal h3{margin:0 0 8px;font-size:15px;color:var(--red);font-weight:500}
+.modal p{margin:0 0 14px;font-size:13px}
+footer{font-size:11.5px;color:var(--sub);text-align:center;margin:18px 0 8px}
+
+/* ===== KIT-BAR 课堂计时 / 排行榜 ===== */
+.kitbar{position:sticky;top:0;z-index:6;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(31,42,68,.06)}
+.kitbar .in{max-width:1040px;margin:0 auto;padding:8px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--sub)}
+.kitbar b{color:var(--ink);font-weight:500}
+.kitbar .tm{font-family:Consolas,"Courier New",monospace;font-size:15px;color:var(--blue)}
+.kitbar .tag2{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:#FAFBFC}
+.kitbar .tag2.ok{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.kitbar .tag2.warn{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.board input{font-family:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="kitbar"><div class="in">
+  <span><b>模块三</b> 配套游戏</span>
+  <span>建议时长 <b>6–8 分钟</b></span>
+  <span>难度 <b>★★★☆☆</b></span>
+  <span>题量 <b>5 阶段装配</b></span>
+  <span>已用 <span class="tm" id="kitTime">00:00</span></span>
+  <span class="tag2" id="kitPace">计时中</span>
+</div></div>
+
+<div class="wrap">
+  <header>
+    <h1>可复现流水线</h1>
+    <p class="sub">DSDH 模块三 · 数据处理基础（Python 与 pandas）— 把「采集 → 清洗 → 建模 → 验证 → 沟通」拼成一条队友能一键重跑的流水线</p>
+  </header>
+  <div class="badges">
+    <span class="badge b">可复现</span>
+    <span class="badge t">案例真实</span>
+    <span class="badge r">伦理在场 · 红线卡</span>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="panel">
+        <h2>流水线装配台</h2>
+        <p class="hint">点选右侧卡片 → 点左侧槽位放入；也可直接拖拽。槽内卡片点一下即可退回。五槽填满后点「队友一键重跑」。</p>
+        <div class="pipe" id="pipe"></div>
+        <div class="row">
+          <button class="primary" id="btnRun" disabled>队友一键重跑</button>
+          <button id="btnReset">重开一局</button>
+        </div>
+        <div class="msg" id="msg"></div>
+      </div>
+
+      <div class="panel">
+        <h2>生成的可复现脚本</h2>
+        <pre id="code">（装配完成后自动生成）</pre>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <h2>卡片池</h2>
+        <p class="hint">每个阶段有两张候选：一张正确、一张藏着不可复现的陷阱。还有一张红线卡，碰了就扣分。</p>
+        <div id="pool"></div>
+      </div>
+      <div class="panel">
+        <h2>可复现检查表</h2>
+        <table id="check"></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="rubricPanel" style="display:none">
+    <h2>评分量规（Rubric）</h2>
+    <table id="rubric"></table>
+  </div>
+
+  
+<div class="panel board" id="kitBoard">
+  <h2>课堂排行榜（本机保存）</h2>
+  <p style="font-size:12px;color:#5F6368;margin:0 0 10px" id="kitHint">完成本局后，输入姓名即可把成绩存入本机排行榜（数据只保存在本机浏览器，不上传）。</p>
+  <div class="row" style="margin-top:0">
+    <input id="kitName" placeholder="姓名 / 昵称" maxlength="12">
+    <button id="kitSave">保存成绩</button>
+    <button id="kitClear">清空排行榜</button>
+  </div>
+  <table id="kitTable"></table>
+</div>
+<footer>单文件 HTML5 · 零依赖 · 双击即开 ｜ DSDH 课程游戏</footer>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>触碰伦理红线</h3>
+    <p id="modalText"></p>
+    <button onclick="document.getElementById('modal').classList.remove('show')">我知道了</button>
+  </div>
+</div>
+
+<script>
+var STAGES = ["采集","清洗","建模","验证","沟通"];
+
+var CARDS = [
+  {id:"c1", stage:"采集", ok:true,  title:"用公开 URL 读取数据",
+   code:'df = pd.read_csv(PUBLIC_URL)\n# 同时记录：获取日期、数据版本、来源链接',
+   note:"来源公开可溯源，队友在同样环境能读到同一份数据。"},
+  {id:"c2", stage:"采集", ok:false, title:"读取本地绝对路径",
+   code:'df = pd.read_csv("C:\\Users\\me\\桌面\\data.csv")',
+   trap:"硬编码本地路径：队友机器上根本没有这个文件，第一步就断。"},
+  {id:"c3", stage:"清洗", ok:true,  title:"去重并记录缺失处理",
+   code:'n0 = len(df)\ndf = df.drop_duplicates()\nprint("删除行数:", n0 - len(df))   # 写进 README',
+   note:"删了什么、删了多少，全部可追溯。"},
+  {id:"c4", stage:"清洗", ok:false, title:"直接 dropna()",
+   code:'df = df.dropna()   # 不记录删了多少、为什么删',
+   trap:"静默丢样本：结论可能只建立在一部分数据上，且无法追溯。"},
+  {id:"c5", stage:"建模", ok:true,  title:"固定随机种子",
+   code:'train_test_split(X, y, random_state=42)',
+   note:"同一个种子，今天跑和明天跑结果一致。"},
+  {id:"c6", stage:"建模", ok:false, title:"不设随机种子",
+   code:'train_test_split(X, y)   # 每次切分都不同',
+   trap:"随机性失控：两次运行根本不是同一个结果。"},
+  {id:"c7", stage:"验证", ok:true,  title:"留测试集 + 记录环境",
+   code:'score = model.score(X_test, y_test)\nprint("pandas:", pd.__version__)',
+   note:"用没见过的数据验证，并写下库版本。"},
+  {id:"c8", stage:"验证", ok:false, title:"只看训练集准确率",
+   code:'score = model.score(X_train, y_train)',
+   trap:"拿训练数据自测，过拟合被完全掩盖。"},
+  {id:"c9", stage:"沟通", ok:true,  title:"导出图 + 附可重跑脚本",
+   code:'fig.savefig("fig.png")\n# 附：脚本 + requirements.txt + 数据来源说明',
+   note:"别人照着脚本能画出同一张图。"},
+  {id:"c10", red:true, title:"红线 · 用玩具数据让结果好看",
+   code:'df = pd.DataFrame({...编造的漂亮数字...})',
+   warn:"用玩具 / 编造数据粉饰结论 —— 触碰学术诚信红线。真实数据与玩具数据的区别，就是研究与编故事的区别。"}
+];
+
+var pool = [], slots = {}, selected = null;
+var attempts = 0, redlines = 0, firstTryWrong = 0, finished = false;
+
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+
+function reset(){
+  pool = shuffle(CARDS.slice());
+  slots = {}; STAGES.forEach(function(s){slots[s]=null;});
+  selected = null; attempts = 0; redlines = 0; firstTryWrong = 0; finished = false;
+  document.getElementById("rubricPanel").style.display = "none";
+  hideMsg();
+  render();
+}
+
+function hideMsg(){ var m=document.getElementById("msg"); m.className="msg"; m.innerHTML=""; }
+
+function showMsg(html, kind){
+  var m=document.getElementById("msg");
+  m.className = "msg show " + (kind||"");
+  m.innerHTML = html;
+}
+
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function cardHTML(c, inSlot){
+  var cls = "card" + (c.red ? " red" : "") + (selected && selected.id===c.id ? " sel" : "");
+  var chip = c.red ? '<span class="chip r">红线卡</span>' : '<span class="chip">'+c.stage+'</span>';
+  var extra = c.red ? '<div class="cardtrap">'+esc(c.warn)+'</div>'
+            : (c.ok ? '<div class="cardnote">'+esc(c.note)+'</div>'
+                    : '<div class="cardtrap">陷阱：'+esc(c.trap)+'</div>');
+  return '<div class="'+cls+'" draggable="true" data-id="'+c.id+'" data-slot="'+(inSlot||'')+'">'
+       + '<div class="cardtitle">'+esc(c.title)+chip+'</div>'
+       + '<div class="cardcode">'+esc(c.code)+'</div>' + extra + '</div>';
+}
+
+function render(){
+  var p = document.getElementById("pool");
+  p.innerHTML = pool.map(function(c){ return cardHTML(c, ""); }).join("") || '<div class="hint">卡片池已空</div>';
+
+  document.getElementById("pipe").innerHTML = STAGES.map(function(s){
+    var c = slots[s];
+    var cls = "slot";
+    if(c){ cls += " filled"; if(finished) cls += " ok"; else if(c.__bad) cls += " bad"; }
+    var inner = c ? cardHTML(c, s)
+                  : '<div class="st"><b>'+s+'</b></div><div class="ph">点击放入卡片</div>';
+    return '<div class="'+cls+'" data-stage="'+s+'">'+inner+'</div>';
+  }).join("");
+
+  var rows = STAGES.map(function(s){
+    var c = slots[s];
+    var st = !c ? '<span class="bad-t">未装配</span>'
+           : (c.__bad ? '<span class="bad-t">断裂</span>' : '<span class="ok-t">通过</span>');
+    return '<tr><td>'+s+'</td><td>'+(c?esc(c.title):'—')+'</td><td>'+st+'</td></tr>';
+  }).join("");
+  rows += '<tr><td>伦理红线</td><td>'+(redlines?('踩线 '+redlines+' 次'):'未踩线')+'</td><td>'+(redlines?'<span class="bad-t">−3/次</span>':'<span class="ok-t">通过</span>')+'</td></tr>';
+  document.getElementById("check").innerHTML = '<tr><th>阶段</th><th>当前卡片</th><th>状态</th></tr>'+rows;
+
+  var code = STAGES.map(function(s){ return slots[s] ? ('# '+s+'\n'+slots[s].code) : ('# '+s+'：待装配'); });
+  document.getElementById("code").textContent = code.join("\n\n");
+
+  document.getElementById("btnRun").disabled = !STAGES.every(function(s){return slots[s];}) || finished;
+
+  bindCards();
+}
+
+function bindCards(){
+  var els = document.querySelectorAll(".card");
+  for(var i=0;i<els.length;i++){
+    (function(el){
+      el.onclick = function(e){
+        e.stopPropagation();
+        var id = el.getAttribute("data-id");
+        var slotStage = el.getAttribute("data-slot");
+        if(slotStage){ unplace(slotStage); return; }
+        var c = findPool(id);
+        if(!c) return;
+        selected = (selected && selected.id===id) ? null : c;
+        render();
+      };
+      el.ondragstart = function(e){
+        e.dataTransfer.setData("text/plain", el.getAttribute("data-id"));
+        selected = findPool(el.getAttribute("data-id"));
+      };
+    })(els[i]);
+  }
+  var slotEls = document.querySelectorAll(".slot");
+  for(var j=0;j<slotEls.length;j++){
+    (function(el){
+      el.onclick = function(){ place(el.getAttribute("data-stage")); };
+      el.ondragover = function(e){ e.preventDefault(); el.classList.add("hot"); };
+      el.ondragleave = function(){ el.classList.remove("hot"); };
+      el.ondrop = function(e){
+        e.preventDefault(); el.classList.remove("hot");
+        var id = e.dataTransfer.getData("text/plain");
+        var c = findPool(id);
+        if(c){ selected = c; }
+        place(el.getAttribute("data-stage"));
+      };
+    })(slotEls[j]);
+  }
+}
+
+function findPool(id){
+  for(var i=0;i<pool.length;i++) if(pool[i].id===id) return pool[i];
+  return null;
+}
+
+function place(stage){
+  if(finished) return;
+  if(!selected) { showMsg("先从右侧卡片池选一张卡片。",""); return; }
+  if(slots[stage]) { showMsg("该阶段已有卡片，点它可退回。",""); return; }
+  var c = selected;
+
+  if(c.red){
+    redlines++;
+    selected = null;
+    render();
+    document.getElementById("modalText").textContent = c.warn + " 本次扣 3 分，累计踩线 " + redlines + " 次。";
+    document.getElementById("modal").classList.add("show");
+    showMsg("红线卡不能被装进流水线 —— 已退回卡片池并扣 3 分。","bad");
+    return;
+  }
+
+  pool = pool.filter(function(x){ return x.id !== c.id; });
+  c.__bad = false;
+  slots[stage] = c;
+  selected = null;
+  hideMsg();
+  render();
+}
+
+function unplace(stage){
+  if(finished) return;
+  var c = slots[stage];
+  if(!c) return;
+  slots[stage] = null;
+  c.__bad = false;
+  pool.push(c);
+  hideMsg();
+  render();
+}
+
+function run(){
+  if(finished) return;
+  if(!STAGES.every(function(s){return slots[s];})) { showMsg("还有空槽位，先把五个阶段填满。","bad"); return; }
+  attempts++;
+
+  var errors = [];
+  STAGES.forEach(function(s){
+    var c = slots[s];
+    if(c.stage !== s){ c.__bad = true; errors.push({s:s, why:"阶段错配：这张卡属于「"+c.stage+"」，不能放在「"+s+"」。", t:""}); }
+    else if(!c.ok){ c.__bad = true; errors.push({s:s, why:"断裂：" + c.trap, t:c.trap}); }
+    else { c.__bad = false; }
+  });
+
+  if(attempts === 1) firstTryWrong = errors.length;
+
+  if(errors.length === 0){
+    finished = true;
+    var penalty = redlines*3 + firstTryWrong*8 + Math.min(10, Math.max(0, (attempts-1)*2));
+    var score = Math.max(0, 100 - penalty);
+    render();
+    showMsg("重跑成功 —— 队友在同一环境下得到<b>完全一致</b>的结果。可复现 ✓（本局得分 "+score+"）","ok");
+    showRubric(score);
+  } else {
+    render();
+    var html = "重跑失败，流水线在以下位置断裂：<br><ul style='margin:6px 0 0 18px;padding:0'>"
+      + errors.map(function(e){ return "<li><b>"+e.s+"</b>："+esc(e.why)+"</li>"; }).join("")
+      + "</ul><div style='margin-top:8px'>点断裂的卡片退回，换一张再试。</div>";
+    showMsg(html,"bad");
+  }
+}
+
+function showRubric(score){
+  var p = document.getElementById("rubricPanel");
+  p.style.display = "block";
+  var orderOK = STAGES.every(function(s){ return slots[s] && slots[s].stage === s; });
+  var rows = [
+    ["阶段顺序", orderOK ? "采集→清洗→建模→验证→沟通 顺序正确 ✓" : "存在阶段错配 ✗", orderOK],
+    ["陷阱识别", firstTryWrong===0 ? "首轮全部命中（5/5）✓" : ("首轮命中 "+(5-firstTryWrong)+"/5"), firstTryWrong===0],
+    ["修正有效性", attempts===1 ? "一次重跑即通过 ✓" : ("经过 "+attempts+" 次重跑后通过"), attempts===1],
+    ["伪代码可复跑性", "已生成含版本/种子/来源记录的脚本 ✓", true],
+    ["伦理红线", redlines===0 ? "全程未踩线 ✓" : ("踩线 "+redlines+" 次（−"+(redlines*3)+" 分）"), redlines===0]
+  ];
+  document.getElementById("rubric").innerHTML =
+    '<tr><th>维度</th><th>表现</th></tr>' +
+    rows.map(function(r){
+      return '<tr><td>'+r[0]+'</td><td class="'+(r[2]?'ok-t':'bad-t')+'">'+r[1]+'</td></tr>';
+    }).join("") +
+    '<tr><td><b>本局得分</b></td><td><b>'+score+' / 100</b></td></tr>';
+}
+
+document.getElementById("btnRun").onclick = run;
+document.getElementById("btnReset").onclick = reset;
+reset();
+
+/* ===== KIT-BAR 课堂计时 / 排行榜（通用组件） ===== */
+(function(){
+  var KEY = "dsdh_game_", LO = 6, HI = 8;
+  var store = (function(){
+    try { if (typeof localStorage !== "undefined" && localStorage) return localStorage; } catch(e){}
+    var m = {};
+    return { getItem:function(k){ return (k in m) ? m[k] : null; },
+             setItem:function(k,v){ m[k] = String(v); },
+             removeItem:function(k){ delete m[k]; } };
+  })();
+  var t0 = Date.now(), stopped = false, finished = false;
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function fmt(s){ return pad(Math.floor(s/60)) + ":" + pad(Math.floor(s % 60)); }
+  function el(id){ return document.getElementById(id); }
+
+  function tick(){
+    var sec = Math.floor((Date.now() - t0) / 1000);
+    var t = el("kitTime"); if (t) t.textContent = fmt(sec);
+    var p = el("kitPace");
+    if (p && !stopped){
+      if (finished){ p.className = "tag2"; p.textContent = "本局用时 " + fmt(sec); }
+      else if (sec < LO * 60){ p.className = "tag2"; p.textContent = "节奏偏快（目标 " + LO + "–" + HI + " 分钟）"; }
+      else if (sec <= HI * 60){ p.className = "tag2 ok"; p.textContent = "节奏合适"; }
+      else { p.className = "tag2 warn"; p.textContent = "已超时（目标 " + LO + "–" + HI + " 分钟）"; }
+    }
+    if (!finished){
+      var f = el("final");
+      var g = el("rubricPanel");
+      if ((f && f.style && f.style.display === "block") || (g && g.style && g.style.display === "block")){
+        finished = true; stopped = true;
+        var h = el("kitHint");
+        if (h) h.textContent = "本局已完成 —— 输入姓名后点「保存成绩」，即可进入排行榜。";
+      }
+    }
+  }
+
+  function parseScore(){
+    var r = el("rubric");
+    if (!r) return 0;
+    var m = /<b>\s*(\d+)\s*\/\s*100\s*<\/b>/.exec(r.innerHTML);
+    return m ? (+m[1]) : 0;
+  }
+  function load(){ try { return JSON.parse(store.getItem(KEY) || "[]"); } catch(e){ return []; } }
+  function render(){
+    var tb = el("kitTable"); if (!tb) return;
+    var rows = load().slice().sort(function(a,b){ return (b.s - a.s) || (a.sec - b.sec); }).slice(0, 10);
+    if (!rows.length){ tb.innerHTML = "<tr><th>暂无记录</th></tr>"; return; }
+    var h = "<tr><th>#</th><th>姓名</th><th>得分</th><th>用时</th><th>日期</th></tr>";
+    rows.forEach(function(r, i){
+      h += "<tr><td>" + (i+1) + "</td><td>" + r.name + "</td><td>" + r.s + " / 100</td><td>"
+         + fmt(r.sec) + "</td><td>" + r.d + "</td></tr>";
+    });
+    tb.innerHTML = h;
+  }
+  function save(){
+    var inp = el("kitName");
+    var n = (inp && inp.value ? inp.value.trim() : "") || "匿名同学";
+    var rec = { name: n, s: parseScore(), sec: Math.floor((Date.now() - t0) / 1000),
+                d: new Date().toLocaleDateString("zh-CN") };
+    var all = load(); all.push(rec);
+    store.setItem(KEY, JSON.stringify(all));
+    render();
+    var h = el("kitHint");
+    if (h) h.textContent = "已保存：" + rec.name + "　" + rec.s + " 分　用时 " + fmt(rec.sec) + "。";
+  }
+
+  var timer = setInterval(tick, 1000);
+  if (timer && typeof timer === "object" && timer.unref) { try { timer.unref(); } catch(e){} }
+  var sb = el("kitSave"); if (sb) sb.onclick = save;
+  var cb = el("kitClear"); if (cb) cb.onclick = function(){ store.removeItem(KEY); render(); };
+  render(); tick();
+})();
+</script>
+</body>
+</html>

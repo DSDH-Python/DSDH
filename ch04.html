@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 模块四　文本挖掘与 NLP · 数字教材</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">《数据科学与数字人文》· 数字教材<small>智能技术实战主线 · 信息资源管理专业</small></div>
+    <nav>
+      <a href="index.html">门户</a>
+      <a href="ch03.html">上一章</a>
+      <a href="ch05.html">下一章</a>
+    </nav>
+  </div>
+</header>
+
+<div class="doc">
+  <aside class="side">
+<h4>第 4 章 目录</h4>
+<a href="#lead" class="cur">导语与学习目标</a>
+<span class="navpart p1">第一部分　课程导学</span>
+<a href="#s46">4.6　伦理坐标：语料偏见与"客观"幻象（本模块核心能力）</a>
+<a href="#s411">4.11　思政融入（课程思政）</a>
+<span class="navpart p2">第二部分　课程内容</span>
+<a href="#s41">4.1　文本是第一大类人文数据</a>
+<a href="#s42">4.2　分词与预处理：中文的特殊性</a>
+<a href="#s43">4.3　从词频到主题：词云、TF-IDF 与 LDA</a>
+<a href="#s44">4.4　命名实体识别：抽人、地、时、事</a>
+<a href="#s45">4.5　历史语言的麻烦：Adapting vs Pre-training</a>
+<a href="#s47">4.7　第一次动手：对一组诗文做主题模型</a>
+<a href="#s48">4.8　第二次动手：用 TF-IDF 对比两位作者</a>
+<a href="#s410">4.10　思考题</a>
+<span class="navpart p3">第三部分　拓展练习</span>
+<a href="#sec11">模块四·学术前沿：OpenAlex / DBLP / arXiv / CrossRef / CORE 实证文献（V2.1）</a>
+<a href="#sec12">模块四·中文核心期刊文献实证（V2.2·19 种图情档核心期刊）</a>
+<span class="navpart p4">第四部分　本章小结</span>
+<a href="#s49">4.9　本章小结</a>
+  </aside>
+  <main class="content">
+<h1>第 4 章　模块四　文本挖掘与 NLP</h1>
+<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）说明中文分词与句读的特殊性；（2）用分词 + TF-IDF/主题模型从语料中提炼结构；（3）用命名实体识别抽取人/地/时/事；（4）理解"历史语言"给 NLP 带来的适配难题，并能指出一处语料偏见。</p></div></p>
+<h2 class="part p1" id="lead">第一部分　课程导学</h2>
+<span class="mod mod-lead">导学</span>
+<h3 class="sec-h" id="s46">4.6 伦理坐标：语料偏见与"客观"幻象（本模块核心能力）</h3>
+<ul><li><b>取样偏见</b>：能数字化的文本偏向"被保存下来的"——名家、官修、纸本，底层声音天然缺失；</li><li><b>词表偏见</b>：停用词表、主题数 k 都是人定的，k 取 5 还是 10，叙事就变；</li><li><b>"客观"幻象</b>：主题模型给的是统计结构，不是"历史真相"，别把机器聚类当定论。</li></ul>
+<div class="callout quote"><p><b>一条红线</b>：不把 NLP 输出直接说成"古人就是这样想的"；呈现结果时同步交代语料与参数。</p></div>
+<div class="kbcase"><h4>4.11 思政融入（课程思政）</h4><div class="callout quote"><p><b>思政融入（课程思政）</b>：用 NLP 阐释古籍，是“守正创新”的生动实践：以新方法激活传统，但<b>必须以尊重原文与前人注疏为前提</b>，不以模型结论僭越历史。中华典籍是中华民族的智慧结晶，让技术使它“活起来”，正是增强<b>文化自信</b>的一条切实路径——前提是谦卑与严谨。</p></div>
+<div class="callout quote"><p><b>思政案例（课程思政示范案例 / AI 思政课 知识库）</b>：可参照《文化哲学》“坚持文化自信”与《中医基础理论》“中国传统文化”的育人切入点——以技术活化典籍，须以尊重传统为前提。</p></div></div>
+<h2 class="part p2" id="part2">第二部分　课程内容</h2>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s41">4.1 文本是第一大类人文数据</h3>
+<figure class="figure"><img src="assets/dsdh/Clean_academic_infographic_ill_2026-09-09T07-00-27.png" alt="文本挖掘与主题模型概念图"><figcaption>文本挖掘与主题模型概念图</figcaption></figure>
+<p>模块二把文本列为五类之首，不是偶然——古籍、报刊、书信、剧本，构成了人文研究的主干材料。NLP 的任务，是把"人读得懂的字"变成"机器算得了的数"：词频、向量、实体、主题。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s42">4.2 分词与预处理：中文的特殊性</h3>
+<p>英文靠空格分词，中文没有。通用工具（如 <code>jieba</code>）按现代语料训练，遇到<b>古籍异体字、避讳字、缺句读</b>就会翻车。预处理常做：</p>
+<ul><li><b>分词</b>：<code>jieba.lcut("关关雎鸠在河之洲")</code>；</li><li><b>去停用词</b>：去掉"之、乎、者、也"等高频无实义词；</li><li><b>句读还原</b>：古书无标点，需先补断句再分析。</li></ul>
+<div class="callout quote"><p><b>提醒</b>：用现代分词器切古诗文，结果要人工抽查——"不亦说乎"被切成什么，决定了后续一切。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s43">4.3 从词频到主题：词云、TF-IDF 与 LDA</h3>
+<ul><li><b>词频/词云</b>：最快的"扫一眼重点"，但易被长文主导；</li><li><b>TF-IDF</b>：衡量"在这篇重要、在全集罕见"的词，比纯词频更准；</li><li><b>LDA 主题模型</b>：把成千上万篇自动归成若干"主题"，每篇是主题的混合。例如对近代报刊跑 LDA，可能析出"实业""教育""宪政"等隐主题。</li></ul>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s44">4.4 命名实体识别：抽人、地、时、事</h3>
+<p>NER（命名实体识别）从文本里标出<b>人物、地点、时间、机构、事件</b>。对一部地方志跑 NER，能直接得到"某县出现过哪些名人、哪些水患、哪些书院"。这是后续网络分析（模块六）、空间分析（模块七）、知识图谱（模块九）的数据源头。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s45">4.5 历史语言的麻烦：Adapting vs Pre-training</h3>
+<p>通用大模型在当代新闻上很强，在<b>历史语言</b>上常失灵——异体字、旧称、已消亡的语义。两条路（见本模块 V2.1 的 <i>Adapting vs. Pre-training Language Models for Historical Languages</i>、<i>Alien Reading</i>）：</p>
+<ul><li><b>Pre-training（从头训）</b>：用海量历史语料重训，最贴但最贵；</li><li><b>Adapting（适配）</b>：在通用模型上微调或加提示，成本可控，是人文项目的现实选择。</li></ul>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s47">4.7 第一次动手：对一组诗文做主题模型</h3>
+<div class="callout quote"><p><b>小练习 4.1（文本挖掘）</b>：取 10–50 篇同主题诗文（如某总集、某报刊专栏），用分词 + 去停用词 + TF-IDF 或 LDA 提炼 3–5 个主题，列出每主题的高权重词，并手判"这些词真的构成一个主题吗"。本模块 V2.2 的《数字人文视域下先秦典籍植物知识挖掘与组织研究》《基于 ChatGPT 和零样本提示的临床量表文本中结构化项目信息抽取研究》可作方法参照——前者是传统挖掘，后者是零样本提示抽取，对照看"老方法"与"新提示"的差异。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s48">4.8 第二次动手：用 TF-IDF 对比两位作者</h3>
+<ul><li><b>目标</b>：取两位诗人 / 作者的诗文各若干篇，用量化方法比较“谁更爱用某类词”。</li><li><b>步骤</b>：<ol><li>各收集不少于 10 篇文本；</li><li>分词并去停用词；</li><li>用 TF-IDF 取各自 Top 20 关键词；</li><li>画两张词云或词频条形图；</li><li>写 150 字：差异能说明什么、不能说明什么。</li></ol></li><li><b>工具</b>：jieba + sklearn <code>TfidfVectorizer</code>。</li><li><b>产出</b>：两张关键词图 + 一段解读。</li><li><b>评价量规</b>：分词去噪（30%）、TF-IDF 正确（30%）、解读克制（40%）。</li></ul>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s410">4.10 思考题</h3>
+<ol><li>用 <code>jieba</code> 切一句你专业的古文，结果哪里不对？这透露了现代分词器的什么盲区？</li><li>LDA 的"主题数 k"由人设定。k 取不同值，叙事会怎样变化？这算"主观"吗？</li><li>如果一篇 NLP 论文声称"用主题模型发现了某思潮的兴起"，你会要求它补充哪些信息才敢引用？</li></ol>
+<h2 class="part p3" id="part3">第三部分　拓展练习</h2>
+<div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
+<table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2022</td><td><a href="https://doi.org/10.46298/jdmdh.9152">Adapting vs. Pre-training Language Models for Historical Languages</a></td><td>Journal of Data Mining &amp;amp; Digital Humanities（被引 27）</td></tr><tr><td>CrossRef</td><td>2016</td><td><a href="https://doi.org/10.5749/j.ctt1cn6thb.21">Alien Reading:</a></td><td>Debates in the Digital Humanities 2016（被引 4）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.18653/v1/2024.nlp4dh-1.10">NLP for Digital Humanities: Processing Chronological Text Corpora</a></td><td>Proceedings of the 4th International Conference on Natural Language Processing for Digital Humanities（被引 3）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.1039/d4sc00924j/v1/review2">Review for "Fine-tuning Large Language Models for Chemical Text Mining"</a></td><td></td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.1109/iccnct68477.2026.11590134">Context-Enriched NLP Pipelines using Large Language Models for High Accuracy Text Mining and Sentiment Analysis</a></td><td>2026 International Conference on Computer Networks and Inventive Communication Technologies (ICCNCT)</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.18653/v1/2026.nlp4dh-1.10">Temporal Text Classification with Large Language Models</a></td><td>Proceedings of the 6th International Conference on Natural Language Processing for the Digital Humanities</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.1039/d4sc00924j/v2/decision1">Decision letter for "Fine-tuning Large Language Models for Chemical Text Mining"</a></td><td></td></tr><tr><td>CORE</td><td></td><td><a href="https://core.ac.uk/download/9015693.pdf">Natural language processing</a></td><td>Chowdhury, Gobinda G., Chowdhury, G., Chowdhury, GG, Gobinda G. Chowdhury</td></tr></tbody></table>
+<p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>
+<pre class="code" data-lang="python"><code>import urllib.request, urllib.parse, json
+q = 'data science digital humanities'
+url = 'https://api.openalex.org/works?search=' + urllib.parse.quote(q) + '&amp;per_page=10&amp;sort=cited_by_count:desc'
+oa = json.loads(urllib.request.urlopen(url, timeout=30).read())
+for w in oa['results']:
+    print(w['publication_year'], w['title'], '-&gt;', (w.get('primary_location') or {}).get('source', {}).get('display_name'))</code></pre>
+<p><b>误用警示</b>：① arXiv 预印本未经同行评审，引用须标 preprint 并追正式版；② 被引数代表影响力非结论正确；③ 商业库（WoS/Scopus/Elsevier/JSTOR/CNKI）本环境无订阅，需机构账号获取后再并入。</p>
+<p><b>与实验衔接</b>：将任一方法对照本模块实验改写数据集或提示词，即可形成有学术依据的结题报告。</p></div>
+<div class="callout src"><h4>模块四·中文核心期刊文献实证（V2.2·19 种图情档核心期刊）</h4><p>下表论文来自 19 种中文图情档核心期刊（中国图书馆学报、情报学报、情报资料工作、档案学通讯、大学图书馆学报、图书情报工作、数据分析与知识发现、情报杂志、情报理论与实践、图书与情报、档案学研究、图书馆杂志、图书情报知识、图书馆论坛、图书馆学研究、图书馆建设、情报科学、现代情报、信息资源管理学报），经 Web 检索（期刊官网 / CNKI 索引 / DOI 溯源）按主题核实得到真实文献（含 DOI/链接）。</p>
+<table class="gtable"><thead><tr><th>来源期刊</th><th>年份</th><th>标题（链接）</th><th>作者</th></tr></thead><tbody><tr><td>图书情报工作</td><td>2023</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2023.12.010">数字人文视域下先秦典籍植物知识挖掘与组织研究</a></td><td>吴梦成, 林立涛, 齐月, 黄水清, 王东波, 刘浏</td></tr><tr><td>图书情报工作</td><td>2024</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2024.22.013">基于ChatGPT和零样本提示的临床量表文本中结构化项目信息抽取研究</a></td><td>郝洁, 莫治强, 孙海霞, 陈振丽, 李姣</td></tr><tr><td>情报学报</td><td>2023</td><td><a href="https://doi.org/10.3772/j.issn.1000-0135.2023.11.010">基于可解释图神经网络模型的社交媒体谣言识别研究</a></td><td>汪子航, 言鹏韦, 蒋卓人</td></tr><tr><td>情报学报</td><td>2024</td><td><a href="https://doi.org/10.3772/j.issn.1000-0135.2024.04.004">基于知识增强的文本语义匹配模型研究</a></td><td>张贞港, 余传明</td></tr></tbody></table>
+<p><b>课堂复现（中文文献检索）</b>：这些期刊正式全文多见于 CNKI/万方/维普（本环境无订阅）。可在机构网络以「期刊名 + 主题词」检索，导出 BibTeX/RIS 后交我并入；DOI 可在 https://doi.org/&lt;DOI&gt; 溯源摘要。</p>
+<p><b>误用警示</b>：① 引用以期刊正式版本为准（年/卷/期/页）；② 回到原文核对方法与数据；③ 与本节实验的映射是"启发"而非"背书"。</p>
+<p><b>与实验衔接</b>：将上表任一中文方法（如中文知识图谱、机器学习人文应用）对照本模块实验改写，即可形成有本土学术依据的结题报告。</p></div>
+<h2 class="part p4" id="part4">第四部分　本章小结</h2>
+<span class="mod mod-ideo">小结</span>
+<h3 class="sec-h" id="s49">4.9 本章小结</h3>
+<p>带走三件事：<b>中文预处理</b>（分词/停用词/句读）、<b>从词到主题</b>（TF-IDF/LDA）、<b>NER 抽实体</b>（人地时事）。记住 4.5 与 4.6：历史语言要适配，模型结论要带"语料与参数"的尾巴。</p>
+<div class="readbox"><button class="btn" id="markRead" data-ch="4">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+  </main>
+</div>
+<div id="termtip"></div>
+<script src="app.js"></script>
+</body>
+</html>

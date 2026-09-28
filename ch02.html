@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第2章 模块二　人文数据的类型与获取 · 数字教材</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">《数据科学与数字人文》· 数字教材<small>智能技术实战主线 · 信息资源管理专业</small></div>
+    <nav>
+      <a href="index.html">门户</a>
+      <a href="ch01.html">上一章</a>
+      <a href="ch03.html">下一章</a>
+    </nav>
+  </div>
+</header>
+
+<div class="doc">
+  <aside class="side">
+<h4>第 2 章 目录</h4>
+<a href="#lead" class="cur">导语与学习目标</a>
+<span class="navpart p2">第二部分　课程内容</span>
+<a href="#s20">2.0　思政导入</a>
+<a href="#s21">2.1　人文数据长什么样：从"文献"到"数据"</a>
+<a href="#s22">2.2　五种类型：文本 / 图像 / 时空 / 关系 / 结构化表格</a>
+<a href="#s23">2.3　结构化程度：结构化 / 半结构化 / 非结构化</a>
+<a href="#s24">2.4　来源谱系：原生数字、数字化副本与衍生数据</a>
+<a href="#s25">2.5　合规获取：许可、敏感度与一条红线（本模块核心能力）</a>
+<span class="navpart p3">第三部分　拓展练习</span>
+<a href="#s26">2.6　课堂练习1：取回一份真实数据并做"数据审计"</a>
+<a href="#sec8">课堂练习2：为一份数据写“数据护照”</a>
+<a href="#s29">2.9　·学术前沿：OpenAlex / DBLP / arXiv / CrossRef / CORE 实证文献（V2.1）</a>
+<a href="#sec10">中文核心期刊文献实证（V2.2·19 种图情档核心期刊）</a>
+<span class="navpart p4">第四部分　本章小结</span>
+<a href="#s28">2.8　本章小结与思考</a>
+  </aside>
+  <main class="content">
+<h1>第 2 章　模块二　人文数据的类型与获取</h1>
+<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）区分人文数据的五种主要类型与三种结构化程度；（2）说出至少三个可公开获取的开放人文数据门户/仓储，并解释"原生数字"与"数字化副本"的差异；（3）用"来源谱系 + 许可 + 敏感度"三步法评估一份数据的可取用性；（4）独立完成第一次合规数据获取——从一个开放门户取回一份真实数据集，并完成一张数据审计表。</p></div></p>
+<h2 class="part p2" id="part2">第二部分　课程内容</h2>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s20">2.0 思政导入</h3>
+<div class="callout quote"><p><b>数据要素</b>：数据已成为与土地、资本并列的<b>生产要素</b>，也是国家竞争力与安全的组成部分。获取人文数据时，既要善用开放资源，也要守住<b>数据主权与个人尊严</b>的边界——不抓取受保护的敏感数据，不将国家与文化数据置于无防护的风险中。自主、合规、负责任地取数，是新时代研究者应有的家国担当。</p></div>
+<div class="callout quote"><p><b>数据边界</b>：可参照《数据库系统原理》（北京交通大学）课程思政的“家国情怀”导向，与人工智能伦理研究中“数据隐私保护”（韩燕霞，基于联合国教科文组织等 5 个国际文件比较）的素养维度——取数须守住国家与个人的数据边界。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s21">2.1 人文数据长什么样：从"文献"到"数据"</h3>
+<p>人文学者的直觉材料，往往是"文献"或"实物"：一本地方志、一卷碑拓、一封书信、一张老地图。但一旦进入计算，第一件事不是"分析"，而是<b>把它想清楚能被机器读成什么</b>。</p>
+<p>&lt;img width="854" height="600" alt="局部截取_20260923_165449" src="https://github.com/user-attachments/assets/d49af209-dcac-4f32-820e-faaf992c249f" /&gt;</p>
+<p>同一个对象，常常有多种"数据化身"：</p>
+<ul><li>一部地方志 → 扫描图（<b>图像</b>）→ OCR 文本（<b>文本</b>）→ 职官/户口条目表（<b>结构化表格</b>）→ 官员任职网络（<b>关系</b>）；</li><li>一张地契 → 高清照片（<b>图像</b>）→ 田亩四至文本（<b>文本</b>）→ 经纬度与边界（<b>时空</b>）。</li></ul>
+<div class="callout quote"><p><b>关键认知</b>：数据的"类型"不是材料的天然属性，而是你为它选择的"问法"。先定问题，再定类型，最后才定工具——顺序反了，就成了拿锤子找钉子。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s22">2.2 五种类型：文本 / 图像 / 时空 / 关系 / 结构化表格</h3>
+<p>为方便检索与建模，我们把人文数据归为五类，每一类对应一组典型问题：</p>
+<p>&lt;img width="1412" height="953" alt="局部截取_20260923_165548" src="https://github.com/user-attachments/assets/2598c7fb-78c3-43f5-8524-085f4d91646a" /&gt;</p>
+<ul><li><b>文本类</b>：古籍、报刊、口述转录、书信、剧本、法律条文。典型问题：分词与句读、命名实体识别（NER）、主题模型、风格与情感分析。</li><li><b>图像类</b>：碑帖、画作、器物、老照片、地图、壁画。典型问题：图像识别与检索、破损修复、风格聚类、以图搜图。</li><li><b>时空类</b>：地契、驿道、人物生平地点、事件发生地、城市肌理。典型问题：GIS 叠加、密度与扩散、历史地理重建。</li><li><b>关系类</b>：家谱、师承、交游、社交、引文。典型问题：网络中心性、社群发现、关键节点识别。</li><li><b>结构化表格类</b>：方志条目、藏品编目、统计年报、户籍册。典型问题：聚合、回归、可视化与异常检测。</li></ul>
+<div class="callout quote"><p><b>现实提醒</b>：真实的人文项目大多是<b>多模态</b>的——一份近代报刊既是文本，也是图像，还带着出版地与时间的时空属性。分类是为了上手，不是为了让材料就范。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s23">2.3 结构化程度：结构化 / 半结构化 / 非结构化</h3>
+<p>除了"类型"，数据还有"规整度"之分，它直接决定清洗成本：</p>
+<ul><li><b>结构化</b>：行列表格（CSV、数据库表），列名固定、取值规范，<code>pandas</code> 可直读直算。</li><li><b>半结构化</b>：有标签但不严整（TEI/XML、JSON、HTML），需先解析再抽取。</li><li><b>非结构化</b>：纯文本、图像、音频、视频，机器读不懂"意思"，需先抽取特征（向量、标签、坐标）才能计算。</li></ul>
+<p>一个重要反直觉：<b>最规整的数据，往往不是最有张力的数据</b>。方志里的户口数是结构化的，却回答不了"灾年为啥逃荒"；一封没有字段的书信，反而藏着最真实的历史动机。所以"结构化"是手段，不是目的。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s24">2.4 来源谱系：原生数字、数字化副本与衍生数据</h3>
+<p>取数据前，先问它"从哪来"。同一份内容，来源不同，可信度与用法天差地别：</p>
+<ul><li><b>原生数字（born-digital）</b>：本来就是数字形态，如网络档案、传感器流、数据库导出。最"原汁"，但仍需核对其采集方法。</li><li><b>数字化副本（digitized surrogate）</b>：纸/实物被扫描或拍摄而成。请牢记它是<b>代理（proxy），不是原物</b>——分辨率、色彩、装帧残缺、扫描偏色，都是副本自带的信息损耗。</li><li><b>衍生数据（derived）</b>：别人跑模型得到的向量、标签、知识图谱。可取用，但<b>必须能追溯到原数据与所用算法</b>，否则就是"黑箱里的黑箱"。</li><li></li></ul>
+<p>&lt;img width="1163" height="731" alt="局部截取_20260923_165902" src="https://github.com/user-attachments/assets/11afbf24-2efa-4970-a84f-fef1af6f0bbd" /&gt;</p>
+<p>可公开获取的开放人文数据门户与仓储（示例，均需在机构网络核实许可）：</p>
+<table class="gtable"><thead><tr><th>门户 / 仓储</th><th>类型侧重</th><th>说明</th></tr></thead><tbody><tr><td>中国哲学书电子化计划（CTEXT）</td><td>文本</td><td>先秦至民国典籍全文与检索</td></tr><tr><td>中国历史地理信息系统（CHGIS）</td><td>时空</td><td>历史政区与聚落时空数据</td></tr><tr><td>OpenStreetMap / Wikidata</td><td>时空 / 关系</td><td>开放协作的地理与实体知识</td></tr><tr><td>Europeana</td><td>多模态</td><td>欧洲图书馆/博物馆聚合</td></tr><tr><td>Zenodo / Figshare</td><td>多模态</td><td>学者自存的可引用数据集（带 DOI）</td></tr><tr><td>Journal of Open Humanities Data</td><td>多模态</td><td>经评审的人文开放数据集论文</td></tr><tr><td>国家数据 / 政府数据开放平台</td><td>结构化</td><td>统计与政务开放数据</td></tr></tbody></table>
+<div class="callout quote"><p><b>一句提醒</b>：开放门户 ≠ 无约束。"开放获取"只说明你"看得到"，能不能"下载、改编、再分发、商用"，要看它挂的<b>许可协议</b>。</p></div>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s25">2.5 合规获取：许可、敏感度与一条红线（本模块核心能力）</h3>
+<p>如果本模块只让你带走一样东西，我们希望是<b>一套合规取数的判断力</b>。请把它当成取数前的随身 checklist：</p>
+<p>&lt;img width="2430" height="767" alt="局部截取_20260923_170742" src="https://github.com/user-attachments/assets/efb51419-db54-4770-90e4-f575b6b32652" /&gt;</p>
+<ul><li><b>许可分级</b>：CC0（放弃权利）/ CC BY（署名）/ CC BY-NC（非商用）/ CC BY-SA（署名+相同方式）/ 版权所有 / 受限访问。先看许可，再决定用法。</li><li><b>权限状态</b>：<code>open</code>（可直接下）/ <code>restricted</code>（需申请）/ <code>closed</code>（不开放）。<b>closed 不抓取全文，不绕过权限墙</b>。</li><li><b>敏感度</b>：家谱中的在世亲属、口述史受访者、地方信仰的持有者——真实个人与活着的社群，须经授权与同意方可采集、公开。</li><li><b>数据引用</b>：像引文献一样引数据——作者、年份、仓储、DOI、版本号一个都不能少，让他人能复现你的取数。</li></ul>
+<div class="callout quote"><p><b>一条红线</b>：不抓取 closed-access 全文，不绕过任何权限墙；凡涉在世社群或敏感文化事项，先获授权、再谈取用；拿不准时，停下来问，而不是先下数据。</p></div>
+<h2 class="part p3" id="part3">第三部分　拓展练习</h2>
+<span class="mod mod-exp">拓展</span>
+<h3 class="sec-h" id="s26">2.6课堂练习1：取回一份真实数据并做"数据审计"</h3>
+<p>别急着写爬虫。本模块的"第一次动手"，是一次<b>有纪律的取数</b>——从一个开放门户取回一份真实数据集，并完成一张审计表。</p>
+<div class="callout quote"><p><b>小练习 2.1（数据审计）</b>：从下列门户任选其一（推荐 Zenodo / Figshare / CTP / CHGIS），取回一个你感兴趣的数据集，填写下面的审计表：</p><p>1. <b>著录</b>：标题、来源门户、许可协议、文件格式、字段说明、数据规模；</p><p>2. <b>归类</b>：它属于 2.2 的哪一类？结构化程度（2.3）？来源谱系（2.4）？</p><p>3. <b>评估</b>：能否合规取用？有无敏感项？若用于课程作业，能改编/再分发吗？</p><p>| 审计项 | 内容 |</p><p>|---|---|</p><p>| 数据集名称 |  |</p><p>| 来源门户 / 仓储 |  |</p><p>| 许可协议 |  |</p><p>| 文件格式 |  |</p><p>| 数据类型（2.2） | 文本 / 图像 / 时空 / 关系 / 结构化 |</p><p>| 结构化程度（2.3） | 结构化 / 半结构化 / 非结构化 |</p><p>| 来源谱系（2.4） | 原生数字 / 数字化副本 / 衍生数据 |</p><p>| 敏感度提示 | 是否涉在世个人/社群？ |</p><p>| 可取用性结论 | 可取用 / 需授权 / 不可取用 |</p><p><b>进阶（可选）</b>：模块一 V2.1 已给你一段 OpenAlex 检索代码。把它改成检索 "cultural heritage open data"，导出前 10 篇，看其中哪些附有可下载数据集——体会"文献 → 数据"的链路。本模块 V2.1 文献里那些 <code>openmeteo</code>、<code>VancouvR</code>、<code>cbsodataR</code> 等 R 包，正是"用 API 直取开放数据"的现成范例。</p></div>
+<span class="mod mod-exp">拓展</span>
+<h3 class="sec-h" id="sec8">课堂练习2：为一份数据写“数据护照”</h3>
+<ul><li><b>目标</b>：给你在 2.6 取回的真实数据，补一份说明它“从哪来、能不能用”的数据卡片。</li><li><b>步骤</b>：<ol><li>列出每个字段名与含义（data dictionary）；</li><li>标注每个字段的来源与获取日期；</li><li>用“公开 / 受限 / 敏感”三档标注敏感度；</li><li>写一句合规结论（能否在教学中使用）；</li><li>用表格呈现上述信息。</li></ol></li><li><b>工具</b>：Markdown 表格或任意表格软件。</li><li><b>产出</b>：一张数据护照表。</li><li><b>评价量规</b>：字段齐全（30%）、敏感度标注合理（40%）、合规结论有据（30%）。</li></ul>
+<div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
+<table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2023</td><td><a href="https://doi.org/10.32614/cran.package.openmeteo">openmeteo: Retrieve Weather Data from the Open-Meteo API</a></td><td>CRAN: Contributed Packages（被引 10）</td></tr><tr><td>CrossRef</td><td>2021</td><td><a href="https://doi.org/10.5334/johd.22">A Collection of Swedish Diachronic Word Embedding Models Trained on Historical Newspaper Data</a></td><td>Journal of Open Humanities Data（被引 3）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.1016/j.ssaho.2024.100988">Predicting the feasibility of data collection for disability-related research in Sub-Saharan Africa</a></td><td>Social Sciences &amp;amp; Humanities Open（被引 2）</td></tr><tr><td>CrossRef</td><td>2019</td><td><a href="https://doi.org/10.32614/cran.package.vancouvr">VancouvR: Access the 'City of Vancouver' Open Data API</a></td><td>CRAN: Contributed Packages</td></tr><tr><td>CrossRef</td><td>2022</td><td><a href="https://doi.org/10.32614/cran.package.openbanker">openbankeR: R Client for Querying the UK 'Open Banking' ('Open Data') API</a></td><td>CRAN: Contributed Packages</td></tr><tr><td>CrossRef</td><td>2016</td><td><a href="https://doi.org/10.32614/cran.package.cbsodatar">cbsodataR: Statistics Netherlands (CBS) Open Data API Client</a></td><td>CRAN: Contributed Packages</td></tr><tr><td>CrossRef</td><td>2021</td><td><a href="https://doi.org/10.32614/cran.package.rthingsboard">Rthingsboard: 'ThingsBoard' API</a></td><td>CRAN: Contributed Packages</td></tr><tr><td>CrossRef</td><td>2014</td><td><a href="https://doi.org/10.32614/cran.package.helsinki">helsinki: R Tools for Helsinki Open Data</a></td><td>CRAN: Contributed Packages</td></tr></tbody></table>
+<p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>
+<pre class="code" data-lang="python"><code>import urllib.request, urllib.parse, json
+q = 'data science digital humanities'
+url = 'https://api.openalex.org/works?search=' + urllib.parse.quote(q) + '&amp;per_page=10&amp;sort=cited_by_count:desc'
+oa = json.loads(urllib.request.urlopen(url, timeout=30).read())
+for w in oa['results']:
+    print(w['publication_year'], w['title'], '-&gt;', (w.get('primary_location') or {}).get('source', {}).get('display_name'))</code></pre>
+<p><b>误用警示</b>：① arXiv 预印本未经同行评审，引用须标 preprint 并追正式版；② 被引数代表影响力非结论正确；③ 商业库（WoS/Scopus/Elsevier/JSTOR/CNKI）本环境无订阅，需机构账号获取后再并入。</p>
+<p><b>与实验衔接</b>：将任一方法对照本模块实验改写数据集或提示词，即可形成有学术依据的结题报告。</p></div>
+<div class="callout src"><h4>中文核心期刊文献实证（V2.2·19 种图情档核心期刊）</h4><p>下表论文来自 19 种中文图情档核心期刊（中国图书馆学报、情报学报、情报资料工作、档案学通讯、大学图书馆学报、图书情报工作、数据分析与知识发现、情报杂志、情报理论与实践、图书与情报、档案学研究、图书馆杂志、图书情报知识、图书馆论坛、图书馆学研究、图书馆建设、情报科学、现代情报、信息资源管理学报），经 Web 检索（期刊官网 / CNKI 索引 / DOI 溯源）按主题核实得到真实文献（含 DOI/链接）。</p>
+<table class="gtable"><thead><tr><th>来源期刊</th><th>年份</th><th>标题（链接）</th><th>作者</th></tr></thead><tbody><tr><td>图书情报工作</td><td>2023</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2023.13.004">智慧图书馆的全数据体系研究</a></td><td>杨新涯, 文佩丹, 卓应忠</td></tr><tr><td>图书情报工作</td><td>2024</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2024.18.003">面向生成式人工智能(AIGC)的图书馆信息资源建设优化策略研究</a></td><td>丁遒劲, 苏静</td></tr><tr><td>图书情报工作</td><td>2024</td><td><a href="https://www.lis.ac.cn/CN/abstract/abstract25470.shtml">智慧图书馆用户数据合规治理机制研究</a></td><td>张春春, 孙瑞英</td></tr><tr><td>图书与情报</td><td>2023</td><td><a href="https://doi.org/10.11968/tsyqb.1003-6938.2023049">面向多元场景的数据治理:进展与思考</a></td><td>孙建军, 马亚雪</td></tr><tr><td>图书与情报</td><td>2023</td><td><a href="https://doi.org/10.11968/tsyqb.1003-6938.2023050">数字经济背景下面向区域协同创新的数据资源开发利用思考</a></td><td>李阳, 刘柏珍, 原德霖</td></tr><tr><td>图书与情报</td><td>2023</td><td><a href="https://doi.org/10.11968/tsyqb.1003-6938.2023051">数据流通与安全:标准与保障体系</a></td><td>付少雄, 孙建军</td></tr><tr><td>信息资源管理学报</td><td>2023</td><td><a href="https://doi.org/10.13365/j.jirm.2023.06.005">协同视角下我国企业数据要素价值创造困境与实践进路</a></td><td>钱锦琳, 夏义堃</td></tr><tr><td>信息资源管理学报</td><td>2024</td><td><a href="https://doi.org/10.13365/j.jirm.2024.02.054">"数据二十条"下探析数据资源持有权的内涵及框架构建</a></td><td>张衠</td></tr></tbody></table>
+<p><b>课堂复现（中文文献检索）</b>：这些期刊正式全文多见于 CNKI/万方/维普（本环境无订阅）。可在机构网络以「期刊名 + 主题词」检索，导出 BibTeX/RIS 后交我并入；DOI 可在 https://doi.org/&lt;DOI&gt; 溯源摘要。</p>
+<p><b>误用警示</b>：① 引用以期刊正式版本为准（年/卷/期/页）；② 回到原文核对方法与数据；③ 与本节实验的映射是"启发"而非"背书"。</p>
+<p><b>与实验衔接</b>：将上表任一中文方法（如中文知识图谱、机器学习人文应用）对照本模块实验改写，即可形成有本土学术依据的结题报告。</p></div>
+<h2 class="part p4" id="part4">第四部分　本章小结</h2>
+<span class="mod mod-ideo">小结</span>
+<h3 class="sec-h" id="s28">2.8 本章小结与思考</h3>
+<p>用一句话收束本模块：<b>人文数据的第一步，不是跑模型，而是认清它是谁、从哪来、能否取用。</b> 请带走三件事——</p>
+<ul><li><b>五种类型 + 三档结构化</b>：文本/图像/时空/关系/表格，结构化/半结构化/非结构化，类型决定能问的问题；</li><li><b>来源谱系三步</b>：原生数字、数字化副本、衍生数据，数字副本是代理不是原物；</li><li><b>合规红线</b>：先看许可与权限，再谈取用；涉在世社群先授权，closed 不抓取、不绕墙。</li></ul>
+<p>###思考题</p>
+<ol><li>选一个你熟悉的人文材料，列出它的至少三种"数据化身"，并各写一句"这种化身能回答、另一种回答不了"的问题。</li><li>找一份声称"开放"的数据集，读它的许可条款，判断你在课程作业中能否商用、改编、再分发，依据分别是什么条款？</li><li>"数字化副本是代理而非原物"。在你关注的领域，这种代理会丢失哪些关键信息？这些信息丢失会让什么结论变得不可靠？</li></ol>
+<div class="readbox"><button class="btn" id="markRead" data-ch="2">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+  </main>
+</div>
+<div id="termtip"></div>
+<script src="app.js"></script>
+</body>
+</html>

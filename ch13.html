@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第13章 综合项目与课程反思 · 数字教材</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">《数据科学与数字人文》· 数字教材<small>智能技术实战主线 · 信息资源管理专业</small></div>
+    <nav>
+      <a href="index.html">门户</a>
+      <a href="ch12.html">上一章</a>
+      <a href="index.html">下一章</a>
+    </nav>
+  </div>
+</header>
+
+<div class="doc">
+  <aside class="side">
+<h4>第 13 章 目录</h4>
+<a href="#lead" class="cur">导语与学习目标</a>
+<span class="navpart p1">第一部分　课程导学</span>
+<a href="#sec1">综合.6 思政融入（课程思政）</a>
+<span class="navpart p2">第二部分　课程内容</span>
+<a href="#sec2">综合.2　选题方法：好选题 = 真问题 + 可得数据 + 适配方法</a>
+<a href="#sec3">综合.3　四要素闭环（详解）</a>
+<a href="#sec4">综合.4　评价量规（Rubric）</a>
+<a href="#sec5">综合.5　答辩与结课寄语</a>
+<span class="navpart p3">第三部分　拓展练习</span>
+<a href="#sec6">综合.1　从"做实验"到"做研究"</a>
+  </aside>
+  <main class="content">
+<h1>第 13 章　综合项目与课程反思</h1>
+<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）用一个真问题串起至少两种方法；（2）走完"数据→方法→可视化/知识→反思"四要素闭环；（3）产出一份可答辩的结题报告；（4）坦诚反思所用方法的能力边界。</p></div></p>
+<h2 class="part p1" id="lead">第一部分　课程导学</h2>
+<div class="kbcase"><h4>综合.6 思政融入（课程思政）</h4><div class="callout quote"><p><b>思政融入（课程思政）</b>：综合项目的最终落点，是把所学服务于<b>国家文化数字化战略与中华优秀传统文化传承创新</b>。无论你选择文本、图像、空间还是图谱，都请记得：方法越强，越要用于守文脉、聚人心、兴文化。愿你们的研究成果，既经得起学术检验，也对得起这片土地上的文明与人民。</p></div>
+<div class="callout quote"><p><b>思政案例（课程思政示范案例 / AI 思政课 知识库）</b>：可呼应人民日报《推动人工智能全方位赋能千行百业》“自立自强、突出应用导向”，以及施一公《人工智能时代，教育何为》的育人之问——让成果服务于国家文化数字化与文明传承。</p></div></div>
+<h2 class="part p2" id="part2">第二部分　课程内容</h2>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="sec2">综合.2　选题方法：好选题 = 真问题 + 可得数据 + 适配方法</h3>
+<p>避免"为方法找数据"的本末倒置。一个可落地的选题清单（供起念）：</p>
+<table class="gtable"><thead><tr><th>方向</th><th>示例问题</th><th>适配方法组合</th></tr></thead><tbody><tr><td>文学</td><td>某流派诗人的交游与主题是否相关？</td><td>文本挖掘 + 社会网络</td></tr><tr><td>历史</td><td>某灾害在方志中的空间扩散规律？</td><td>空间人文 + 可视化</td></tr><tr><td>艺术</td><td>某类器物的纹饰风格聚类？</td><td>图像处理 + 机器学习</td></tr><tr><td>文献</td><td>某文集的人物关系能否问答？</td><td>知识图谱 + 大模型 RAG</td></tr></tbody></table>
+<p>先问"我关心什么真问题"，再问"数据从哪来、方法怎么搭"。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="sec3">综合.3　四要素闭环（详解）</h3>
+<p>综合项目不是堆方法，而是走通一个<b>可复现闭环</b>，每要素都要有检查单：</p>
+<ul><li><b>数据</b>：来源、许可、规模、字段是否清楚？（回看模块二审计表）</li><li><b>方法</b>：为何选这两种方法？参数与假设是什么？（回看模块三~十一）</li><li><b>可视化/知识</b>：产出是图、网络、图谱还是报告？是否"有标注、可解释"？（回看模块五修辞、模块六/九解释）</li><li><b>反思</b>：方法答了什么、答不了什么？偏见与局限在哪？（贯穿各模块伦理坐标）</li></ul>
+<p>四要素缺一环，就不算"研究"，只是"演示"。</p>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="sec4">综合.4　评价量规（Rubric）</h3>
+<p>结题按以下维度评定，提前对齐预期：</p>
+<table class="gtable"><thead><tr><th>维度</th><th>权重</th><th>达标描述</th></tr></thead><tbody><tr><td>问题真实性</td><td>20%</td><td>提出具体、有价值的人文问题，非为方法凑数据</td></tr><tr><td>数据合规</td><td>15%</td><td>来源/许可清晰，敏感数据已授权，引用规范</td></tr><tr><td>方法适配</td><td>25%</td><td>方法选择有依据，参数可信，步骤可复现</td></tr><tr><td>产出与解释</td><td>25%</td><td>图/网/图谱/报告"有标注、可解释"，结论不过界</td></tr><tr><td>反思与诚信</td><td>15%</td><td>坦诚局限与偏见，AI 使用已声明，无伪造</td></tr></tbody></table>
+<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="sec5">综合.5　答辩与结课寄语</h3>
+<p>结课以答辩收尾：你讲清"问题—数据—方法—结论—局限"五分钟，评委追问方法边界。数据科学给数字人文以规模与严谨；人文学科给数据科学以意义与节制。愿你在方法与人文学之间，既敢于计算，也懂得停下追问——这，就是这门课想留给你的东西。</p>
+<h2 class="part p3" id="part3">第三部分　拓展练习</h2>
+<div class="labtask"><h3>综合.1　从"做实验"到"做研究"</h3><p>前十个模块你分别练了数据、Python、文本、可视化、网络、空间、图像、图谱、模型、大模型——每个都是"一块肌肉"。综合项目要求你把至少两块肌肉<b>组合起来</b>，回答一个具体的人文问题。例如"用文本挖掘 + 社会网络，看某总集里的师承网络如何随主题演变"，或"用图像处理 + 知识图谱，让一批碑拓可检索、可问答"。</p></div>
+<div class="readbox"><button class="btn" id="markRead" data-ch="13">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+  </main>
+</div>
+<div id="termtip"></div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>寻数大冒险 · DSDH 模块二</title>
+<style>
+:root{--ink:#1F2A44;--sub:#5F6368;--line:#DDE1E8;--bg:#F6F7F9;--card:#fff;
+--blue:#185FA5;--blue-bg:#E6F1FB;--blue-line:#B5D4F4;
+--teal:#0F6E56;--teal-bg:#E1F5EE;--teal-line:#9FE1CB;
+--red:#A32D2D;--red-bg:#FCEBEB;--red-line:#F09595;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:20px;margin:0 0 4px;font-weight:500}
+.sub{font-size:13px;color:var(--sub);margin:0}
+.badges{margin:12px 0 18px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--sub)}
+.badge.b{color:var(--blue);border-color:var(--blue-line);background:var(--blue-bg)}
+.badge.t{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.badge.r{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+h2{font-size:15px;margin:0 0 10px;font-weight:500}
+.q{background:#FAFBFC;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.q .qt{font-size:13.5px;font-weight:500;margin-bottom:8px}
+.q .kind{font-size:11px;color:var(--blue);border:1px solid var(--blue-line);border-radius:4px;padding:0 6px;margin-right:6px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px;background:#fff}
+.opt:hover{border-color:#85B7EB;background:#FAFCFF}
+.opt input{margin-top:3px;accent-color:var(--blue)}
+.opt.sel{border-color:var(--blue);background:var(--blue-bg)}
+.opt.correct{border-color:var(--teal-line);background:var(--teal-bg)}
+.opt.wrong{border-color:var(--red-line);background:var(--red-bg)}
+.ex{font-size:12px;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:none}
+.ex.show{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button{font-family:inherit;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:hover:not(:disabled){border-color:#85B7EB}
+.msg{margin-top:12px;font-size:13px;border-radius:8px;padding:10px 12px;border:1px solid var(--line);background:#FAFBFC;display:none}
+.msg.show{display:block}
+.msg.ok{border-color:var(--teal-line);background:var(--teal-bg);color:var(--teal)}
+.msg.warn{border-color:var(--red-line);background:var(--red-bg);color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+th{color:var(--sub);font-weight:500}
+.ok-t{color:var(--teal)}.bad-t{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(31,42,68,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:12px;max-width:520px;padding:20px;border-top:4px solid var(--red)}
+.modal h3{margin:0 0 8px;font-size:15px;color:var(--red);font-weight:500}
+.modal p{margin:0 0 14px;font-size:13px}
+footer{font-size:11.5px;color:var(--sub);text-align:center;margin:18px 0 8px}
+
+/* ===== KIT-BAR 课堂计时 / 排行榜 ===== */
+.kitbar{position:sticky;top:0;z-index:6;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(31,42,68,.06)}
+.kitbar .in{max-width:1040px;margin:0 auto;padding:8px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--sub)}
+.kitbar b{color:var(--ink);font-weight:500}
+.kitbar .tm{font-family:Consolas,"Courier New",monospace;font-size:15px;color:var(--blue)}
+.kitbar .tag2{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:#FAFBFC}
+.kitbar .tag2.ok{color:var(--teal);border-color:var(--teal-line);background:var(--teal-bg)}
+.kitbar .tag2.warn{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.board input{font-family:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="kitbar"><div class="in">
+  <span><b>模块二</b> 配套游戏</span>
+  <span>建议时长 <b>5–7 分钟</b></span>
+  <span>难度 <b>★★☆☆☆</b></span>
+  <span>题量 <b>7 题</b></span>
+  <span>已用 <span class="tm" id="kitTime">00:00</span></span>
+  <span class="tag2" id="kitPace">计时中</span>
+</div></div>
+
+<div class="wrap">
+  <h1>寻数大冒险</h1>
+  <p class="sub">DSDH 模块二 · 人文数据的类型与获取 — 为每个研究需求配对正确的数据源，并判断它的使用许可</p>
+  <div class="badges">
+    <span class="badge b">可复现</span><span class="badge t">案例真实</span><span class="badge r">伦理在场 · 红线卡</span>
+  </div>
+
+  <div class="panel" id="stage"></div>
+  <div class="panel" id="final" style="display:none">
+    <h2>评分量规（Rubric）</h2>
+    <table id="rubric"></table>
+  </div>
+  
+<div class="panel board" id="kitBoard">
+  <h2>课堂排行榜（本机保存）</h2>
+  <p style="font-size:12px;color:#5F6368;margin:0 0 10px" id="kitHint">完成本局后，输入姓名即可把成绩存入本机排行榜（数据只保存在本机浏览器，不上传）。</p>
+  <div class="row" style="margin-top:0">
+    <input id="kitName" placeholder="姓名 / 昵称" maxlength="12">
+    <button id="kitSave">保存成绩</button>
+    <button id="kitClear">清空排行榜</button>
+  </div>
+  <table id="kitTable"></table>
+</div>
+<footer>单文件 HTML5 · 零依赖 · 双击即开 ｜ DSDH 课程游戏</footer>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>触碰伦理红线</h3>
+    <p id="modalText"></p>
+    <button onclick="document.getElementById('modal').classList.remove('show')">我知道了</button>
+  </div>
+</div>
+
+<script>
+var TASKS = [
+ {kind:"数据源", q:"需求①：检索「清代方志中的水利条目」——该去哪一类数据源？",
+  opts:["中国地方志库（方志全文 / 联合目录）","近代报刊全文库","CBDB 历代人物传记资料库","OpenAlex 开放学术 API"],
+  a:0, ex:"方志类问题首查方志库。报刊库、人物库、学术 API 都不是方志的一手来源。"},
+ {kind:"许可", q:"该数据源的使用许可通常是什么？",
+  opts:["机构订阅 / 需授权后使用","完全公开，可自由商用","禁止任何形式的复制","先下载使用，许可以后再说"],
+  a:0, red:3, ex:"多数方志库为机构订阅制，须先取得授权；「先下载再说」直接触碰合规红线。"},
+ {kind:"数据源", q:"需求②：查某位近代学人的仕途与交游网络——该去哪一类数据源？",
+  opts:["CBDB 历代人物传记资料库","中国地方志库","近代报刊全文库","家谱影像库"],
+  a:0, ex:"CBDB 专收人物传记与社会关系数据，最适合仕途 / 交游网络分析。"},
+ {kind:"许可", q:"CBDB 的授权方式是？",
+  opts:["公开数据（CC BY，署名即可使用）","需逐条书面授权","禁止商用","先抓取下来，授权以后再补"],
+  a:0, red:3, ex:"CBDB 为公开数据，署名即可使用；抓取后再补授权不是合规流程。"},
+ {kind:"数据源", q:"需求③：追踪「数字人文」领域的最新研究论文——该去哪一类数据源？",
+  opts:["OpenAlex 开放学术 API","中国地方志库","口述史档案","家谱影像库"],
+  a:0, ex:"OpenAlex 聚合期刊 / 会议 / 预印本，提供免费 API，检索式可复现。"},
+ {kind:"许可", q:"OpenAlex 数据的授权方式是？",
+  opts:["CC0 公开领域，可自由使用（含商用）","需机构订阅","仅限内部教学","先下载，授权以后再说"],
+  a:0, red:3, ex:"OpenAlex 为 CC0，可自由使用，且能用 API 复现他人检索。"},
+ {kind:"授权场景", q:"需求④：想获取某馆「尚未开放的家谱影像」并公开发布——正确做法是？",
+  opts:["先取得馆藏授权，并通过伦理审查","用爬虫绕过访问限制批量下载后公开","只要不发布，私自下载就没问题","换一个已开放馆藏的同类资源"],
+  a:0, red:1, ex:"未开放影像必须先取得授权；绕过限制抓取并公开触碰伦理与法律红线。涉及在世亲属的家族影像尤其要谨慎。"}
+];
+
+var answers = [], redlines = 0, done = false;
+
+function render(){
+  var html = "";
+  TASKS.forEach(function(t, i){
+    var chosen = answers[i];
+    html += '<div class="q"><div class="qt"><span class="kind">'+t.kind+'</span>'+t.q+'</div><div class="opts">';
+    t.opts.forEach(function(o, j){
+      var cls = "opt";
+      var tag = "";
+      if(done){
+        if(j === t.a){ cls += " correct"; tag = ' <span class="tag" style="font-size:11px;color:#0F6E56">正确</span>'; }
+        else if(chosen === j){ cls += " wrong"; tag = ' <span class="tag" style="font-size:11px;color:#A32D2D">你的选择</span>'; }
+      } else if(chosen === j){ cls += " sel"; }
+      html += '<label class="'+cls+'"><input type="radio" name="q'+i+'" value="'+j+'"'
+           + (chosen===j ? " checked" : "") + (done ? " disabled" : "") + '><span>'+o+tag+'</span></label>';
+    });
+    html += '</div><div class="ex'+(done?' show':'')+'">'+t.ex+'</div></div>';
+  });
+
+  if(done){
+    var okCount = answers.filter(function(v,i){ return v === TASKS[i].a; }).length;
+    html += '<div class="msg show '+(okCount===TASKS.length?'ok':'warn')+'"><b>完成 '+okCount+' / '+TASKS.length
+         + ' 项配对</b>　踩线 '+redlines+' 次</div>';
+  }
+
+  html += '<div class="row">';
+  html += done ? '<button class="primary" id="btnScore">查看评分量规</button>'
+               : '<button class="primary" id="btnSubmit">提交全部配对</button>';
+  html += '<button id="btnAgain">重开一局</button></div>';
+  document.getElementById("stage").innerHTML = html;
+  bind();
+}
+
+function bind(){
+  var els = document.querySelectorAll("#stage input[type=radio]");
+  for(var i=0;i<els.length;i++){
+    els[i].onchange = function(){
+      var m = /^q(\d+)$/.exec(this.name);
+      answers[+m[1]] = +this.value;
+      render();
+    };
+  }
+  var bs = document.getElementById("btnSubmit");
+  if(bs) bs.onclick = submit;
+  var bf = document.getElementById("btnScore");
+  if(bf) bf.onclick = finish;
+  var ba = document.getElementById("btnAgain");
+  if(ba) ba.onclick = reset;
+}
+
+function submit(){
+  for(var i=0;i<TASKS.length;i++){
+    if(answers[i] === undefined || answers[i] === null){ alert("第 " + (i+1) + " 题还没选。"); return; }
+    var t = TASKS[i];
+    if(t.red !== undefined && answers[i] === t.red) redlines++;
+  }
+  done = true;
+  render();
+  if(redlines > 0){
+    document.getElementById("modalText").textContent =
+      "在许可问题上选择「先使用、后补授权」，或绕过访问限制抓取未开放影像 —— 触碰合规与伦理红线。"
+      + "本次共踩线 " + redlines + " 次，每次扣 3 分。";
+    document.getElementById("modal").classList.add("show");
+  }
+}
+
+function reset(){ answers = []; redlines = 0; done = false;
+  document.getElementById("final").style.display = "none"; render(); }
+
+function finish(){
+  var srcIdx = [], licIdx = [], lastIdx = TASKS.length - 1;
+  TASKS.forEach(function(t,i){ if(t.kind==="数据源") srcIdx.push(i); if(t.kind==="许可") licIdx.push(i); });
+  function ok(list){ return list.filter(function(i){ return answers[i] === TASKS[i].a; }).length; }
+  var okSrc = ok(srcIdx), okLic = ok(licIdx), okLast = (answers[lastIdx] === TASKS[lastIdx].a) ? 1 : 0;
+  var total = answers.filter(function(v,i){ return v === TASKS[i].a; }).length;
+  var score = Math.max(0, Math.round(total / TASKS.length * 100) - redlines * 3);
+
+  var rows = [
+    ["类型匹配（数据源）", okSrc + " / " + srcIdx.length, okSrc === srcIdx.length],
+    ["许可合规判断", okLic + " / " + licIdx.length, okLic === licIdx.length],
+    ["敏感场景授权处理", okLast === 1 ? "正确 ✓" : "需补正 ✗", okLast === 1],
+    ["伦理红线", redlines === 0 ? "全程未踩线 ✓" : ("踩线 " + redlines + " 次（−" + redlines*3 + " 分）"), redlines === 0]
+  ];
+  document.getElementById("rubric").innerHTML = '<tr><th>维度</th><th>表现</th></tr>' +
+    rows.map(function(r){ return '<tr><td>'+r[0]+'</td><td class="'+(r[2]?'ok-t':'bad-t')+'">'+r[1]+'</td></tr>'; }).join("") +
+    '<tr><td><b>本局得分</b></td><td><b>'+score+' / 100</b></td></tr>';
+  document.getElementById("final").style.display = "block";
+  document.getElementById("final").scrollIntoView({behavior:"smooth"});
+}
+
+reset();
+
+/* ===== KIT-BAR 课堂计时 / 排行榜（通用组件） ===== */
+(function(){
+  var KEY = "dsdh_game_", LO = 5, HI = 7;
+  var store = (function(){
+    try { if (typeof localStorage !== "undefined" && localStorage) return localStorage; } catch(e){}
+    var m = {};
+    return { getItem:function(k){ return (k in m) ? m[k] : null; },
+             setItem:function(k,v){ m[k] = String(v); },
+             removeItem:function(k){ delete m[k]; } };
+  })();
+  var t0 = Date.now(), stopped = false, finished = false;
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function fmt(s){ return pad(Math.floor(s/60)) + ":" + pad(Math.floor(s % 60)); }
+  function el(id){ return document.getElementById(id); }
+
+  function tick(){
+    var sec = Math.floor((Date.now() - t0) / 1000);
+    var t = el("kitTime"); if (t) t.textContent = fmt(sec);
+    var p = el("kitPace");
+    if (p && !stopped){
+      if (finished){ p.className = "tag2"; p.textContent = "本局用时 " + fmt(sec); }
+      else if (sec < LO * 60){ p.className = "tag2"; p.textContent = "节奏偏快（目标 " + LO + "–" + HI + " 分钟）"; }
+      else if (sec <= HI * 60){ p.className = "tag2 ok"; p.textContent = "节奏合适"; }
+      else { p.className = "tag2 warn"; p.textContent = "已超时（目标 " + LO + "–" + HI + " 分钟）"; }
+    }
+    if (!finished){
+      var f = el("final");
+      var g = el("rubricPanel");
+      if ((f && f.style && f.style.display === "block") || (g && g.style && g.style.display === "block")){
+        finished = true; stopped = true;
+        var h = el("kitHint");
+        if (h) h.textContent = "本局已完成 —— 输入姓名后点「保存成绩」，即可进入排行榜。";
+      }
+    }
+  }
+
+  function parseScore(){
+    var r = el("rubric");
+    if (!r) return 0;
+    var m = /<b>\s*(\d+)\s*\/\s*100\s*<\/b>/.exec(r.innerHTML);
+    return m ? (+m[1]) : 0;
+  }
+  function load(){ try { return JSON.parse(store.getItem(KEY) || "[]"); } catch(e){ return []; } }
+  function render(){
+    var tb = el("kitTable"); if (!tb) return;
+    var rows = load().slice().sort(function(a,b){ return (b.s - a.s) || (a.sec - b.sec); }).slice(0, 10);
+    if (!rows.length){ tb.innerHTML = "<tr><th>暂无记录</th></tr>"; return; }
+    var h = "<tr><th>#</th><th>姓名</th><th>得分</th><th>用时</th><th>日期</th></tr>";
+    rows.forEach(function(r, i){
+      h += "<tr><td>" + (i+1) + "</td><td>" + r.name + "</td><td>" + r.s + " / 100</td><td>"
+         + fmt(r.sec) + "</td><td>" + r.d + "</td></tr>";
+    });
+    tb.innerHTML = h;
+  }
+  function save(){
+    var inp = el("kitName");
+    var n = (inp && inp.value ? inp.value.trim() : "") || "匿名同学";
+    var rec = { name: n, s: parseScore(), sec: Math.floor((Date.now() - t0) / 1000),
+                d: new Date().toLocaleDateString("zh-CN") };
+    var all = load(); all.push(rec);
+    store.setItem(KEY, JSON.stringify(all));
+    render();
+    var h = el("kitHint");
+    if (h) h.textContent = "已保存：" + rec.name + "　" + rec.s + " 分　用时 " + fmt(rec.sec) + "。";
+  }
+
+  var timer = setInterval(tick, 1000);
+  if (timer && typeof timer === "object" && timer.unref) { try { timer.unref(); } catch(e){} }
+  var sb = el("kitSave"); if (sb) sb.onclick = save;
+  var cb = el("kitClear"); if (cb) cb.onclick = function(){ store.removeItem(KEY); render(); };
+  render(); tick();
+})();
+</script>
+</body>
+</html>
