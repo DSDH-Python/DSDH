@@ -85,3 +85,15 @@ yt-dlp
 
 ***关于公有与私有的区别***
 <img width="2454" height="824" alt="局部截取_20260924_091250" src="https://github.com/user-attachments/assets/03d9f323-8a9b-41e7-bfd0-8e7c8547d9db" />
+
+# GitHub 本地修改推送到远程仓库（完整流程）
+
+> 前提：本地已经 `git clone` 下来仓库，本地文件夹就是这个仓库目录，里面有 `.git` 隐藏文件夹
+> 先cd 进入当前库的本地目录。
+> Git Bash 处理 Windows 复制路径里的反斜杠 `\`，最快方式是
+## ✅ 方法 3：**英文双引号包裹原始路径（最省事！不用改任何斜杠）⭐**
+<img width="885" height="267" alt="局部截取_20260928_175326" src="https://github.com/user-attachments/assets/9029e3f4-9917-495c-9d24-de1a725f2e8c" />
+
+直接粘贴 Windows 复制的带`\`完整路径，**外面套英文双引号**，斜杠不用手动改！
+<img width="714" height="1017" alt="局部截取_20260928_175041" src="https://github.com/user-attachments/assets/33af4d1f-60b1-4fa5-99c2-7861d397ca72" />
+实测，后三步必须按顺序执行。
