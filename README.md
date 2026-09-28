@@ -1,59 +1,36 @@
-# 《数据科学与数字人文》互动教材
+# 《数据科学与数字人文》课程资源
 
-**在线地址**：<https://sghpedc5279.github.io/dsdh/>
+**在线站点**：<https://sghpedc5279.github.io/dsdh/>  
+苏州大学历史文化学院相关课程的数字教材与课堂互动资源。课程主体包括 12 个方法模块和 1 个综合项目，围绕可复现、真实案例与研究伦理展开。
 
-苏州大学历史文化学院 · 图情档方向课程教材，含 **12 个模块 + 综合项目**。
+## 项目内容
 
-## 站点结构
-
-| 文件 / 目录 | 说明 |
+| 路径 | 内容 |
 |---|---|
-| `index.html` | 首页，提供「在线阅读」与「章节下载」两个入口 |
-| `book.html` | 互动翻页教材（**由 CI 从 `src/` 自动生成**，勿手工编辑） |
-| `download.html` | 章节下载页（章节 docx 已于 2026-09-23 移除，链接暂不可用；如需恢复须重跑 `split_for_feishu.py` 放回 `chapters/`） |
-| `src/` | **可编辑源**：`NN_标题.md` 按模块拆分，直接改这里即可改教材 |
-| `build_flipbook.py` `build_html.py` `quotes_bank.py` `split_md_source.py` | 翻页生成与源拆分脚本（零第三方依赖） |
-| `.github/workflows/deploy-pages.yml` | GitHub Actions：推送即由 `src/` 重建 `book.html` 并部署 |
+| `src/` | 课程正文 Markdown 源稿，共 13 篇，包含 12 个模块与综合项目。修改完整课程正文时从这里开始。 |
+| `docs/` | MkDocs 站点内容，包括站点首页、已整理上线的模块一及课堂游戏目录。它与 `src/` 是分开的内容，不会由当前工作流自动互相转换。 |
+| `docs/games/` | 模块二至模块十的 9 款课堂 HTML5 游戏。 |
+| `HTML教材/` | 13 章 HTML 教材页面，以及模块二至模块十的配套游戏和破冰游戏。章节页引用同目录下的 `style.css`、`app.js`；当前目录未包含这两个文件，分发或浏览这套多文件页面前需补齐资源。 |
+| `数据科学与数字人文_互动翻页教材.html` | 单文件交互翻页教材预览。 |
+| `数字人文实验_教材预览.html` | 《数字人文实验》教材预览，属于另一份教材内容。 |
+| `数据科学与数字人文_教材_V2.2.pdf` | 教材 PDF 版本。 |
+| `assets/dsdh/` | 课程相关配图资源。 |
+| `docs/games.md` | 游戏玩法、建议时长与课堂使用说明。 |
+| `.github/workflows/deploy-pages.yml` | GitHub Pages 工作流：在 `main` 分支推送时安装 MkDocs 与 Material，并运行 `mkdocs build` 后部署。 |
 
-## 阅读操作
+## 阅读与修改
 
-- 键盘 `←` `→` 翻页 · `T` 打开目录 · `F` 全屏
-- 点击任意图片可全屏查看（灯箱），`Esc` 关闭
+- 查看完整课程正文：从 `src/` 中按序打开 Markdown 文件。
+- 查看站点内容：从 `docs/index.md` 开始；目前站点首页将模块一标为已上线，其余模块仍列为迁移中。
+- 查看单文件交互教材：打开 `数据科学与数字人文_互动翻页教材.html`。
+- 修改正文：编辑对应的 `src/NN_模块标题.md`；若要更新 MkDocs 站点，还需同步维护 `docs/` 中对应页面。当前没有从 `src/` 自动生成站点页面的脚本。
 
-## 如何修改教材（推荐：直接改 `src/`）
+## 本地预览与部署
 
-`book.html` 不再手工维护，改 `src/` 里的源文件即可：
+独立 HTML 文件可直接用浏览器打开。MkDocs 站点的工作流依赖 MkDocs 配置文件，但当前仓库根目录没有 `mkdocs.yml` 或 `mkdocs.yaml`；因此，在添加并配置该文件之前，`mkdocs build` 无法按工作流完成构建，Pages 自动部署也不能视为可用。
 
-1. 在 GitHub 上直接编辑 `src/XX_模块标题.md`，或本地改完提交；
-2. 推送到 `main` 分支，GitHub Actions 会自动：
-   - 运行 `python build_flipbook.py --src src --book dsdh` 重建 `book.html`；
-   - 部署到 Pages。
+工作流监听 `main` 分支推送，也支持在 GitHub Actions 中手动触发。启用 Pages 部署时，仓库的 **Settings → Pages → Build and deployment → Source** 需选择 **GitHub Actions**。
 
-本地预览生成结果：
+## 课堂游戏
 
-```bash
-cd dsdh-pages
-python build_flipbook.py --src src --book dsdh   # 生成 book.html
-```
-
-## 如果你仍习惯编辑整本 Markdown
-
-教材正文主稿仍是 `数据科学与数字人文_教材编写.md`（位于工作区）。改完后用
-`split_md_source.py` 重新生成 `src/` 即可，后续流程不变：
-
-```bash
-cd "C:\Users\sghpe\Desktop\BaiduSyncdisk\两本教材"
-python split_md_source.py --book dsdh
-# 再把 dsdh-pages/src/ 提交推送
-```
-
-## 课堂互动
-
-教材已按章节拆分为 14 篇 docx，可**批量导入飞书知识库**（导入为在线文档 → Microsoft Word），
-学生即可在文档中使用「划词评论」参与课堂讨论与提问。
-
-## 部署方式
-
-GitHub Actions 自动部署，推送到 `main` 分支即触发。
-
-> 首次部署需在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**（一次性人工操作，已配置）。
+游戏为轻量 HTML5 页面，适合课堂投影或课后练习；题目覆盖数据获取、可复现流程、文本分析、可视化修辞、关系网络、空间分析、图像修复、知识图谱和模型评估。游戏设计包含计时、排行榜或伦理判断等互动环节；具体功能以各游戏页面为准。
