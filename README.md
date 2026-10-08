@@ -2,6 +2,8 @@
 
 苏州大学历史文化学院相关课程的数字教材与课堂互动资源。课程主体包括 12 个方法模块和 1 个综合项目，围绕可复现、真实案例与研究伦理展开。
 
+<img width="3304" height="1682" alt="image" src="https://github.com/user-attachments/assets/8bd00b30-28f7-4d76-bf2b-0528da64c6e4" />
+
 ## 项目内容
 
 | 路径 | 内容 |
