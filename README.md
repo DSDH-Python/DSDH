@@ -1,42 +1,50 @@
-# 《数据科学与数字人文》课程资源
+# 数据科学与数字人文
 
-苏州大学历史文化学院相关课程的数字教材与课堂互动资源。课程主体包括 12 个方法模块和 1 个综合项目，围绕可复现、真实案例与研究伦理展开。
+苏州大学历史文化学院课程资源。课程由 12 个方法模块和 1 个综合项目组成，贯穿可复现、案例真实与研究伦理。
 
-<img width="3304" height="1682" alt="image" src="https://github.com/user-attachments/assets/8bd00b30-28f7-4d76-bf2b-0528da64c6e4" />
+**站点入口：**[数据科学与数字人文 · GitHub Pages](https://dsdh-python.github.io/DSDH/)（预期地址；仓库 Pages 尚待管理员启用，启用前会返回 404）  
+**GitHub 仓库：**[DSDH-Python/DSDH](https://github.com/DSDH-Python/DSDH)
 
-## 项目内容
+## 教材与站点
 
-| 路径 | 内容 |
-|---|---|
-| `src/` | 课程正文 Markdown 源稿，共 13 篇，包含 12 个模块与综合项目。修改完整课程正文时从这里开始。 |
-| `docs/` | MkDocs 站点内容，包括站点首页、已整理上线的模块一及课堂游戏目录。它与 `src/` 是分开的内容，不会由当前工作流自动互相转换。 |
-| `docs/games/` | 模块二至模块十的 9 款课堂 HTML5 游戏。 |
-| `HTML教材/` | 13 章 HTML 教材页面，以及模块二至模块十的配套游戏和破冰游戏。GitHub Pages 构建时会将此目录发布到站点的 `教材/` 路径。 |
-| `数据科学与数字人文_互动翻页教材.html` | 单文件交互翻页教材预览。 |
-| `数字人文实验_教材预览.html` | 《数字人文实验》教材预览，属于另一份教材内容。 |
-| `数据科学与数字人文_教材_V2.2.pdf` | 教材 PDF 版本。 |
-| `assets/dsdh/` | 课程相关配图资源。 |
-| `docs/games.md` | 游戏玩法、建议时长与课堂使用说明。 |
-| `mkdocs.yml`、`requirements-site.txt` | MkDocs Material 站点配置与固定版本构建依赖。 |
-| `scripts/prepare_site_assets.py` | 将 `HTML教材/` 与 `assets/dsdh/` 复制到 MkDocs 静态站点目录。 |
-| `.github/workflows/deploy-pages.yml` | GitHub Pages 工作流：在 `main` 分支推送时安装站点依赖、准备 HTML 教材资源并部署。 |
+| 资源 | 路径 | 说明 |
+|---|---|---|
+| 章节 HTML 源页面 | `HTML教材/` | 13 章教材门户、章节页、9 款模块游戏及破冰游戏；这是 HTML 教材的编辑源目录 |
+| 配图与图表 | `assets/dsdh/` | 章节图片和原创教学图；HTML 页面通过相对路径引用 |
+| Markdown 源稿 | `src/` | 13 篇课程正文。与 HTML 页面是两套内容，不会自动互相转换 |
+| MkDocs 站点内容 | `docs/` | 站点首页、游戏目录及历史 Markdown 页面 |
+| MkDocs 配置 | `mkdocs.yml` | 站点主题、左侧导航和 Pages 基础地址 |
+| 站点依赖 | `requirements-site.txt` | 固定版本的 MkDocs 与 Material 主题 |
+| 静态资源准备脚本 | `scripts/prepare_site_assets.py` | 将 `HTML教材/` 和 `assets/dsdh/` 复制到构建输入目录 `docs/` |
+| GitHub Pages 工作流 | `.github/workflows/deploy-pages.yml` | 在 `main` 推送或手动触发时构建并部署站点 |
+| 单文件翻页预览 | `数据科学与数字人文_互动翻页教材.html` | 可直接在浏览器打开的交互翻页版本 |
+| 实验教材预览 | `数字人文实验_教材预览.html` | 另一套《数字人文实验》教材内容 |
+| 教材 PDF | `数据科学与数字人文_教材_V2.2.pdf` | 离线阅读版本 |
 
-## 阅读与修改
+站点首页展示课程体系；左侧“教材目录”列出 13 章，另有课堂游戏中心。静态教材构建到站点的 `教材/` 路径，配图发布到 `assets/dsdh/`。
 
-- 查看完整课程正文：从 `src/` 中按序打开 Markdown 文件。
-- 查看站点内容：从 `docs/index.md` 开始；目前站点首页将模块一标为已上线，其余模块仍列为迁移中。
-- 查看单文件交互教材：打开 `数据科学与数字人文_互动翻页教材.html`。
-- 修改 HTML 教材：直接编辑 `HTML教材/` 中对应页面，配图放入 `assets/dsdh/`；构建脚本会自动把这些内容带入站点，无需编辑生成后的 `docs/教材/`。
-- 修改 Markdown 正文或站点首页：分别编辑 `src/` 或 `docs/`；两套正文目前不会互相自动转换。
+## 编辑与预览
 
-## 本地预览与部署
+- 更新 HTML 教材：编辑 `HTML教材/chNN.html`；新增或替换图片放入 `assets/dsdh/`，使用相对路径引用。不要编辑生成到 `docs/教材/` 的副本。
+- 更新课程首页或左侧导航：编辑 `docs/index.md` 和 `mkdocs.yml`。
+- 更新 Markdown 源稿：编辑 `src/` 中对应章节；它与 HTML 教材、MkDocs 首页目前不自动同步。
+- 生成站点：先准备静态资源，再构建 MkDocs。
 
-独立 HTML 文件可直接用浏览器打开。安装 `requirements-site.txt` 中的依赖后，可运行 `python scripts/prepare_site_assets.py` 再执行 `mkdocs build` 生成 `site/`。GitHub Actions 会在 `main` 分支推送时自动构建并部署 GitHub Pages。
+Windows PowerShell 示例：
 
-工作流监听 `main` 分支推送，也支持在 GitHub Actions 中手动触发。启用 Pages 部署时，仓库的 **Settings → Pages → Build and deployment → Source** 需选择 **GitHub Actions**。
+```powershell
+python -m pip install -r requirements-site.txt
+python scripts/prepare_site_assets.py
+python -m mkdocs build --strict
+python -m http.server 8000 --directory site
+```
+
+本地预览地址为 `http://localhost:8000/`。`site/` 是构建产物，不需要提交；`docs/教材/` 与 `docs/assets/dsdh/` 也由脚本生成并列入忽略规则。
+
+## 发布到 GitHub Pages
+
+工作流 `.github/workflows/deploy-pages.yml` 监听 `main` 分支推送，并支持 GitHub Actions 手动运行。首次发布前，仓库管理员需在 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。目前仓库代码和本地构建已准备好，但 Pages 尚未启用；最近的 workflow 因缺少 Pages 配置而停在 `Setup Pages`，所以预期站点链接暂时不可访问。启用后可在 [Actions](https://github.com/DSDH-Python/DSDH/actions) 查看部署状态。
 
 ## 课堂游戏
 
-游戏为轻量 HTML5 页面，适合课堂投影或课后练习；题目覆盖数据获取、可复现流程、文本分析、可视化修辞、关系网络、空间分析、图像修复、知识图谱和模型评估。游戏设计包含计时、排行榜或伦理判断等互动环节；具体功能以各游戏页面为准。
-
-<img width="380" height="1269" alt="局部截取_20261008_152850" src="https://github.com/user-attachments/assets/5b7d10b0-b864-469c-b971-dc00b75f6d54" />
+模块二至模块十各有一款 HTML5 游戏，涵盖数据获取、可复现流程、文本分析、可视化修辞、关系网络、空间分析、图像处理、知识图谱与模型评估。游戏中心位于 `docs/games.md`；单文件游戏位于 `docs/games/`，教材内配套游戏位于 `HTML教材/`。

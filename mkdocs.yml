@@ -1,6 +1,6 @@
 site_name: 数据科学与数字人文
 site_url: https://dsdh-python.github.io/DSDH/
-repo_url: https://github.com/sghpedc5279/dsdh
+repo_url: https://github.com/DSDH-Python/DSDH
 site_description: 可复现、案例真实、伦理在场的数字教材
 
 theme:
@@ -8,6 +8,7 @@ theme:
   language: zh
   features:
     - navigation.instant
+    - navigation.expand
     - navigation.sections
     - navigation.top
     - search.suggest
@@ -19,8 +20,21 @@ theme:
 
 nav:
   - 首页: index.md
-  - 模块一: 模块一.md
-  - 数字教材: 教材/index.html
+  - 教材目录:
+      - 教材门户: https://dsdh-python.github.io/DSDH/教材/index.html
+      - 第 1 章　导论: https://dsdh-python.github.io/DSDH/教材/ch01.html
+      - 第 2 章　人文数据: https://dsdh-python.github.io/DSDH/教材/ch02.html
+      - 第 3 章　数据处理: https://dsdh-python.github.io/DSDH/教材/ch03.html
+      - 第 4 章　文本挖掘: https://dsdh-python.github.io/DSDH/教材/ch04.html
+      - 第 5 章　数据可视化: https://dsdh-python.github.io/DSDH/教材/ch05.html
+      - 第 6 章　社会网络: https://dsdh-python.github.io/DSDH/教材/ch06.html
+      - 第 7 章　空间人文: https://dsdh-python.github.io/DSDH/教材/ch07.html
+      - 第 8 章　计算机视觉: https://dsdh-python.github.io/DSDH/教材/ch08.html
+      - 第 9 章　知识图谱: https://dsdh-python.github.io/DSDH/教材/ch09.html
+      - 第 10 章　机器学习: https://dsdh-python.github.io/DSDH/教材/ch10.html
+      - 第 11 章　生成式 AI: https://dsdh-python.github.io/DSDH/教材/ch11.html
+      - 第 12 章　AI 前沿: https://dsdh-python.github.io/DSDH/教材/ch12.html
+      - 第 13 章　综合项目: https://dsdh-python.github.io/DSDH/教材/ch13.html
   - 课堂游戏: games.md
 
 markdown_extensions:

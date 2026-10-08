@@ -5,17 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>第1章 导论：当数据科学遇见数字人文 </title>
 <link rel="stylesheet" href="style.css">
-<style>
-.side a {
-  display: block;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-.content img {
-  max-width: 100%;
-  height: auto;
-}
-</style>
 </head>
 <body>
 <header class="topbar">
@@ -48,9 +37,10 @@
 <a href="#s17">1.7　课堂练习</a>
 <a href="#s18">1.8　本章小结与思考</a>
 <a href="#s19">1.9　学术前沿：OpenAlex / DBLP / arXiv / CrossRef / CORE 实证文献</a>
+  </aside>
   <main class="content">
 <h1>第 1 章　导论：当数据科学遇见数字人文</h1>
-<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）说清"数据科学"与"数字人文"各自是什么、为何相遇；（2）复述本书"可复现、案例真实、伦理在场"的方法论承诺；（3）建立属于自己的"伦理坐标"，在动手之前先能提出三个关键问题；（4）独立完成第一次可复现检索——复现一篇数字人文文献。</p></div></p>
+<div class="callout quote" id="lead"><p><b>学习目标</b>：完成本模块后，你应能（1）说清"数据科学"与"数字人文"各自是什么、为何相遇；（2）复述本书"可复现、案例真实、伦理在场"的方法论承诺；（3）建立属于自己的"伦理坐标"，在动手之前先能提出三个关键问题；（4）独立完成第一次可复现检索——复现一篇数字人文文献。</p></div>
 
 <div class="kbcase"><h4>1.0 课程思政融入</h4><div class="callout quote"><p><b>思政导入</b>：数据科学是当今大国科技竞争的焦点之一。当我们用计算方法研究中华典籍、文物与历史，本质上是在<b>用自主的方法守护与阐释中华文脉</b>——把论文写在祖国大地上。愿你在本课程中，既习得"规模与严谨"，也始终记得它的国家与文化意义：让沉淀千年的文明，在数字时代被看见、被理解、被传承。</p></div>
 <div class="callout quote"><p><b>思政案例</b>：施一公《人工智能时代，教育何为》（人民日报）"落实立德树人"的论断——方法之上，育人为本。</p></div></div>
@@ -124,15 +114,32 @@ for w in oa['results']:
 <ul><li><b>范式自觉</b>：数据科学是纪律，数字人文是问题意识，二者相遇才成立；</li><li><b>方法底座</b>：记住"采集→清洗→建模→验证→沟通"这条流水线，它会出现在每一章；</li><li><b>伦理坐标</b>：动手之前，先问"谁被算、谁被漏、谁被代言"。</li></ul>
 <p><b>思考题</b></p>
 <ol><li>找一篇你专业领域里"号称用了数据方法"的文章，判断它属于 1.3 中的哪一种"相遇方式"？它的方法，是被套用、被打磨，还是被反思？</li><li>回忆一个你熟悉的人文数据集（如某地方志、某家族谱、某口述史项目）。如果用 1.5 的伦理 checklist 审视它，哪一条最容易踩线？</li><li>本书承诺"可复现"。你觉得在人文研究中，"可复现"会遇到哪些不同于自然科学的具体困难？</li></ol>
-<h3 class="sec-h" id="s18">1.9　学术前沿：OpenAlex / DBLP / arXiv / CrossRef / CORE 实证文献</h3>
+<h3 class="sec-h" id="s19">1.9 学术前沿：OpenAlex / DBLP / arXiv / CrossRef / CORE 实证文献</h3>
 <div class="callout src" id="sec10"><h4>中文核心期刊文献实证（V2.2·19 种图情档核心期刊）</h4><p>下表论文来自 19 种中文图情档核心期刊（中国图书馆学报、情报学报、情报资料工作、档案学通讯、大学图书馆学报、图书情报工作、数据分析与知识发现、情报杂志、情报理论与实践、图书与情报、档案学研究、图书馆杂志、图书情报知识、图书馆论坛、图书馆学研究、图书馆建设、情报科学、现代情报、信息资源管理学报），经 Web 检索（期刊官网 / CNKI 索引 / DOI 溯源）按主题核实得到真实文献（含 DOI/链接）。</p>
 <table class="gtable"><thead><tr><th>来源期刊</th><th>年份</th><th>标题（链接）</th><th>作者</th></tr></thead><tbody><tr><td>图书情报工作</td><td>2023</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2023.12.010">数字人文视域下先秦典籍植物知识挖掘与组织研究</a></td><td>吴梦成, 林立涛, 齐月, 黄水清, 王东波, 刘浏</td></tr><tr><td>图书情报工作</td><td>2023</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2023.04.012">基于协作智能的数字人文领域知识图谱构建</a></td><td>任明, 贾君枝</td></tr><tr><td>图书情报工作</td><td>2024</td><td><a href="https://doi.org/10.13266/j.issn.0252-3116.2024.23.010">古籍智能信息处理研究现状</a></td><td>刘洋, 王东波</td></tr><tr><td>中国图书馆学报</td><td>2024</td><td><a href="https://www.jlis.cn/jtlsc/ch/reader/view_reference.aspx?aid=CC47071EEE34BA86679E5C94DD8F3513&amp;sid=659D3B06EBF534A7">数字人文在古籍整理领域的应用路径及发展策略</a></td><td>李明杰, 郑翔, 关思雨</td></tr><tr><td>中国图书馆学报</td><td>2022</td><td><a href="https://www.jlis.cn">数字人文视域下的古籍数字化与古典知识库建设问题</a></td><td>陈力</td></tr><tr><td>情报资料工作</td><td>2023</td><td><a href="https://doi.org/10.12154/j.qbzlgz.2023.05.008">山水志史料资源语义知识关联与多维知识发现研究</a></td><td>高劲松, 周树斌, 高颖, 吴艳飞, 张强</td></tr><tr><td>图书馆杂志</td><td>2024</td><td><a href="https://www.lis.ac.cn">数字人文服务中的跨媒介叙事研究与实践</a></td><td>仇开域, 夏翠娟</td></tr><tr><td>图书馆杂志</td><td>2024</td><td><a href="https://www.lis.ac.cn">面向全流程管理的专家协同知识生产系统设计与实现——以家谱联合编目系统为例</a></td><td>朱武信, 夏翠娟, 吴建伟</td></tr></tbody></table>
 <p><b>课堂复现（中文文献检索）</b>：这些期刊正式全文多见于 CNKI/万方/维普（本环境无订阅）。可在机构网络以「期刊名 + 主题词」检索，导出 BibTeX/RIS 后交我并入；DOI 可在 https://doi.org/&lt;DOI&gt; 溯源摘要。</p>
 <p><b>误用警示</b>：① 引用以期刊正式版本为准（年/卷/期/页）；② 回到原文核对方法与数据；③ 与本节实验的映射是"启发"而非"背书"。</p>
 <p><b>与实验衔接</b>：将上表任一中文方法（如中文知识图谱、机器学习人文应用）对照本模块实验改写，即可形成有本土学术依据的结题报告。</p></div>
 <h4>外文文献实证</h4>
-<div class="callout frontier" id="s19"><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
-<table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2018</td><td><a href="https://doi.org/10.2307/j.ctv19cwdqv.4">INTRODUCTION</a></td><td>Disrupting the Digital Humanities（被引 2）</td></tr><tr><td>CrossRef</td><td>2016</td><td><a href="https://doi.org/10.1515/9781474409629-002">1. Introduction</a></td><td>Research Methods for Reading Digital Data in the Digital Humanities（被引 1）</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.63744/jgy3ruqzndgr">Introduction: History and Data Science: Data-driven Inquiries into the Past</a></td><td>Digital Humanities Quarterly</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.2307/jj.21126150.4">Introduction [Read Me]</a></td><td>Poetry's Data</td></tr><tr><td>CrossRef</td><td>2021</td><td><a href="https://doi.org/10.4324/9781003106531-2">Data modeling and use</a></td><td>The Digital Humanities Coursebook</td></tr><tr><td>CrossRef</ td>< td >Data mining and analysis
+<div class="callout frontier" id="sec11"><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
+<table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2018</td><td><a href="https://doi.org/10.2307/j.ctv19cwdqv.4">INTRODUCTION</a></td><td>Disrupting the Digital Humanities（被引 2）</td></tr><tr><td>CrossRef</td><td>2016</td><td><a href="https://doi.org/10.1515/9781474409629-002">1. Introduction</a></td><td>Research Methods for Reading Digital Data in the Digital Humanities（被引 1）</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.63744/jgy3ruqzndgr">Introduction: History and Data Science: Data-driven Inquiries into the Past</a></td><td>Digital Humanities Quarterly</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.2307/jj.21126150.4">Introduction [Read Me]</a></td><td>Poetry's Data</td></tr><tr><td>CrossRef</td><td>2021</td><td><a href="https://doi.org/10.4324/9781003106531-2">Data modeling and use</a></td><td>The Digital Humanities Coursebook</td></tr><tr><td>CrossRef</td><td>2021</td><td><a href="https://doi.org/10.4324/9781003106531-7">Data mining and analysis</a></td><td>The Digital Humanities Coursebook</td></tr><tr><td>CrossRef</td><td>2021</td><td><a href="https://doi.org/10.4324/9781003106531-4">Metadata, markup, and data description</a></td><td>The Digital Humanities Coursebook</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.4324/9781003318323-17">Data acquisition</a></td><td>The Routledge Introduction to English Canadian Literature and Digital Humanities</td></tr></tbody></table>
+<p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>
+<pre class="code" data-lang="python"><code>import urllib.request, urllib.parse, json
+q = 'data science digital humanities'
+url = 'https://api.openalex.org/works?search=' + urllib.parse.quote(q) + '&amp;per_page=10&amp;sort=cited_by_count:desc'
+oa = json.loads(urllib.request.urlopen(url, timeout=30).read())
+for w in oa['results']:
+    print(w['publication_year'], w['title'], '-&gt;', (w.get('primary_location') or {}).get('source', {}).get('display_name'))</code></pre>
+<p><b>误用警示</b>：① arXiv 预印本未经同行评审，引用须标 preprint 并追正式版；② 被引数代表影响力非结论正确；③ 商业库（WoS/Scopus/Elsevier/JSTOR/CNKI）本环境无订阅，需机构账号获取后再并入。</p>
+<p><b>与实验衔接</b>：将任一方法对照本模块实验改写数据集或提示词，即可形成有学术依据的结题报告。</p>
+</div>
+<div class="readbox"><button class="btn" id="markRead" data-ch="1">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+  </main>
+</div>
+<div id="termtip"></div>
+<script src="app.js"></script>
+</body>
+</html>
 
 </body>
 </html>
