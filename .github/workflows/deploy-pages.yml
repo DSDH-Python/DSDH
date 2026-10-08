@@ -29,8 +29,11 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install MkDocs + Material
-        run: pip install mkdocs mkdocs-material
+      - name: Install site dependencies
+        run: pip install -r requirements-site.txt
+
+      - name: Prepare HTML textbook assets
+        run: python scripts/prepare_site_assets.py
 
       - name: Build site (MkDocs)
         run: mkdocs build

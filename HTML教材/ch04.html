@@ -42,8 +42,7 @@
   </aside>
   <main class="content">
 <h1>第 4 章　模块四　文本挖掘与 NLP</h1>
-<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）说明中文分词与句读的特殊性；（2）用分词 + TF-IDF/主题模型从语料中提炼结构；（3）用命名实体识别抽取人/地/时/事；（4）理解"历史语言"给 NLP 带来的适配难题，并能指出一处语料偏见。</p></div></p>
-<h2 class="part p1" id="lead">第一部分　课程导学</h2>
+<div class="callout quote" id="lead"><p><b>学习目标</b>：完成本模块后，你应能（1）说明中文分词与句读的特殊性；（2）用分词 + TF-IDF/主题模型从语料中提炼结构；（3）用命名实体识别抽取人/地/时/事；（4）理解"历史语言"给 NLP 带来的适配难题，并能指出一处语料偏见。</p></div>
 <span class="mod mod-lead">导学</span>
 <h3 class="sec-h" id="s46">4.6 伦理坐标：语料偏见与"客观"幻象（本模块核心能力）</h3>
 <ul><li><b>取样偏见</b>：能数字化的文本偏向"被保存下来的"——名家、官修、纸本，底层声音天然缺失；</li><li><b>词表偏见</b>：停用词表、主题数 k 都是人定的，k 取 5 还是 10，叙事就变；</li><li><b>"客观"幻象</b>：主题模型给的是统计结构，不是"历史真相"，别把机器聚类当定论。</li></ul>
@@ -53,7 +52,7 @@
 <h2 class="part p2" id="part2">第二部分　课程内容</h2>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s41">4.1 文本是第一大类人文数据</h3>
-<figure class="figure"><img src="assets/dsdh/Clean_academic_infographic_ill_2026-09-09T07-00-27.png" alt="文本挖掘与主题模型概念图"><figcaption>文本挖掘与主题模型概念图</figcaption></figure>
+<figure class="figure"><img src="../assets/dsdh/Clean_academic_infographic_ill_2026-09-09T07-00-27.png" alt="文本挖掘与主题模型概念图"><figcaption>文本挖掘与主题模型概念图</figcaption></figure>
 <p>模块二把文本列为五类之首，不是偶然——古籍、报刊、书信、剧本，构成了人文研究的主干材料。NLP 的任务，是把"人读得懂的字"变成"机器算得了的数"：词频、向量、实体、主题。</p>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s42">4.2 分词与预处理：中文的特殊性</h3>
@@ -101,6 +100,7 @@ for w in oa['results']:
 <h3 class="sec-h" id="s49">4.9 本章小结</h3>
 <p>带走三件事：<b>中文预处理</b>（分词/停用词/句读）、<b>从词到主题</b>（TF-IDF/LDA）、<b>NER 抽实体</b>（人地时事）。记住 4.5 与 4.6：历史语言要适配，模型结论要带"语料与参数"的尾巴。</p>
 <div class="readbox"><button class="btn" id="markRead" data-ch="4">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+<div class="callout quote"><p><b>本章配套游戏</b>：<a href="模块四_分词实体宾果.html">分词实体宾果</a></p></div>
   </main>
 </div>
 <div id="termtip"></div>

@@ -41,8 +41,8 @@
   </aside>
   <main class="content">
 <h1>第 3 章　模块三　数据处理基础：Python 与 pandas</h1>
-<p class="progress-txt"><div class="callout quote"><p><b>学习目标</b>：完成本模块后，你应能（1）在统一预部署环境中运行第一段 Python 并读懂报错；（2）用 pandas 读入、筛选、分组聚合一份 CSV；（3）理解"可复现流水线"的含义——随机种子、版本、环境皆可见；（4）独立完成第一次数据清洗：处理缺失、重复与类型错误。</p></div></p>
-<h2 class="part p1" id="lead">第一部分　课程导学</h2>
+<div class="callout quote" id="lead"><p><b>学习目标</b>：完成本模块后，你应能（1）在统一预部署环境中运行第一段 Python 并读懂报错；（2）用 pandas 读入、筛选、分组聚合一份 CSV；（3）理解"可复现流水线"的含义——随机种子、版本、环境皆可见；（4）独立完成第一次数据清洗：处理缺失、重复与类型错误。</p></div>
+<figure class="chapter-figure"><img src="../assets/dsdh/ch03_diagram.png" alt="数据处理与可复现分析流程"><figcaption>数据处理流水线：从原始材料到可复现产物</figcaption></figure>
 <span class="mod mod-lead">导学</span>
 <h3 class="sec-h" id="s31">3.1 为什么要学一点 Python：不是要你当程序员</h3>
 <p>本书承诺"可复现"，而可复现的底线是<b>把操作变成代码</b>。你不必成为算法工程师，但值得亲手写出第一条流水线：别人能重跑你的步骤，得到一样的结果。Python 是这门课的统一语言，因为它免费、生态成熟、中文社区友好。</p>
@@ -102,6 +102,7 @@ for w in oa['results']:
 <h3 class="sec-h" id="s39">3.9 本章小结</h3>
 <p>带走三件事：<b>pandas 三件套</b>（Series/DataFrame/读写）、<b>清洗四板斧</b>（缺失/重复/类型/重命名）、<b>可复现纪律</b>（种子/版本/环境/留痕）。模块一说的流水线"采集→清洗→建模→验证→沟通"，你今天走完了前两步。</p>
 <div class="readbox"><button class="btn" id="markRead" data-ch="3">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
+<div class="callout quote"><p><b>本章配套游戏</b>：<a href="模块三_可复现流水线.html">可复现流水线</a></p></div>
   </main>
 </div>
 <div id="termtip"></div>

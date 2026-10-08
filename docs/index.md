@@ -9,11 +9,15 @@
 <div class="grid cards" markdown>
 
 - :material-book-open-page-variant: **模块一 · 导论：当数据科学遇见数字人文**
-  [:octicons-arrow-right-24: 开始阅读](模块一/)
+  [:octicons-arrow-right-24: 开始阅读](模块一.md)
 
 </div>
 
 本模块涵盖：课程思政融入、两门学科的相遇方式、本书的方法论承诺（可复现 / 案例真实 / 伦理在场）、属于你自己的"伦理坐标"，以及第一次可复现检索与可复现图表练习。
+
+## 完整数字教材
+
+课程配套的 13 章 HTML 教材与交互页面可从[数字教材门户](教材/index.html)进入；章节图片、目录跳转和课堂游戏均可在浏览器中使用。
 
 ## 全书面貌与后续模块
 
@@ -42,7 +46,7 @@
 <div class="grid cards" markdown>
 
 - :material-gamepad-variant: **课堂游戏（模块二–十）**
-  [:octicons-arrow-right-24: 进入游戏中心](games/)
+  [:octicons-arrow-right-24: 进入游戏中心](games.md)
 
 </div>
 

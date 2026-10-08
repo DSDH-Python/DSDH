@@ -22,10 +22,7 @@
   <aside class="side">
 <h4>第 12 章 目录</h4>
 <a href="#lead" class="cur">导语与学习目标</a>
-<span class="navpart p1">第一部分　课程导学</span>
 <a href="#s121">12.1　引言：当数据科学遇见生成式 AI</a>
-<a href="#s1210">12.10　思政融入（课程思政）</a>
-<span class="navpart p2">第二部分　课程内容</span>
 <a href="#s122">12.2　大模型与推理模型：数据分析的新引擎</a>
 <a href="#s123">12.3　自动化数据分析与 AI for Science</a>
 <a href="#s124">12.4　多模态与生成式 AI 在数据科学中的角色</a>
@@ -34,19 +31,18 @@
 <a href="#s127">12.7　数据治理、版权与负责任 AI</a>
 <a href="#s128">12.8　案例：AI 赋能数字人文研究</a>
 <a href="#s129">12.9　实践：在教学中引入 AI 工具</a>
+<a href="#s1210">12.10　思政融入与负责任创新</a>
 <a href="#s1211">12.11　讨论：算力、经费与学术共同体的分化</a>
+<a href="#s1212">12.12　本章小结与思考</a>
 <a href="#sec12">参考文献</a>
   </aside>
   <main class="content">
 <h1>第 12 章　模块十二　人工智能前沿进展</h1>
-<h2 class="part p1" id="lead">第一部分　课程导学</h2>
-<span class="mod mod-lead">导学</span>
+  <div class="callout quote" id="lead"><p><b>学习目标</b>：完成本章后，你应能（1）概述大模型、多模态模型与 AI for Science 的主要进展；（2）说明智能体、MCP 与 RAG 如何参与数据工作流；（3）结合数字人文案例评估 AI 工具的适用范围；（4）识别版权、隐私、算力可及性与责任治理问题。</p></div>
+  <figure class="chapter-figure"><img src="../assets/dsdh/ch12_diagram.png" alt="多模态输入、模型推理、工具协作与治理复核组成的人工智能工作流"><figcaption>AI 工作流：模型能力需由工具协作与治理复核共同支撑</figcaption></figure>
 <h3 class="sec-h" id="s121">12.1 引言：当数据科学遇见生成式 AI</h3>
 <p>数据科学的方法体系（采集、清洗、建模、可视化）正与生成式 AI 深度融合：LLM 承担代码生成、文档理解与推理，智能体自动执行分析流水线，多模态模型处理图像/视频数据。本模块以"数据科学 + 数字人文"的视角，梳理近三年关键进展。</p>
-<div class="kbcase"><h4>12.10 思政融入（课程思政）</h4><p>负责任创新与科技报国：数据科学与 AI 是国之重器，引导学生树立"数据合规、算法向善、结果可信"的职业伦理，理解技术自主可控与开源开放的时代意义，把个人学习与国家战略需求相结合。</p></div>
-<h2 class="part p2" id="part2">第二部分　课程内容</h2>
-<span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s122">12.2 大模型与推理模型：数据分析的新引擎</h3>
+  <h3 class="sec-h" id="s122">12.2 大模型与推理模型：数据分析的新引擎</h3>
 <ul><li>推理模型（o1/o3、DeepSeek-R1、Gemini 2.0 Flash Thinking）在数學、编程、科学问答上表现突出，可辅助假设生成、公式推演与结果校验。</li><li>科研范式变革：2024 年诺贝尔物理学奖授予机器学习先驱（Hinton、Hopfield），化学奖授予蛋白质结构预测（AlphaFold）相关研究者，凸显 AI 驱动科研（AI4Science）的范式地位。</li></ul>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s123">12.3 自动化数据分析与 AI for Science</h3>
@@ -69,6 +65,8 @@
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s129">12.9 实践：在教学中引入 AI 工具</h3>
 <p>建议课程设计"AI 辅助数据分析"实验：给定可信数据集，用 LLM 起草分析代码、用推理模型校验结论、用智能体串联流水线，并以人工复核与可复现性为评分重点。</p>
+<h3 class="sec-h" id="s1210">12.10 思政融入与负责任创新</h3>
+<div class="kbcase"><h4>课程思政</h4><p>负责任创新与科技报国：数据科学与 AI 是国之重器，引导学生树立"数据合规、算法向善、结果可信"的职业伦理，理解技术自主可控与开源开放的时代意义，把个人学习与国家战略需求相结合。</p></div>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s1211">12.11 讨论：算力、经费与学术共同体的分化</h3>
 <p>最后一个更硬的问题：AI 正在改写科研的<b>成本结构</b>，进而改写学术共同体的格局。</p>
@@ -79,7 +77,10 @@
 <p><b>人文学科的机遇与它自己的瓶颈</b>：人文智能的新范式把人文研究推向了前台，但人文学科也面临"<b>数据荒</b>"与"<b>数据孤岛</b>"。有学者指出，AI 在数据侧已不能只靠互联网公开语料"堆量"，而需要各细分领域的高质量数据与专家的隐性知识；因此在古籍、历史档案这类数字化基础较好的领域，建立明确的<b>数据使用协议与贡献者权益</b>、面向认证学者有限开放，可能比再训一个大模型更关键。</p>
 <p><b>最后一个提醒</b>：当 AI 让"产出论文"变得廉价，评价体系若仍停留在"唯论文、唯数量"，就会把 AI 的产能转化为学术系统的通胀。已有科研机构在调整评价标准，对依托 AI 完成的高质量原创研究与交叉学科成果给予正向激励，摒弃片面导向。技术变得更快，制度与评价必须同步迭代——否则被奖励的，将是产量而不是贡献。</p>
 <div class="callout quote"><p><b>给这门课收个尾</b>：AI 带来的机遇，属于"能提出好问题、能驾驭工具、又守得住诚信"的人。方法会继续迭代，算力会继续变便宜，唯一不会过时的，是你对真问题的敏感与对证据的诚实。</p></div>
-<span class="mod mod-theory">理论</span>
+<h3 class="sec-h" id="s1212">12.12 本章小结与思考</h3>
+<p>本章的核心线索是：AI 扩展了数据分析的能力，也把数据治理、版权、隐私、算力公平和责任归属推到研究流程中。使用新工具时，先明确问题与数据边界，再核查模型证据并保留人工判断。</p>
+<h4>思考题</h4>
+<ol><li>在你的研究问题中，哪些环节适合交给 AI，哪些判断必须由研究者负责？</li><li>如果算力资源有限，如何通过开源模型、共享资源或缩小任务范围保持研究可及性？</li><li>为一个数字人文 AI 项目列出至少两项版权或隐私风险，并写出相应的复核措施。</li></ol>
 <h3 class="sec-h" id="sec12">参考文献</h3>
 <p>[1] OPENAI. Learning to reason with LLMs[EB/OL]. (2024)[2026-08-05]. https://openai.com/index/learning-to-reason-with-llms/. [2] GUO D, YANG D, ZHANG H, et al. DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning[J]. Nature, 2025, 645: 633-638. DOI: 10.1038/s41586-025-09422-z. [3] The Nobel Prize in Physics 2024[EB/OL]. (2024)[2026-08-05]. https://www.nobelprize.org/prizes/physics/2024/. [4] ANTHROPIC. Model context protocol[EB/OL]. (2024-11)[2026-08-05]. https://modelcontextprotocol.io/. [5] 杨建梁, 王一多, 黄美雯, 等. 基于大语言模型的红色档案资源交互式知识发现研究——以《南方局党史资料大事记》为例[J]. 图书情报工作, 2025, 69(15): 112-123. DOI: 10.13266/j.issn.0252-3116.2025.15.010. [6] 欧洲议会, 欧盟理事会. 欧盟人工智能法案: Regulation (EU) 2024/1689[S]. 2024.</p>
 <div class="readbox"><button class="btn" id="markRead" data-ch="12">标记为已读</button><span class="dot" id="readDot"></span><span>进度自动保存于本机浏览器</span></div>
