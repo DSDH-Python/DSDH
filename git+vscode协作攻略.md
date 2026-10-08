@@ -49,6 +49,12 @@ git config --global --list
     - 左下角状态栏显示当前分支；同步按钮=pull+push一键同步；也可以单独Push、Pull。
 
 > 小提示：遇到报错，可打开命令面板 `Ctrl+Shift+P`，执行 `Git: Show Git Output`，看详细日志排查问题。
+初次使用时，一般vscode会弹出欢迎窗口，
+> 
+> <img width="1094" height="701" alt="局部截取_20261008_103539" src="https://github.com/user-attachments/assets/9bc88fa1-dea5-40b2-a352-c0ff915aa2e5" />
+如果没有弹出，可在工具栏“帮助”下找到，然后从远程克隆仓库到本地。
+> 
+
 
 ## 五、仓库推荐配置（直接新建两个文件放到仓库根目录）
 ### `.gitignore`（忽略不需要上传的临时文件）
