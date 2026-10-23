@@ -1,13 +1,13 @@
 import os
-
 import tensorflow as tf
-from tensorflow.keras import Model
-from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras.applications.vgg16 import preprocess_input
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import GlobalAveragePooling2D
-from tensorflow.keras.losses import BinaryCrossentropy
-from tensorflow.keras.optimizers import Adam
+import keras
+from keras import Model
+from keras.applications.vgg16 import VGG16, preprocess_input
+from keras.layers import Dense, GlobalAveragePooling2D
+from keras.losses import BinaryCrossentropy
+from keras.optimizers import Adam
+
+
 
 
 def add_input_top_model(base_model, class_num, input_shape):
