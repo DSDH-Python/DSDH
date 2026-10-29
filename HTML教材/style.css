@@ -254,6 +254,22 @@ pre.code {
   overflow-wrap: anywhere;
 }
 
+.code-block {
+  position: relative;
+  margin: 16px 0;
+}
+
+.code-block pre.code {
+  margin: 0;
+  padding-top: 48px;
+}
+
+.code-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
 .readbox {
   margin: 30px 0 18px;
   padding: 12px 0;
