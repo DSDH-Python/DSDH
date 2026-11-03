@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 720" role="img" aria-labelledby="title description">
+  <title id="title">中文历史文本预处理流程</title>
+  <desc id="description">从保存原始影像和转写文本开始，经过断句校勘、古今词表辅助分词、停用词与词形处理、抽样人工核验，再进入文本分析。强调规则记录和原文保留。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M1 1L10 6L1 11" fill="none" stroke="#D8754F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </marker>
+    <style>
+      text { font-family: "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
+      .title { fill: #243246; font-size: 38px; font-weight: 700; }
+      .subtitle { fill: #647184; font-size: 20px; }
+      .number { fill: #FFFFFF; font-size: 18px; font-weight: 700; }
+      .heading { fill: #243246; font-size: 22px; font-weight: 700; }
+      .body { fill: #526174; font-size: 17px; }
+      .note { fill: #176B66; font-size: 19px; font-weight: 700; }
+    </style>
+  </defs>
+  <rect width="1500" height="720" fill="#F8F7F2"/>
+  <rect x="34" y="30" width="1432" height="660" rx="22" fill="#FFFFFF" stroke="#D9E0E5" stroke-width="2"/>
+  <rect x="34" y="30" width="16" height="660" rx="8" fill="#176B66"/>
+  <text x="88" y="94" class="title">中文历史文本预处理：每一步都可复核</text>
+  <text x="90" y="133" class="subtitle">先保留材料原貌，再把处理规则变成可检查的研究步骤</text>
+
+  <g fill="none" stroke="#D8754F" stroke-width="3" marker-end="url(#arrow)">
+    <path d="M278 338H300"/><path d="M512 338H534"/>
+    <path d="M746 338H768"/><path d="M980 338H1002"/>
+    <path d="M1214 338H1236"/>
+  </g>
+
+  <g>
+    <rect x="78" y="218" width="200" height="238" rx="16" fill="#E5F2EF" stroke="#C9DDD8" stroke-width="2"/>
+    <circle cx="110" cy="256" r="18" fill="#176B66"/>
+    <text x="110" y="262" text-anchor="middle" class="number">1</text>
+    <text x="102" y="311" class="heading">保存原文</text>
+    <text x="102" y="352" class="body">影像 / 转写文本</text>
+    <text x="102" y="384" class="body">记录版本与来源</text>
+    <text x="102" y="424" class="body">原始文件不覆盖</text>
+  </g>
+  <g>
+    <rect x="312" y="218" width="200" height="238" rx="16" fill="#F5F6F3" stroke="#D9E0E5" stroke-width="2"/>
+    <circle cx="344" cy="256" r="18" fill="#D8754F"/>
+    <text x="344" y="262" text-anchor="middle" class="number">2</text>
+    <text x="336" y="311" class="heading">断句校勘</text>
+    <text x="336" y="352" class="body">补标点并留依据</text>
+    <text x="336" y="384" class="body">核对异体、讹字</text>
+    <text x="336" y="424" class="body">不确定处做标记</text>
+  </g>
+  <g>
+    <rect x="546" y="218" width="200" height="238" rx="16" fill="#E5F2EF" stroke="#C9DDD8" stroke-width="2"/>
+    <circle cx="578" cy="256" r="18" fill="#176B66"/>
+    <text x="578" y="262" text-anchor="middle" class="number">3</text>
+    <text x="570" y="311" class="heading">辅助分词</text>
+    <text x="570" y="352" class="body">通用词典 + 专名表</text>
+    <text x="570" y="384" class="body">人名、地名、旧称</text>
+    <text x="570" y="424" class="body">记录词典与版本</text>
+  </g>
+  <g>
+    <rect x="780" y="218" width="200" height="238" rx="16" fill="#F5F6F3" stroke="#D9E0E5" stroke-width="2"/>
+    <circle cx="812" cy="256" r="18" fill="#D8754F"/>
+    <text x="812" y="262" text-anchor="middle" class="number">4</text>
+    <text x="804" y="311" class="heading">整理词项</text>
+    <text x="804" y="352" class="body">按研究问题设词表</text>
+    <text x="804" y="384" class="body">谨慎处理停用词</text>
+    <text x="804" y="424" class="body">保留映射与规则</text>
+  </g>
+  <g>
+    <rect x="1014" y="218" width="200" height="238" rx="16" fill="#E5F2EF" stroke="#C9DDD8" stroke-width="2"/>
+    <circle cx="1046" cy="256" r="18" fill="#176B66"/>
+    <text x="1046" y="262" text-anchor="middle" class="number">5</text>
+    <text x="1038" y="311" class="heading">人工抽查</text>
+    <text x="1038" y="352" class="body">随机抽样看切分</text>
+    <text x="1038" y="384" class="body">检查专名与歧义</text>
+    <text x="1038" y="424" class="body">记录修正前后差异</text>
+  </g>
+  <g>
+    <rect x="1248" y="218" width="176" height="238" rx="16" fill="#F5F6F3" stroke="#D9E0E5" stroke-width="2"/>
+    <circle cx="1280" cy="256" r="18" fill="#D8754F"/>
+    <text x="1280" y="262" text-anchor="middle" class="number">6</text>
+    <text x="1272" y="311" class="heading">进入分析</text>
+    <text x="1272" y="352" class="body">词频 / TF-IDF</text>
+    <text x="1272" y="384" class="body">主题 / 实体</text>
+    <text x="1272" y="424" class="body">报告误差边界</text>
+  </g>
+
+  <rect x="78" y="514" width="1346" height="104" rx="16" fill="#F5F4EF" stroke="#E4E1D8" stroke-width="2"/>
+  <text x="108" y="555" class="note">分析示例</text>
+  <text x="240" y="555" class="body">“不亦说乎”可因句读、词典和任务不同而有不同切分；模型输出是待核验结果，不是原文事实。</text>
+  <text x="108" y="592" class="body">请同时保存：原始文本、处理后文本、词典 / 停用词表版本、抽查样本与修正规则。</text>
+</svg>

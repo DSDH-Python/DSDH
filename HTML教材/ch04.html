@@ -29,10 +29,9 @@
 <a href="#s44">4.4 命名实体识别：抽人、地、时、事</a>
 <a href="#s45">4.5 历史语言的麻烦：Adapting vs Pre-training</a>
 <a href="#s46">4.6 伦理坐标：语料偏见与"客观"幻象（本模块核心能力）</a>
-<a href="#s47">4.7 第一次动手：对一组诗文做主题模型</a>
-<a href="#s48">4.8 第二次动手：用 TF-IDF 对比两位作者</a>
-<a href="#s49">4.9 本章小结与思考</a>
-<a href="#s410">4.10 学术前沿与延伸阅读</a>
+<a href="#s47">4.7 综合实践：主题探索与作者文本对比</a>
+<a href="#s48">4.8 本章小结与思考</a>
+<a href="#s49">4.9 学术前沿与延伸阅读</a>
   </aside>
   <main class="content">
 <h1>第 4 章　文本挖掘与 NLP</h1>
@@ -49,30 +48,35 @@
 <ul><li><b>分词</b>：<code>jieba.lcut("关关雎鸠在河之洲")</code>；</li><li><b>去停用词</b>：去掉"之、乎、者、也"等高频无实义词；</li><li><b>句读还原</b>：古书无标点，需先补断句再分析。</li></ul>
 <div class="callout quote"><p><b>提醒</b>：用现代分词器切古诗文，结果要人工抽查——"不亦说乎"被切成什么，决定了后续一切。</p></div>
 <span class="mod mod-theory">理论</span>
-<img src="c:\腾讯电脑管家截图文件\局部截取_20261029_124444.png" alt="中文分词与句读的特殊性">
+<figure class="chapter-figure"><img src="../assets/dsdh/ch04_preprocessing.svg" alt="中文历史文本预处理流程：保存原文、断句校勘、辅助分词、整理词项、人工抽查后进入分析"><figcaption>中文历史文本预处理流程：保存原貌、记录规则、抽样核验</figcaption></figure>
 <h3 class="sec-h" id="s43">4.3 从词频到主题：词云、TF-IDF 与 LDA</h3>
 <ul><li><b>词频/词云</b>：最快的"扫一眼重点"，但易被长文主导；</li><li><b>TF-IDF</b>：衡量"在这篇重要、在全集罕见"的词，比纯词频更准；</li><li><b>LDA 主题模型</b>：把成千上万篇自动归成若干"主题"，每篇是主题的混合。例如对近代报刊跑 LDA，可能析出"实业""教育""宪政"等隐主题。</li></ul>
+<div class="callout quote"><p><b>真实研究案例：历史报纸中的议题发现</b>：Kuebart、Schultze 与 Selgert 在《Article based topic modeling on re-processed historical newspapers》中，对《科隆日报》（<i>Kölnische Zeitung</i>）1803—1945 年的 425,194 页报纸进行图像与文本重处理、版面分段后，比较了多种主题模型实现（包括 Gensim LDA、tomotopy LDA、LeetTopic 和 BERTopic）。研究展示了主题模型如何帮助定位贸易登记、劳工广告和政治新闻等版块，并比较不同工具在大规模报纸语料上的适用性。这个案例说明：主题模型的可解释结果依赖 OCR 与版面切分质量，也要结合原文抽查；模型发现的是候选议题，不是自动成立的历史解释。<a href="https://doi.org/10.5617/dhnbpub.13103">查看论文（DOI: 10.5617/dhnbpub.13103）</a>。</p></div>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s44">4.4 命名实体识别：抽人、地、时、事</h3>
 <p>NER（命名实体识别）从文本里标出<b>人物、地点、时间、机构、事件</b>。对一部地方志跑 NER，能直接得到"某县出现过哪些名人、哪些水患、哪些书院"。这是后续网络分析（模块六）、空间分析（模块七）、知识图谱（模块九）的数据源头。</p>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s45">4.5 历史语言的麻烦：Adapting vs Pre-training</h3>
-<p>通用大模型在当代新闻上很强，在<b>历史语言</b>上常失灵——异体字、旧称、已消亡的语义。两条路（见本模块 V2.1 的 <i>Adapting vs. Pre-training Language Models for Historical Languages</i>、<i>Alien Reading</i>）：</p>
-<ul><li><b>Pre-training（从头训）</b>：用海量历史语料重训，最贴但最贵；</li><li><b>Adapting（适配）</b>：在通用模型上微调或加提示，成本可控，是人文项目的现实选择。</li></ul>
+<p>通用模型在当代文本上训练，遇到<b>历史词义、旧拼写、专名和文体变化</b>时，可能把旧词误读成现代含义，或无法识别当时的人名、地名。改善模型有两条路线：<b>领域预训练</b>从历史语料训练基础模型，可能更贴合历史语言，但需要大量语料和算力；<b>适配</b>则从现有通用模型继续预训练或微调，门槛较低，但效果取决于历史语料和下游任务。</p>
+<div class="callout quote"><p><b>真实研究案例：历史英语模型 MacBERTh</b>：Manjavacas 与 Fonteyn 在 2022 年研究中，比较了以历史英语语料从头预训练模型与将现代英语模型继续适配到历史文本的路线。他们在词性标注、命名实体识别、词义消歧及历史文本断代等任务上评估模型，报告指出：历史语料从头预训练得到的基础模型整体更强；但其成本更高，继续适配现有模型是更轻量的选择。研究对象是历史英语，不能直接据此断定中文古籍也会有相同结果；中文项目仍需按语料年代、字形、任务建立验证集进行比较。<a href="https://doi.org/10.46298/jdmdh.9152">查看论文（DOI: 10.46298/jdmdh.9152）</a>。</p></div>
+<ol><li><b>先定义任务</b>：分词、实体识别、断句或词义判断对模型的要求不同。</li><li><b>再盘点资源</b>：评估可用历史文本的数量、年代跨度、OCR 质量和人工标注成本。</li><li><b>设置对照</b>：在相同训练 / 验证 / 测试划分上比较通用模型、适配模型和领域模型，避免只挑表现最好的一组数据汇报。</li><li><b>人工审错</b>：尤其检查异体字、古今同形异义词、避讳字和低频专名。</li></ol>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s46">4.6 伦理坐标：语料偏见与"客观"幻象（本模块核心能力）</h3>
 <ul><li><b>取样偏见</b>：能数字化的文本偏向"被保存下来的"——名家、官修、纸本，底层声音天然缺失；</li><li><b>词表偏见</b>：停用词表、主题数 k 都是人定的，k 取 5 还是 10，叙事就变；</li><li><b>"客观"幻象</b>：主题模型给的是统计结构，不是"历史真相"，别把机器聚类当定论。</li></ul>
+<div class="callout quote"><p><b>真实研究案例：Google Books 语料的时代偏差</b>：Pechenick、Danforth 与 Dodds（2015）研究 Google Books 词频数据能否代表文化与语言变化。他们指出，该语料更像“每本书收一份”的图书馆目录，而非反映读者人数或社会流行度的调查；20 世纪科学与专业文本在语料中的比重上升，也会带来学术术语与引用表达的增加。作者比较 1800—2000 年多个英语子语料的差异后，提醒研究者先检查语料构成与时间变化，再作广泛的文化趋势推断。对人文研究的启示是：词频曲线可能反映的是馆藏和出版结构，而不一定是社会观念本身。<a href="https://doi.org/10.1371/journal.pone.0137041">查看论文（DOI: 10.1371/journal.pone.0137041）</a>。</p></div>
 <div class="callout quote"><p><b>一条红线</b>：不把 NLP 输出直接说成"古人就是这样想的"；呈现结果时同步交代语料与参数。</p></div>
-<h3 class="sec-h" id="s47">4.7 第一次动手：对一组诗文做主题模型</h3>
-<div class="callout quote"><p><b>小练习 4.1（文本挖掘）</b>：取 10–50 篇同主题诗文（如某总集、某报刊专栏），用分词 + 去停用词 + TF-IDF 或 LDA 提炼 3–5 个主题，列出每主题的高权重词，并手判"这些词真的构成一个主题吗"。本模块 V2.2 的《数字人文视域下先秦典籍植物知识挖掘与组织研究》《基于 ChatGPT 和零样本提示的临床量表文本中结构化项目信息抽取研究》可作方法参照——前者是传统挖掘，后者是零样本提示抽取，对照看"老方法"与"新提示"的差异。</p></div>
+<h3 class="sec-h" id="s47">4.7 综合实践：主题探索与作者文本对比</h3>
+<p>本节把主题探索与作者比较合并为一次文本分析项目。两项任务可以使用同一批经许可取得的诗文、报刊或档案材料；开始前先记录来源、年代范围、收录标准和分词 / 停用词规则。</p>
+<h4>任务一：探索语料中的主题</h4>
+<div class="callout quote"><p>选取 10–50 篇同一总集、报刊专栏或档案专题中的文本，完成分词和必要的停用词处理，再使用 TF-IDF 或 LDA 提炼关键词 / 候选主题。列出每个主题的高权重词，回到原文抽查例句，并判断这些词是否能形成有证据支持的解释。LDA 主题数及停用词设置应写入记录，并可比较不同设置下结果是否稳定。</p></div>
+<h4>任务二：比较两位作者的文本特征</h4>
+<ul><li><b>材料</b>：选择两位诗人或作者各不少于 10 篇文本，尽量控制体裁、时期和文本长度差异；</li><li><b>步骤</b>：统一分词和停用词规则，用 sklearn <code>TfidfVectorizer</code> 提取各作者的高权重词，绘制关键词条形图或词云，再回到原文核对关键词语境；</li><li><b>产出</b>：主题 / 关键词表、对照图、抽查记录，以及一段约 150 字的解释，说明差异能支持什么、不能证明什么；</li><li><b>评价量规</b>：分词与语料说明（25%）、分析设置和结果正确（30%）、原文核查（25%）、解释克制（20%）。</li></ul>
+<div class="callout quote"><p><b>方法参照</b>：可阅读《数字人文视域下先秦典籍植物知识挖掘与组织研究》及《基于 ChatGPT 和零样本提示的临床量表文本中结构化项目信息抽取研究》，比较古籍文本挖掘与提示式信息抽取各自回答的问题；两篇研究方法并不相同，不应将其结果当成同一任务的直接优劣比较。</p></div>
 <span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s48">4.8 第二次动手：用 TF-IDF 对比两位作者</h3>
-<ul><li><b>目标</b>：取两位诗人 / 作者的诗文各若干篇，用量化方法比较“谁更爱用某类词”。</li><li><b>步骤</b>：<ol><li>各收集不少于 10 篇文本；</li><li>分词并去停用词；</li><li>用 TF-IDF 取各自 Top 20 关键词；</li><li>画两张词云或词频条形图；</li><li>写 150 字：差异能说明什么、不能说明什么。</li></ol></li><li><b>工具</b>：jieba + sklearn <code>TfidfVectorizer</code>。</li><li><b>产出</b>：两张关键词图 + 一段解读。</li><li><b>评价量规</b>：分词去噪（30%）、TF-IDF 正确（30%）、解读克制（40%）。</li></ul>
-<span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s49">4.9 本章小结与思考</h3>
+<h3 class="sec-h" id="s48">4.8 本章小结与思考</h3>
 <p>带走三件事：<b>中文预处理</b>（分词/停用词/句读）、<b>从词到主题</b>（TF-IDF/LDA）、<b>NER 抽实体</b>（人地时事）。记住 4.5 与 4.6：历史语言要适配，模型结论要带"语料与参数"的尾巴。</p>
 <h4>思考题</h4>
-<ol><li>用 <code>jieba</code> 切一句你专业的古文，结果哪里不对？这透露了现代分词器的什么盲区？</li><li>LDA 的"主题数 k"由人设定。k 取不同值，叙事会怎样变化？这算"主观"吗？</li><li>如果一篇 NLP 论文声称"用主题模型发现了某思潮的兴起"，你会要求它补充哪些信息才敢引用？</li></ol><h3 class="sec-h" id="s410">4.10 学术前沿与延伸阅读</h3>
+<ol><li>用 <code>jieba</code> 切一句你专业的古文，结果哪里不对？这透露了现代分词器的什么盲区？</li><li>LDA 的"主题数 k"由人设定。k 取不同值，叙事会怎样变化？这算"主观"吗？</li><li>如果一篇 NLP 论文声称"用主题模型发现了某思潮的兴起"，你会要求它补充哪些信息才敢引用？</li></ol><h3 class="sec-h" id="s49">4.9 学术前沿与延伸阅读</h3>
 <div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
 <table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2022</td><td><a href="https://doi.org/10.46298/jdmdh.9152">Adapting vs. Pre-training Language Models for Historical Languages</a></td><td>Journal of Data Mining &amp;amp; Digital Humanities（被引 27）</td></tr><tr><td>CrossRef</td><td>2016</td><td><a href="https://doi.org/10.5749/j.ctt1cn6thb.21">Alien Reading:</a></td><td>Debates in the Digital Humanities 2016（被引 4）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.18653/v1/2024.nlp4dh-1.10">NLP for Digital Humanities: Processing Chronological Text Corpora</a></td><td>Proceedings of the 4th International Conference on Natural Language Processing for Digital Humanities（被引 3）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.1039/d4sc00924j/v1/review2">Review for "Fine-tuning Large Language Models for Chemical Text Mining"</a></td><td></td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.1109/iccnct68477.2026.11590134">Context-Enriched NLP Pipelines using Large Language Models for High Accuracy Text Mining and Sentiment Analysis</a></td><td>2026 International Conference on Computer Networks and Inventive Communication Technologies (ICCNCT)</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.18653/v1/2026.nlp4dh-1.10">Temporal Text Classification with Large Language Models</a></td><td>Proceedings of the 6th International Conference on Natural Language Processing for the Digital Humanities</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.1039/d4sc00924j/v2/decision1">Decision letter for "Fine-tuning Large Language Models for Chemical Text Mining"</a></td><td></td></tr><tr><td>CORE</td><td></td><td><a href="https://core.ac.uk/download/9015693.pdf">Natural language processing</a></td><td>Chowdhury, Gobinda G., Chowdhury, G., Chowdhury, GG, Gobinda G. Chowdhury</td></tr></tbody></table>
 <p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>

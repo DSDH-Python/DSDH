@@ -43,6 +43,7 @@
 <span class="mod mod-lead">导学</span>
 <h3 class="sec-h" id="s31">3.1 为什么要学一点 Python：不是要你当程序员</h3>
 <p>本书承诺"可复现"，而可复现的底线是<b>把操作变成代码</b>。你不必成为算法工程师，但值得亲手写出第一条流水线：别人能重跑你的步骤，得到一样的结果。Python 是这门课的统一语言，因为它免费、生态成熟、中文社区友好。</p>
+<figure class="chapter-figure"><img src="../assets/dsdh/python_beginner_roadmap.svg" alt="Python 入门经典学习路线图：从搭好环境、基础语法、组织与复用、动手实践，到 pandas 数据分析"><figcaption>Python 入门学习路线：先掌握基础，再以小项目逐步拓展</figcaption></figure>
 <span class="mod mod-lead">导学</span>
 <h3 class="sec-h" id="s32">3.2 十分钟上手：变量、列表、字典与函数</h3>
 <p>只需要四个概念就能开工：</p>
@@ -53,11 +54,87 @@
 <p><code>pandas</code> 是数据科学的"表格引擎"。两类核心对象：</p>
 <ul><li><b>Series</b>：一列带索引的值（如某朝代所有诗人的生年）；</li><li><b>DataFrame</b>：多列组成的表（如"诗人—生年—籍贯—作品数"）。</li></ul>
 <p>读写一行就够：<code>df = pd.read_csv("poets.csv")</code>、<code>df.to_csv("clean.csv", index=False)</code>。本环境已预装 pandas，导入即用的代码不依赖外网。</p>
+<p>从读取表格到筛选、清洗、分组统计和核验结果，下面的思维导图概括了 pandas 的常用知识点与工作流：</p>
+<figure class="chapter-figure"><img src="../assets/dsdh/pandas_core_mindmap.svg" alt="pandas 核心知识点思维导图，包含数据对象、读写、选择筛选、清洗变换、分组统计、合并核验与复现"><figcaption>pandas 核心知识：围绕 Series 与 DataFrame 组织可复现的数据处理</figcaption></figure>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s34">3.4 数据清洗四板斧</h3>
-<p>真实人文数据几乎没有"干净的"。常做的四件事：</p>
-<ul><li><b>缺失</b>：<code>df.dropna()</code> 丢空行，或 <code>df.fillna(0)</code> 补默认值；</li><li><b>重复</b>：<code>df.drop_duplicates()</code> 去重（同一首诗被不同库收录两次很常见）；</li><li><b>类型</b>：<code>df["year"] = df["year"].astype(int)</code> 把"字符型年份"变成能算的数；</li><li><b>重命名</b>：<code>df.rename(columns={"籍貫":"籍贯"})</code> 统一字段名，避免后续对不上。</li></ul>
-<div class="callout quote"><p><b>经验</b>：清洗不是"美化"，而是"留痕"。每步改动都写进脚本，别人才能复现你的取舍。</p></div>
+<p>人文材料中的缺失、重复、类型不一致和字段异名，往往来自不同的著录规则或数据导出方式。下面用档案目录、馆藏记录、历史编年和人物作品表四种常见场景说明处理方法。代码中的微型数据仅用于演示，替换为真实材料时应先核对来源、字段定义与处理口径。</p>
+<h4>案例 1：档案目录中的形成时间缺失</h4>
+<p><b>场景</b>：整理档案目录时，部分记录没有可确认的形成时间。未知时间不等于年份为 0，也不应为了让表格完整而随意补值；保留原记录并标记缺失，只在时间统计时排除无法使用的记录。</p>
+<pre class="code" data-lang="python"><code>import pandas as pd
+
+records = pd.DataFrame({
+    "档号": ["A-001", "A-002", "A-003"],
+    "题名": ["地契", "往来文书", "账册"],
+    "形成时间": [1898, None, 1911]
+})
+
+records["时间状态"] = records["形成时间"].isna().map({
+    True: "待考", False: "已著录"
+})
+known_dates = records.dropna(subset=["形成时间"])
+
+print("待考记录：")
+print(records.loc[records["时间状态"] == "待考", ["档号", "题名"]])
+print("可用于时间统计的记录数：", len(known_dates))</code></pre>
+<h4>案例 2：合并馆藏目录后核查重复记录</h4>
+<p><b>场景</b>：同一批馆藏目录被重复导出或导入，导致同一档号出现多次。先查看重复记录，并确认档号确实能唯一标识材料；题名相同的不同版本可能是不同材料，不能仅按题名删除。</p>
+<pre class="code" data-lang="python"><code>import pandas as pd
+
+records = pd.DataFrame({
+    "档号": ["GZ-001", "GZ-001", "GZ-002"],
+    "题名": ["县志", "县志", "县志"],
+    "版本": ["光绪本", "光绪本", "民国本"]
+})
+
+duplicate_mask = records.duplicated(subset=["档号"], keep=False)
+print("请先核查的重复记录：")
+print(records.loc[duplicate_mask].sort_values("档号"))
+
+# 确认重复档号的著录信息一致后，才按档号去重。
+unique_records = records.drop_duplicates(subset=["档号"], keep="first")
+print("原始记录数：", len(records), "去重后：", len(unique_records))
+print(unique_records)</code></pre>
+<h4>案例 3：历史编年中的年份格式不一</h4>
+<p><b>场景</b>：编年材料的年份字段可能同时包含公历数字、带“年”的字符串和年号纪年。先转换能够明确识别的公历年份，并单独列出未识别值；年号、民国纪年等须依据材料说明采用明确换算规则，不能直接猜测。</p>
+<pre class="code" data-lang="python"><code>import pandas as pd
+
+chronology = pd.DataFrame({
+    "原始年份": ["1912", "1916年", "民国元年", "不详"]
+})
+year_text = chronology["原始年份"].str.extract(
+    r"^\s*(\d{4})(?:年)?\s*$", expand=False
+)
+chronology["公历年份"] = pd.to_numeric(
+    year_text, errors="coerce"
+).astype("Int64")
+
+print("可解析的年份：")
+print(chronology.loc[chronology["公历年份"].notna()])
+print("需按来源规则核查的写法：")
+print(chronology.loc[chronology["公历年份"].isna(), "原始年份"])
+</code></pre>
+<h4>案例 4：不同人物作品表中的字段名称不一致</h4>
+<p><b>场景</b>：合并人物或作品目录时，不同数据库可能分别使用“作者姓名”“籍貫”“作品名”等字段。先将字段映射到统一名称，再检查必需字段是否齐全，以免后续筛选或合并时把列名差异误当成数据缺失。</p>
+<pre class="code" data-lang="python"><code>import pandas as pd
+
+exported = pd.DataFrame({
+    "作者姓名": ["人物甲", "人物乙"],
+    "籍貫": ["某地甲", "某地乙"],
+    "作品名": ["作品甲", "作品乙"]
+})
+normalized = exported.rename(columns={
+    "作者姓名": "作者",
+    "籍貫": "籍贯",
+    "作品名": "题名"
+})
+
+required = {"作者", "籍贯", "题名"}
+missing_columns = required - set(normalized.columns)
+if missing_columns:
+    raise ValueError(f"缺少必要字段：{sorted(missing_columns)}")
+print(normalized[["作者", "籍贯", "题名"]])</code></pre>
+<div class="callout quote"><p><b>经验</b>：清洗不是"美化"，而是"留痕"。保留原始数据，记录每步改动、影响的记录数和判断依据，别人才能复现你的取舍。</p></div>
 <span class="mod mod-theory">理论</span>
 <h3 class="sec-h" id="s35">3.5 分组与聚合：groupby 的人文用法</h3>
 <p><code>groupby</code> 是提问的利器。例如"统计每个朝代各有多少位诗人"：</p>

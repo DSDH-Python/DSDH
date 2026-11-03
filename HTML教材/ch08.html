@@ -29,10 +29,9 @@
 <a href="#s84">8.4 图像检索与分类：以图搜图</a>
 <a href="#s85">8.5 视觉语言模型（VLM）：描述与问答</a>
 <a href="#s86">8.6 伦理坐标：真实、残缺与伪造（本模块核心能力）</a>
-<a href="#s87">8.7 第一次动手：对一张老影像做 OCR + 标注</a>
-<a href="#s88">8.8 第二次动手：用 VLM 给老照片写图注并人工校验</a>
-<a href="#s89">8.9 本章小结与思考</a>
-<a href="#s810">8.10 学术前沿与延伸阅读</a>
+<a href="#s87">8.7 综合实践：识别并核验一组历史影像</a>
+<a href="#s88">8.8 本章小结与思考</a>
+<a href="#s89">8.9 学术前沿与延伸阅读</a>
   </aside>
   <main class="content">
 <h1>第 8 章　　图像处理与计算机视觉</h1>
@@ -61,16 +60,16 @@
 <h3 class="sec-h" id="s86">8.6 伦理坐标：真实、残缺与伪造（本模块核心能力）</h3>
 <ul><li><b>色彩真实</b>：修复/上色要标明"此为复原，非原貌"，不把推测当原物；</li><li><b>残缺伦理</b>：补全残卷时，补的部分须可辨识，不能让观者分不清"原"与"补"；</li><li><b>伪造风险</b>：生成式 AI 能"造"出以假乱真的古画/拓片，发布必须声明。</li></ul>
 <div class="callout quote"><p><b>一条红线</b>：不把 AI 复原或生成的影像冒充原始遗产；任何处理过的图像都标注"处理类型与程度"。</p></div>
-<h3 class="sec-h" id="s87">8.7 第一次动手：对一张老影像做 OCR + 标注</h3>
-<div class="callout quote"><p><b>小练习 8.1（图像处理）</b>：取一张带文字的老照片/碑帖扫描图，先做几何校正与二值化，再跑 OCR 取文本，核对识别错误并标注"哪些字 OCR 读错"；若可用 VLM，让它描述画面并人工纠错。本模块 V2.1 的 <i>Computer vision and cultural heritage</i>、<i>Advanced image analysis for the preservation of cultural heritage</i> 是方法总览，可对照你的预处理流程是否覆盖了"保护优先"的原则。</p></div>
-<span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s88">8.8 第二次动手：用 VLM 给老照片写图注并人工校验</h3>
+<h3 class="sec-h" id="s87">8.7 综合实践：识别并核验一组历史影像</h3>
+<h4>任务一：对影像文字进行 OCR 与校勘</h4>
+<div class="callout quote"><p><b>小练习 8.1（图像处理）</b>：取一张带文字的老照片 / 碑帖扫描图，先做几何校正与二值化，再跑 OCR 取文本，核对识别错误并标注"哪些字 OCR 读错"。保留未经处理的原始图像和 OCR 输出。本模块 V2.1 的 <i>Computer vision and cultural heritage</i>、<i>Advanced image analysis for the preservation of cultural heritage</i> 是方法总览，可对照检查流程是否遵循"保护优先"原则。</p></div>
+<h4>任务二：生成影像图注并人工复核</h4>
 <ul><li><b>目标</b>：在 8.7 OCR 基础上，进一步用视觉语言模型生成图注，再人工抽查准确率。</li><li><b>步骤</b>：<ol><li>取 10 张老影像；</li><li>用 VLM 各生成一句图注；</li><li>人工核对，标注“准确 / 部分 / 错误”；</li><li>统计准确率；</li><li>写 150 字：VLM 在档案图注上可靠吗、何时必须人工。</li></ol></li><li><b>工具</b>：视觉语言模型 API + 表格记录。</li><li><b>产出</b>：图注表 + 准确率统计 + 反思。</li><li><b>评价量规</b>：图注可用（30%）、人工校验认真（30%）、可靠性判断有据（40%）。</li></ul>
 <span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s89">8.9 本章小结与思考</h3>
+<h3 class="sec-h" id="s88">8.8 本章小结与思考</h3>
 <p>带走三件事：<b>预处理三件事</b>（二值化/去噪/校正）、<b>OCR 是 NLP 入口但要校勘</b>、<b>VLM 能问答但会幻觉 + 真实性红线</b>。图像分析让"看不懂的遗产"可计算，但真实性的边界必须守住。</p>
 <h4>思考题</h4>
-<ol><li>OCR 把碑帖变文本，但会读错。若研究结论依赖这些文本，你如何控制"识别错误"带来的风险？</li><li>用 AI 给一幅残画"补全"，怎样标注才既有用又不误导？</li><li>生成式 AI 能造出逼真"古画"。在教材/展览中使用这类图像，应遵循什么透明原则？</li></ol><h3 class="sec-h" id="s810">8.10 学术前沿与延伸阅读</h3>
+<ol><li>OCR 把碑帖变文本，但会读错。若研究结论依赖这些文本，你如何控制"识别错误"带来的风险？</li><li>用 AI 给一幅残画"补全"，怎样标注才既有用又不误导？</li><li>生成式 AI 能造出逼真"古画"。在教材/展览中使用这类图像，应遵循什么透明原则？</li></ol><h3 class="sec-h" id="s89">8.9 学术前沿与延伸阅读</h3>
 <div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
 <table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>1998</td><td><a href="https://doi.org/10.1006/cviu.1998.0686">Analysis of Compressed Document Images for Dominant Skew, Multiple Skew, and Logotype Detection</a></td><td>Computer Vision and Image Understanding（被引 11）</td></tr><tr><td>CrossRef</td><td>2010</td><td><a href="https://doi.org/10.1117/12.839000">Advanced image analysis for the preservation of cultural heritage</a></td><td>SPIE Proceedings（被引 6）</td></tr><tr><td>CrossRef</td><td>2023</td><td><a href="https://doi.org/10.1016/j.cviu.2023.103835">Minimum error adaptive RGB calibration in a context of colorimetric uncertainty for cultural heritage preservation</a></td><td>Computer Vision and Image Understanding（被引 4）</td></tr><tr><td>CrossRef</td><td>2011</td><td><a href="https://doi.org/10.1117/12.876590">Polarized light scanning for cultural heritage investigation</a></td><td>SPIE Proceedings（被引 3）</td></tr><tr><td>CrossRef</td><td>1996</td><td><a href="https://doi.org/10.1006/cviu.1996.0061">ICDAR '97: Fourth International Conference on Document Analysis and Recognition</a></td><td>Computer Vision and Image Understanding</td></tr><tr><td>CrossRef</td><td>1983</td><td><a href="https://doi.org/10.1016/0734-189x(83">Digital document processing</a>90087-7)</td><td>Computer Vision, Graphics, and Image Processing</td></tr><tr><td>CrossRef</td><td>2019</td><td><a href="https://doi.org/10.1109/icdar.2019.00192">Semantic and Interaction: When Document Image Analysis Meets Computer Vision and Machine Learning</a></td><td>2019 International Conference on Document Analysis and Recognition (ICDAR)</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.2307/jj.24215718.9">Computer vision and cultural heritage</a></td><td>Navigating Artificial Intelligence for Cultural Heritage Organisations</td></tr></tbody></table>
 <p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>

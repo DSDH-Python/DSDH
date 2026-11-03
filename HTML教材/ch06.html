@@ -29,10 +29,9 @@
 <a href="#s64">6.4 社群发现：凝聚子群</a>
 <a href="#s65">6.5 文本 × 网络：从共现到引文</a>
 <a href="#s66">6.6 伦理坐标：网络也会偏见（本模块核心能力）</a>
-<a href="#s67">6.7 第一次动手：建一张人物关系网</a>
-<a href="#s68">6.8 第二次动手：算中心性，找“关键人物”</a>
-<a href="#s69">6.9 本章小结与思考</a>
-<a href="#s610">6.10 学术前沿与延伸阅读</a>
+<a href="#s67">6.7 综合实践：构建关系网络并分析关键节点</a>
+<a href="#s68">6.8 本章小结与思考</a>
+<a href="#s69">6.9 学术前沿与延伸阅读</a>
   </aside>
   <main class="content">
 <h1>第 6 章　　社会网络分析</h1>
@@ -60,16 +59,16 @@
 <h3 class="sec-h" id="s66">6.6 伦理坐标：网络也会偏见（本模块核心能力）</h3>
 <ul><li><b>抽样偏差</b>：被数字化、被研究得多的人物更"中心"，沉默者天然边缘；</li><li><b>缺失关系</b>：信件散佚、著者不详，会让真实枢纽"消失"；</li><li><b>被代表</b>：用"中心性高"暗示"更重要"，是把结构当价值。</li></ul>
 <div class="callout quote"><p><b>一条红线</b>：不把"网络中心"直接等同于"历史重要"；呈现中心性时同步说明数据覆盖的局限。</p></div>
-<h3 class="sec-h" id="s67">6.7 第一次动手：建一张人物关系网</h3>
-<div class="callout quote"><p><b>小练习 6.1（网络分析）</b>：取模块四 NER 抽出的人物—地点/人物—人物对，用 <code>networkx</code> 建一张小网，计算度中心性，找出前三"枢纽"，并手判它们是否真的重要。本模块 V2.2 的《基于用户关系管理的高校图书馆数字学术服务重塑》《基于开源情报的军事知识图谱问答智能服务研究》展示了"关系数据→服务/问答"的落地，可对照你这张网的潜在用途。</p></div>
+<h3 class="sec-h" id="s67">6.7 综合实践：构建关系网络并分析关键节点</h3>
+<h4>任务一：从材料建立人物关系网</h4>
+<div class="callout quote"><p><b>小练习 6.1（网络分析）</b>：取模块四 NER 抽出的人物—地点 / 人物—人物关系，回到原文核实后，用 <code>networkx</code> 建一张小网。本模块 V2.2 的《基于用户关系管理的高校图书馆数字学术服务重塑》《基于开源情报的军事知识图谱问答智能服务研究》展示了"关系数据→服务 / 问答"的落地，可对照思考你所建网络的用途。</p></div>
+<h4>任务二：比较中心性并解释“关键人物”</h4>
+<ul><li><b>目标</b>：在任务一建好的人物关系网上，量化谁最核心。</li><li><b>步骤</b>：<ol><li>用 networkx 计算 degree / betweenness / closeness；</li><li>排序取 Top 5；</li><li>检查“度数最高”是否等于“最关键”，举一个反例；</li><li>做社群发现（community detection）；</li><li>写 150 字结论。</li></ol></li><li><b>工具</b>：networkx。</li><li><b>产出</b>：中心性排序表 + 社群划分 + 结论。</li><li><b>评价量规</b>：三种中心性正确（40%）、反例有见地（30%）、结论清晰（30%）。</li></ul>
 <span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s68">6.8 第二次动手：算中心性，找“关键人物”</h3>
-<ul><li><b>目标</b>：在 6.7 建好的人物关系网上，量化谁最核心。</li><li><b>步骤</b>：<ol><li>用 networkx 计算 degree / betweenness / closeness；</li><li>排序取 Top 5；</li><li>检查“度数最高”是否等于“最关键”，举一个反例；</li><li>做社群发现（community detection）；</li><li>写 150 字结论。</li></ol></li><li><b>工具</b>：networkx。</li><li><b>产出</b>：中心性排序表 + 社群划分 + 结论。</li><li><b>评价量规</b>：三种中心性正确（40%）、反例有见地（30%）、结论清晰（30%）。</li></ul>
-<span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s69">6.9 本章小结与思考</h3>
+<h3 class="sec-h" id="s68">6.8 本章小结与思考</h3>
 <p>带走三件事：<b>图的语言</b>（节点/边/度/路径）、<b>三种中心性</b>（度/介数/接近，答不同问题）、<b>社群发现 + 偏见自觉</b>。网络让你看见"结构"，但结构不等于价值。</p>
 <h4>思考题</h4>
-<ol><li>用你专业的某组关系（师承/合作/引用）画成网络，谁的中心性最高？这和你既有认知一致吗？</li><li>"被数字化得多"的人更中心——这会怎样扭曲我们对历史圈子的理解？</li><li>如果一封关键信件散佚，网络分析的结论会怎样改变？这提醒我们什么？</li></ol><h3 class="sec-h" id="s610">6.10 学术前沿与延伸阅读</h3>
+<ol><li>用你专业的某组关系（师承/合作/引用）画成网络，谁的中心性最高？这和你既有认知一致吗？</li><li>"被数字化得多"的人更中心——这会怎样扭曲我们对历史圈子的理解？</li><li>如果一封关键信件散佚，网络分析的结论会怎样改变？这提醒我们什么？</li></ol><h3 class="sec-h" id="s69">6.9 学术前沿与延伸阅读</h3>
 <div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
 <table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2018</td><td><a href="https://doi.org/10.4018/978-1-5225-5097-6.ch001">Social Network Analysis</a></td><td>Advances in Business Information Systems and Analytics（被引 10）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.22148/001c.117486">Poet-Composer Collaborations in Modern Egyptian Song:  A Social Network Analysis Approach to Music History</a></td><td>Journal of Cultural Analytics（被引 1）</td></tr><tr><td>CrossRef</td><td>2018</td><td><a href="https://doi.org/10.1007/978-1-4939-7131-2_101435">Visual Social Network Analysis, Visual Analytics</a></td><td>Encyclopedia of Social Network Analysis and Mining</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.4324/9781003507840-8">Relational Analytics and Social Network Analysis</a></td><td>AI, Analytics and Strategic Decision Making</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.3102/ip.25.2184998">Strengthening Educational Research Curriculum through Network Curriculum Analytics &amp;amp;amp; Social Network Analysis</a></td><td>AERA 2025</td></tr><tr><td>CrossRef</td><td>2013</td><td><a href="https://doi.org/10.4135/9781452276311.n196">Network Theory/Social Network Analysis</a></td><td>Theory in Social and Cultural Anthropology: An Encyclopedia</td></tr><tr><td>CrossRef</td><td></td><td><a href="https://doi.org/10.1057/9781137379283.0012">Text Mining and Social Network Analysis</a></td><td>Predictive Analytics, Data Mining and Big Data</td></tr><tr><td>CrossRef</td><td>2017</td><td><a href="https://doi.org/10.4324/9781315640914-14">Network Analysis and Social Network Mapping</a></td><td>Digital Analytics for Marketing</td></tr></tbody></table>
 <p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>

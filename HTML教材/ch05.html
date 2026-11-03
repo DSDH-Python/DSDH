@@ -29,10 +29,9 @@
 <a href="#s54">5.4 视觉修辞三要素：路径、视角、色彩</a>
 <a href="#s55">5.5 人文图表的设计准则</a>
 <a href="#s56">5.6 伦理坐标：误导与操控的红线（本模块核心能力）</a>
-<a href="#s57">5.7 第一次动手：画一张"有标注"的图</a>
-<a href="#s58">5.8 第二次动手：用同一数据画“两张相反的图”</a>
-<a href="#s59">5.9 本章小结与思考</a>
-<a href="#s510">5.10 学术前沿与延伸阅读</a>
+<a href="#s57">5.7 综合实践：设计并审视数据可视化</a>
+<a href="#s58">5.8 本章小结与思考</a>
+<a href="#s59">5.9 学术前沿与延伸阅读</a>
   </aside>
   <main class="content">
 <h1>第 5 章　　数据可视化与视觉修辞</h1>
@@ -60,16 +59,16 @@
 <h3 class="sec-h" id="s56">5.6 伦理坐标：误导与操控的红线（本模块核心能力）</h3>
 <ul><li><b>截断轴</b>：纵轴不从 0 起，小差异被放大成"巨变"；</li><li><b>双轴陷阱</b>：两个量纲不同的序列共用一张图，强行制造"相关性"；</li><li><b>因果暗示</b>：相关被画成因果，时间先后被说成因果；</li><li><b>选择性呈现</b>：只画支持结论的年份/群体。</li></ul>
 <div class="callout quote"><p><b>一条红线</b>：不为"让结论更震撼"而改动坐标轴、省略不利数据或暗示因果。图是论证，造假图等于造假论证。</p></div>
-<h3 class="sec-h" id="s57">5.7 第一次动手：画一张"有标注"的图</h3>
+<h3 class="sec-h" id="s57">5.7 综合实践：设计并审视数据可视化</h3>
+<h4>任务一：绘制一张有标注的人文图</h4>
 <div class="callout quote"><p><b>小练习 5.1（视觉修辞）</b>：用模块三清洗好的 CSV，画一张折线或柱状图，要求：① 纵轴从 0 起；② 至少一个拐点配一句文字标注；③ 用色彩区分两组但说明色板含义；④ 在图下写一段"我想让观众先看到什么"。本模块 V2.2 的《事件驱动的数据可视化交互设计：基于"数据叙事"的探索和实践》提供"数据叙事"的设计思路，可对照检查你的叙事顺序是否合理。</p></div>
-<span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s58">5.8 第二次动手：用同一数据画“两张相反的图”</h3>
+<h4>任务二：用同一数据呈现两种不同叙事</h4>
 <ul><li><b>目标</b>：体会可视化的 framing——同一份数据，换坐标轴 / 口径能讲相反故事。</li><li><b>步骤</b>：<ol><li>取一份含对比的数据（如各省档案开放数量）；</li><li>画 A 图突出“差距在拉大”；</li><li>画 B 图突出“整体在提升”；</li><li>标出你各自改了哪三个视觉参数；</li><li>写反思：哪种更诚实。</li></ol></li><li><b>工具</b>：matplotlib 或任意绘图工具。</li><li><b>产出</b>：A、B 两图 + 参数清单 + 反思。</li><li><b>评价量规</b>：两图可运行（30%）、参数标注清楚（30%）、伦理反思到位（40%）。</li></ul>
 <span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s59">5.9 本章小结与思考</h3>
+<h3 class="sec-h" id="s58">5.8 本章小结与思考</h3>
 <p>带走三件事：<b>图非中立</b>（可视化是论证）、<b>修辞三要素</b>（路径/视角/色彩）、<b>误导红线</b>（截断轴/双轴/因果暗示/选择性呈现）。好的人文图表，让人"看见"也让人"质疑"。</p>
 <h4>思考题</h4>
-<ol><li>找一张你领域里"看似专业"的图，用 5.6 的红线检查它有没有误导手法？</li><li>"色彩即立场"——如果你用红色表示"衰落"、绿色表示"兴盛"，这背后藏着什么价值观预设？</li><li>叙事可视化引导视线，会不会剥夺观众自己发现的能力？如何在"引导"与"留白"间平衡？</li></ol><h3 class="sec-h" id="s510">5.10 学术前沿与延伸阅读</h3>
+<ol><li>找一张你领域里"看似专业"的图，用 5.6 的红线检查它有没有误导手法？</li><li>"色彩即立场"——如果你用红色表示"衰落"、绿色表示"兴盛"，这背后藏着什么价值观预设？</li><li>叙事可视化引导视线，会不会剥夺观众自己发现的能力？如何在"引导"与"留白"间平衡？</li></ol><h3 class="sec-h" id="s59">5.9 学术前沿与延伸阅读</h3>
 <div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
 <table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2011</td><td><a href="https://doi.org/10.1109/tvcg.2011.255">Visualization Rhetoric: Framing Effects in Narrative Visualization</a></td><td>IEEE Transactions on Visualization and Computer Graphics（被引 394）</td></tr><tr><td>CrossRef</td><td>2020</td><td><a href="https://doi.org/10.26583/sv.12.4.06">Novel Circular Graph Capabilities for Comprehensive Visual Analytics of Interconnected Data in Digital Humanities</a></td><td>Scientific Visualization（被引 4）</td></tr><tr><td>CrossRef</td><td>2013</td><td><a href="https://doi.org/10.1109/bigdata.2013.6691666">Visualization and rhetoric: Key concerns for utilizing big data in humanities research: A case study of vaccination discourses: 1918-1919</a></td><td>2013 IEEE International Conference on Big Data（被引 1）</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.1109/tvcg.2025.3628181">Untangling Rhetoric, Pathos, and Aesthetics in Data Visualization</a></td><td>IEEE Transactions on Visualization and Computer Graphics（被引 1）</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.59298/idosrjah/2025/121110000">Data Visualization as Cultural Rhetoric: Persuasion, Uncertainty, and Trust</a></td><td>IDOSR JOURNAL OF ARTS AND HUMANITIES</td></tr><tr><td>CrossRef</td><td>2015</td><td><a href="https://doi.org/10.18737/0607511234">Visual Design: Exploring Data Visualization in Neuroimaging</a></td><td>The Journal of Humanities in Rehabilitation</td></tr><tr><td>CrossRef</td><td>2023</td><td><a href="https://doi.org/10.2307/jj.17681834.11">Reimagining Representational Codes in Data Visualization:</a></td><td>Future Horizons</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.5334/johd.331">GraphEidos: A Dataset of Visual Rhetoric in Digital Humanities</a></td><td>Journal of Open Humanities Data</td></tr></tbody></table>
 <p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>

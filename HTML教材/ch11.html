@@ -29,11 +29,9 @@
 <a href="#s114">11.4 智能体：多步自主任务</a>
 <a href="#s115">11.5 局限与风险：幻觉、版权与学术诚信</a>
 <a href="#s116">11.6 伦理坐标：署名、透明、不替代思考（本模块核心能力）</a>
-<a href="#s117">11.7 第一次动手：用 RAG 问一本古籍</a>
-<a href="#s118">11.8 第二次动手：写提示词模板并做“幻觉自检”</a>
-<a href="#s119">11.9 讨论：人机协同——学术工作的重新分工</a>
-<a href="#s1110">11.10 本章小结与思考</a>
-<a href="#s1111">11.11 学术前沿与延伸阅读</a>
+<a href="#s117">11.7 综合实践：构建 RAG 问答并核查幻觉</a>
+<a href="#s118">11.8 讨论与小结：人机协同、学术责任与研究方法</a>
+<a href="#s119">11.9 学术前沿与延伸阅读</a>
   </aside>
   <main class="content">
 <h1>第 11 章　　大语言模型与生成式 AI</h1>
@@ -61,13 +59,14 @@
 <ul><li><b>透明声明</b>：凡用 AI 辅助，在作业/论文中写明用了什么、用在哪里；</li><li><b>不替代思考</b>：AI 生成的是草稿不是结论，关键判断必须由你做；</li><li><b>不伪造</b>：不许用 AI 造文献、造数据、造引用；</li><li><b>版权合规</b>：不把受版权文本大规模喂入不明来源的服务。</li></ul>
 <div class="callout quote"><p><b>一条红线</b>：任何交付物中，AI 生成内容须标注；伪造引用与数据，按学术不端处理。本课程鼓励"用 AI 提效"，零容忍"用 AI 作弊"。</p></div>
 <div class="callout quote"><p><b>现实案例 11.1（AI 的双向放大：论文工厂与 AI 打假）</b></p><p>生成式 AI 正在同时放大"造假"与"打假"两种能力——这正是本模块要你警惕的：</p><p>- <b>造假一侧</b>：据多地警方与媒体调查，已出现公司化运营的"论文工厂"，从代写、代投、数据造假到图片处理提供"一条龙"服务；有报道称单家工厂年发表造假论文可达十万篇量级。AI 让批量生成"看似合理"的数据、文本与图像变得廉价。</p><p>- <b>打假一侧</b>：同一批技术也被用于监督。围绕 2026 年的打假风波，开源社区出现了用 AI 辅助检查论文数据造假、图片复用与统计异常的工具；《科学》(Science) 于 2026 年 6 月以 <i>Misconduct sleuth in China swiftly gains acclaim for calling out questionable papers</i> 为题报道此事，称民间举报者是治理科研不端过程中"出人意料的盟友"，并引述学者评价：这可能是基层举报者首次借助社交媒体获得广泛正面报道、并推动实质调查的案例。</p><p>- <b>正面示范</b>：学术纠错本身不是丑闻。2026 年 2 月，一篇发表于 Science 的动物演化论文，因国内研究团队公开指出其技术缺陷，从发表到撤稿仅 84 天——这就是"可复现 + 公开质疑"机制有效运转的样子。</p><p><b>补一条红线</b>：用 AI 造数据、造图片、造引用，与亲手造假同属学术不端；反过来，用 AI 检测异常、做数据审计，是这门课鼓励你掌握的能力。工具中立，人的选择不中立。</p><p><i>资料来源：Science, "Misconduct sleuth in China swiftly gains acclaim for calling out questionable papers"（2026-06-09）；Science 撤稿声明（2026-02-05）。</i></p></div>
-<h3 class="sec-h" id="s117">11.7 第一次动手：用 RAG 问一本古籍</h3>
+<h3 class="sec-h" id="s117">11.7 综合实践：构建 RAG 问答并核查幻觉</h3>
+<h4>任务一：用 RAG 问一本古籍</h4>
 <div class="callout quote"><p><b>小练习 11.1（生成式 AI）</b>：取你的一小组文本（如某人文集或模块二取回的数据集），用最简 RAG 流程（切段→向量化→检索→让模型基于检索段作答）问它一个具体问题，对比"直接问模型"与"RAG 问"的答案差异，记录模型是否仍出现幻觉。本模块 V2.2 的《古籍智能信息处理研究现状》《大语言模型背景下文献的跨学科知识组织和可视化研究》可作方法参照，看 RAG 如何把"通用大模型"变成"你的领域助手"。</p></div>
 <span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s118">11.8 第二次动手：写提示词模板并做“幻觉自检”</h3>
-<ul><li><b>目标</b>：把 11.7 的 RAG 问答工程化，加入引用回溯防止幻觉。</li><li><b>步骤</b>：<ol><li>设计“带引用”的提示词模板；</li><li>问 5 个问题；</li><li>逐条检查答案是否能在语料中找到出处；</li><li>标出幻觉条数；</li><li>改模板降低幻觉，对比前后。</li></ol></li><li><b>工具</b>：LLM + 你的语料（RAG）。</li><li><b>产出</b>：提示词模板 + 幻觉核查表 + 前后对比。</li><li><b>评价量规</b>：模板可用（30%）、引用核查严（30%）、迭代有改进（40%）。</li></ul>
-<span class="mod mod-theory">理论</span>
-<h3 class="sec-h" id="s119">11.9 讨论：人机协同——学术工作的重新分工</h3>
+<h4>任务二：设计提示模板并进行幻觉自检</h4>
+<ul><li><b>目标</b>：在任务一的 RAG 问答基础上加入引用回溯，检查回答能否由语料证据支持。</li><li><b>步骤</b>：<ol><li>设计要求附带来源片段的提示词模板；</li><li>提出 5 个问题并保存回答；</li><li>逐条核对答案与原文证据，标记无依据或矛盾内容；</li><li>修改模板后重复提问，比较前后差异。</li></ol></li><li><b>工具</b>：LLM + 自有语料（RAG）。</li><li><b>产出</b>：提示词模板、问答记录、证据核查表与反思。</li><li><b>评价量规</b>：模板可用（30%）、引用核查严谨（30%）、迭代与反思有据（40%）。</li></ul>
+<h3 class="sec-h" id="s118">11.8 讨论与小结：人机协同、学术责任与研究方法</h3>
+<h4>人机协同：学术工作的重新分工</h4>
 <p>大模型之后，学术工作正在被重新切分。有学者将这一变化概括为：科研正从"人类单一思辨"迈向<b>人机协同认知共生</b>——AI 不再只是检索与润色的工具，而开始在知识生成、理论扩展与范式重构中扮演<b>认知协作者</b>的角色。</p>
 <p><b>分工大致是这样划的</b>：</p>
 <table class="gtable"><thead><tr><th>环节</th><th>主要由谁承担</th></tr></thead><tbody><tr><td>文献检索、数据清洗、模型运算、结果可视化</td><td>AI（基础性、程序性工作）</td></tr><tr><td>提出问题、研究设计、价值权衡、理论综合、核心阐释</td><td>人（创造性、判断性工作）</td></tr></tbody></table>
@@ -76,10 +75,10 @@
 <p><b>伴随的挑战有三个</b>：</p>
 <ul><li><b>责任归属</b>：AI 生成的错误由谁负责？署名里要不要写 AI？（回看 11.6 的红线）</li><li><b>能力退化</b>：过度外包基础工作，判断力会不会一起萎缩？</li><li><b>评价失据</b>：当 AI 能承担大部分程序性工作，如何评价一个人的学术贡献？有建议提出在评审中试点<b>"研究者贡献指标"</b>——要求学者说明自己在问题提出、价值权衡、理论综合等核心环节的独创性贡献，与 AI 承担的基础性工作明确区隔。</li></ul>
 <div class="callout quote"><p><b>制度正在跟上</b>：中国社会科学院在推进人机融合科研时强调"<b>约束与赋能并重</b>"——既立规矩，也建智算中心、改评价机制、育复合人才；只立规矩不给支撑，只会让人"不敢用、不会用"。这与本课程的态度一致：鼓励用 AI 提效，零容忍用 AI 作弊。</p></div>
-<h3 class="sec-h" id="s1110">11.10 本章小结与思考</h3>
+<h4>本章小结与思考</h4>
 <p>带走三件事：<b>提示工程</b>（角色/任务/约束/示例）、<b>RAG 抑幻觉</b>、<b>智能体提效 + 诚信红线</b>（透明/不替代/不伪造）。大模型是书房里的新成员，主位是你。</p>
 <h4>思考题</h4>
-<ol><li>用 RAG 与不用 RAG 问同一古籍问题，答案差异说明了什么？</li><li>如果 AI 帮你写了文献综述初稿，你在作业里应如何声明才符合学术诚信？</li><li>"模型会编出处"对人文研究是致命伤。你会在流程的哪一步设卡，拦住幻觉流入结论？</li></ol><h3 class="sec-h" id="s1111">11.11 学术前沿与延伸阅读</h3>
+<ol><li>用 RAG 与不用 RAG 问同一古籍问题，答案差异说明了什么？</li><li>如果 AI 帮你写了文献综述初稿，你在作业里应如何声明才符合学术诚信？</li><li>"模型会编出处"对人文研究是致命伤。你会在流程的哪一步设卡，拦住幻觉流入结论？</li></ol><h3 class="sec-h" id="s119">11.9 学术前沿与延伸阅读</h3>
 <div class="callout frontier"><span class="f-tag">知识拓展</span><p>下表为通过 OpenAlex（开放学术图谱，聚合期刊/会议/预印本）、DBLP（CS 会议期刊，含 SIGIR/UIST/DH/IJDAR/EPIA）、arXiv（预印本）、CrossRef（期刊 DOI 元数据）、CORE（开放获取库）检索到的真实文献，按来源/被引排序，供延伸阅读与实验报告引用。</p>
 <table class="gtable"><thead><tr><th>来源</th><th>年份</th><th>标题（链接）</th><th>作者 / 场所</th></tr></thead><tbody><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.36227/techrxiv.173121409.91676949/v1">Applications of AI Chatbots Based on Generative AI, Large Language Models and Large Multimodal Models</a></td><td>（被引 18）</td></tr><tr><td>CrossRef</td><td>2023</td><td><a href="https://doi.org/10.1007/978-1-4842-9367-6_5">Large Language Models</a></td><td>Generative AI（被引 9）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.36227/techrxiv.173121396.62005552/v2">Imperfectly Perfect AI Chatbots: Limitations of Generative AI, Large Language Models and Large Multimodal Models</a></td><td>（被引 8）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.52783/jier.v4i2.767">Impacts and Implications of Generative AI and Large Language Models: Redefining Banking Sector</a></td><td>Journal of Informatics Education and Research（被引 5）</td></tr><tr><td>CrossRef</td><td>2024</td><td><a href="https://doi.org/10.1007/979-8-8688-1001-5_1">Introduction to Generative AI and Large Language Models (LLMs)</a></td><td>Mastering Spring AI（被引 4）</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.1016/j.drudis.2025.104593">Generative AI in pharmaceutical R&amp;amp;D: From large language models to AI agents to regulation</a></td><td>Drug Discovery Today（被引 3）</td></tr><tr><td>CrossRef</td><td>2025</td><td><a href="https://doi.org/10.1007/978-3-658-49218-2_7">AI Agents</a></td><td>Prompt Engineering in the Enterprise – An Introduction</td></tr><tr><td>CrossRef</td><td>2026</td><td><a href="https://doi.org/10.3390/books978-3-7258-7704-1">Generative AI and Large Language Models</a></td><td></td></tr></tbody></table>
 <p><b>课堂复现（检索即方法）</b>：下列代码直接调用 OpenAlex 免费 API 复现本模块文献检索（无需密钥）。</p>
