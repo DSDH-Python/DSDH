@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">历史人物网络中的社群与关系不确定性示意</title>
+  <desc id="desc">节点按社群着色，实线表示史料明确的关系，虚线表示待核实的关系；示意图不对应特定历史人物数据。</desc>
+  <rect width="760" height="300" rx="8" fill="#fff"/>
+  <g stroke="#c7d0d9" stroke-width="2">
+    <path d="M170 112L235 76 M170 112L237 151 M235 76L297 111 M237 151L297 111 M297 111L376 88 M297 111L376 153 M376 88L442 119 M376 153L442 119 M442 119L511 84 M442 119L515 159 M511 84L577 119 M515 159L577 119"/>
+  </g>
+  <g stroke="#bb603f" stroke-width="2.5" stroke-dasharray="7 6">
+    <path d="M237 151L376 88 M297 111L442 119 M376 153L515 159"/>
+  </g>
+  <g fill="#176b66" stroke="#fff" stroke-width="3">
+    <circle cx="170" cy="112" r="13"/><circle cx="235" cy="76" r="13"/><circle cx="237" cy="151" r="13"/><circle cx="297" cy="111" r="18"/>
+  </g>
+  <g fill="#526f9b" stroke="#fff" stroke-width="3">
+    <circle cx="376" cy="88" r="13"/><circle cx="376" cy="153" r="13"/><circle cx="442" cy="119" r="18"/><circle cx="511" cy="84" r="13"/><circle cx="515" cy="159" r="13"/><circle cx="577" cy="119" r="13"/>
+  </g>
+  <g fill="#243246" font-family="Arial, sans-serif" font-size="13">
+    <text x="90" y="220">节点颜色：两个待比较的关系社群</text>
+    <path d="M90 244H146" stroke="#9aa5b1" stroke-width="2"/><text x="157" y="248">史料支持的关系</text>
+    <path d="M310 244H366" stroke="#bb603f" stroke-width="2" stroke-dasharray="7 6"/><text x="377" y="248">待核实 / 不确定的关系</text>
+  </g>
+  <text x="380" y="35" text-anchor="middle" fill="#647184" font-family="Arial, sans-serif" font-size="12">概念示意；节点与连线不是某一历史网络的实测结果</text>
+</svg>

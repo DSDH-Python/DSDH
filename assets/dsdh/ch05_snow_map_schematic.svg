@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-labelledby="title desc">
+  <title id="title">约翰·斯诺伦敦宽街霍乱地图的概念示意</title>
+  <desc id="desc">简化街区示意图显示死亡个案集中在宽街水泵周边。此图不是1854年原地图的复刻，也不表示精确病例坐标。</desc>
+  <rect width="760" height="340" rx="8" fill="#f7f8fa"/>
+  <g fill="none" stroke="#c8d0d9" stroke-width="18" stroke-linecap="round">
+    <path d="M85 62H680 M85 145H680 M85 228H680 M85 305H680"/>
+    <path d="M145 35V320 M290 35V320 M435 35V320 M580 35V320"/>
+  </g>
+  <g fill="none" stroke="#fff" stroke-width="2">
+    <path d="M85 62H680 M85 145H680 M85 228H680 M85 305H680"/>
+    <path d="M145 35V320 M290 35V320 M435 35V320 M580 35V320"/>
+  </g>
+  <g fill="#176b66" opacity=".92">
+    <circle cx="292" cy="120" r="6"/><circle cx="320" cy="133" r="6"/><circle cx="347" cy="117" r="6"/>
+    <circle cx="363" cy="147" r="6"/><circle cx="380" cy="124" r="6"/><circle cx="405" cy="139" r="6"/>
+    <circle cx="415" cy="112" r="6"/><circle cx="332" cy="171" r="6"/><circle cx="389" cy="177" r="6"/>
+    <circle cx="438" cy="160" r="6"/><circle cx="290" cy="184" r="6"/><circle cx="461" cy="130" r="6"/>
+    <circle cx="471" cy="191" r="6"/><circle cx="255" cy="143" r="6"/><circle cx="494" cy="150" r="6"/>
+    <circle cx="314" cy="207" r="6"/><circle cx="427" cy="205" r="6"/><circle cx="518" cy="180" r="6"/>
+    <circle cx="235" cy="182" r="6"/><circle cx="538" cy="126" r="6"/><circle cx="354" cy="96" r="6"/>
+    <circle cx="486" cy="104" r="6"/>
+  </g>
+  <g fill="#526070" font-family="Arial, sans-serif" font-size="13">
+    <text x="382" y="55" text-anchor="middle">宽街（今 Broadwick Street）</text>
+    <text x="625" y="166" transform="rotate(90 625 166)" text-anchor="middle">剑桥街一带</text>
+    <text x="105" y="166" transform="rotate(90 105 166)" text-anchor="middle">街区</text>
+  </g>
+  <g>
+    <circle cx="382" cy="157" r="14" fill="#fff" stroke="#bb603f" stroke-width="3"/>
+    <path d="M382 145V169 M374 151H390" stroke="#bb603f" stroke-width="3" stroke-linecap="round"/>
+    <path d="M399 155L520 82" stroke="#bb603f" stroke-width="1.5"/>
+    <rect x="512" y="57" width="172" height="42" rx="5" fill="#fff" stroke="#e0b5a4"/>
+    <text x="598" y="74" text-anchor="middle" fill="#8f442f" font-family="Arial, sans-serif" font-size="13">宽街公共水泵</text>
+    <text x="598" y="90" text-anchor="middle" fill="#647184" font-family="Arial, sans-serif" font-size="11">位置为概念标示</text>
+  </g>
+  <g fill="#526070" font-family="Arial, sans-serif" font-size="12">
+    <circle cx="104" cy="28" r="5" fill="#176b66"/>
+    <text x="116" y="32">个案聚集（示意点位）</text>
+    <text x="740" y="325" text-anchor="end">概念示意，不是 1854 年原图或精确病例坐标</text>
+  </g>
+</svg>

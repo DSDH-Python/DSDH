@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" role="img" aria-labelledby="title desc">
+  <title id="title">历史文献影像的可追溯OCR处理流程</title>
+  <desc id="desc">流程从原始影像出发，经预处理和版面识别生成OCR候选文本，再由人工对照原图校勘并记录版本。</desc>
+  <rect width="760" height="290" rx="8" fill="#fff"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g><rect x="28" y="75" width="145" height="112" rx="8" fill="#f3f5f7" stroke="#cbd3dc"/>
+      <path d="M65 98h68v62H65z" fill="#fff" stroke="#9aa5b1"/><path d="M74 110h49 M74 121h44 M74 132h48 M74 143h39" stroke="#68778a" stroke-width="3"/>
+      <text x="100" y="215" fill="#243246" font-size="14">原始影像</text><text x="100" y="235" fill="#647184" font-size="11">只读保存 / 来源</text></g>
+    <g><rect x="218" y="75" width="145" height="112" rx="8" fill="#eaf3f1" stroke="#b7d4ce"/>
+      <path d="M255 98h68v62H255z" fill="#fff" stroke="#9aa5b1"/><path d="M264 110h49 M264 121h44 M264 132h48 M264 143h39" stroke="#35434e" stroke-width="3"/>
+      <text x="290" y="215" fill="#243246" font-size="14">校正与版面分析</text><text x="290" y="235" fill="#647184" font-size="11">参数、操作可追溯</text></g>
+    <g><rect x="408" y="75" width="145" height="112" rx="8" fill="#fff5ec" stroke="#edceb6"/>
+      <path d="M442 103h77 M442 119h64 M442 135h70 M442 151h50" stroke="#9c6846" stroke-width="4"/>
+      <text x="480" y="215" fill="#243246" font-size="14">OCR候选文本</text><text x="480" y="235" fill="#647184" font-size="11">保留置信度与版面</text></g>
+    <g><rect x="598" y="75" width="134" height="112" rx="8" fill="#eef1f8" stroke="#c5cee0"/>
+      <path d="M628 106l12 12 27-29 M628 139h69" fill="none" stroke="#526f9b" stroke-width="5" stroke-linecap="round"/>
+      <text x="665" y="215" fill="#243246" font-size="14">人工校勘</text><text x="665" y="235" fill="#647184" font-size="11">疑难字回看原图</text></g>
+  </g>
+  <g fill="none" stroke="#647184" stroke-width="2"><path d="M176 130h34"/><path d="M366 130h34"/><path d="M556 130h34"/></g>
+  <g fill="#647184"><path d="M210 125l10 5-10 5z"/><path d="M400 125l10 5-10 5z"/><path d="M590 125l10 5-10 5z"/></g>
+</svg>

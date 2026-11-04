@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">检索增强生成中的证据回溯流程</title>
+  <desc id="desc">问题触发对有来源文档的检索，选出的片段连同出处交给语言模型，生成回答后仍需人工核验每条主张。</desc>
+  <rect width="760" height="300" rx="8" fill="#fff"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g><rect x="25" y="78" width="130" height="92" rx="9" fill="#f0f2f5" stroke="#cbd3dc"/><text x="90" y="116" fill="#243246" font-size="15">研究问题</text><text x="90" y="141" fill="#647184" font-size="12">明确对象 / 范围</text></g>
+    <g><rect x="210" y="78" width="150" height="92" rx="9" fill="#e8f2ef" stroke="#b7d4ce"/><text x="285" y="116" fill="#243246" font-size="15">检索语料</text><text x="285" y="141" fill="#647184" font-size="12">段落 + 来源定位</text></g>
+    <g><rect x="415" y="78" width="145" height="92" rx="9" fill="#fff3e9" stroke="#edceb6"/><text x="487" y="116" fill="#243246" font-size="15">模型生成</text><text x="487" y="141" fill="#647184" font-size="12">只依据提供证据</text></g>
+    <g><rect x="615" y="78" width="120" height="92" rx="9" fill="#eef1f8" stroke="#c5cee0"/><text x="675" y="116" fill="#243246" font-size="15">人工核验</text><text x="675" y="141" fill="#647184" font-size="12">逐条对原文</text></g>
+  </g>
+  <g stroke="#68778a" stroke-width="2" fill="#68778a"><path d="M157 124h46"/><path d="M362 124h46"/><path d="M562 124h46"/></g>
+  <g fill="#68778a"><path d="M199 119l10 5-10 5z"/><path d="M404 119l10 5-10 5z"/><path d="M604 119l10 5-10 5z"/></g>
+  <path d="M286 176V225H674V176" fill="none" stroke="#9aa5b1" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="480" y="246" text-anchor="middle" fill="#526070" font-family="Arial, sans-serif" font-size="12">回答中的每项主张须能回到具体文档、页码或段落</text>
+  <text x="380" y="35" text-anchor="middle" fill="#647184" font-family="Arial, sans-serif" font-size="12">检索提供证据，不会自动保证回答正确或完整</text>
+</svg>

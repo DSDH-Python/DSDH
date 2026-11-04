@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">柱状图纵轴从零起与截断的视觉对照</title>
+  <desc id="desc">同一组示例数值98和100，在零起点坐标中高度接近，在纵轴从95起的截断坐标中差异被夸大。数值为教学用合成示例。</desc>
+  <rect width="760" height="300" fill="#fff"/>
+  <g font-family="Arial, sans-serif">
+    <text x="188" y="28" text-anchor="middle" fill="#243246" font-size="15" font-weight="700">从 0 起：差异约 2%</text>
+    <text x="570" y="28" text-anchor="middle" fill="#243246" font-size="15" font-weight="700">从 95 起：差异被放大</text>
+    <text x="188" y="49" text-anchor="middle" fill="#647184" font-size="12">纵轴 0–110</text>
+    <text x="570" y="49" text-anchor="middle" fill="#647184" font-size="12">纵轴 95–101（截断）</text>
+  </g>
+  <g stroke="#d9e0e5" stroke-width="1">
+    <path d="M70 80H330 M70 135H330 M70 190H330 M70 245H330"/>
+    <path d="M450 80H710 M450 135H710 M450 190H710 M450 245H710"/>
+  </g>
+  <g fill="#647184" font-family="Arial, sans-serif" font-size="11" text-anchor="end">
+    <text x="63" y="249">0</text><text x="63" y="194">37</text><text x="63" y="139">73</text><text x="63" y="84">110</text>
+    <text x="443" y="249">95</text><text x="443" y="194">97</text><text x="443" y="139">99</text><text x="443" y="84">101</text>
+  </g>
+  <g stroke="#9aa5b1" stroke-width="1.2">
+    <path d="M70 80V245H330 M450 80V245H710"/>
+  </g>
+  <g fill="#176b66">
+    <rect x="115" y="98" width="66" height="147" rx="3"/><rect x="220" y="95" width="66" height="150" rx="3"/>
+    <rect x="495" y="163" width="66" height="82" rx="3"/><rect x="600" y="108" width="66" height="137" rx="3"/>
+  </g>
+  <g fill="#243246" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">
+    <text x="148" y="91">98</text><text x="253" y="88">100</text>
+    <text x="528" y="156">98</text><text x="633" y="101">100</text>
+    <text x="148" y="267">A</text><text x="253" y="267">B</text><text x="528" y="267">A</text><text x="633" y="267">B</text>
+  </g>
+  <text x="380" y="291" text-anchor="middle" fill="#647184" font-family="Arial, sans-serif" font-size="11">教学用合成数值：用于说明坐标选择，不对应任何真实调查或统计结果</text>
+</svg>

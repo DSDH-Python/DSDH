@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">知识图谱事实、语义关系与出处来源示意</title>
+  <desc id="desc">图中人物、作品和地点通过有明确含义的关系连接，并由来源节点记录支持该事实的文献及页码。</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#68778a"/></marker></defs>
+  <rect width="760" height="300" rx="8" fill="#fff"/>
+  <g stroke="#68778a" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M185 103L324 103"/><path d="M410 116L534 169"/><path d="M540 208L411 230"/><path d="M325 230L189 132"/>
+  </g>
+  <g fill="#526070" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">
+    <text x="255" y="90">著有</text><text x="485" y="130">记载于</text><text x="481" y="226">页码 / 版本</text><text x="254" y="207">支持此说</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="14" text-anchor="middle">
+    <rect x="90" y="82" width="100" height="44" rx="20" fill="#e7f2ef" stroke="#8bbab0"/><text x="140" y="109" fill="#243246">人物</text>
+    <rect x="320" y="82" width="100" height="44" rx="20" fill="#e7f2ef" stroke="#8bbab0"/><text x="370" y="109" fill="#243246">作品</text>
+    <rect x="530" y="165" width="125" height="44" rx="20" fill="#fff1e9" stroke="#ddb39f"/><text x="592" y="192" fill="#243246">史料来源</text>
+    <rect x="320" y="214" width="100" height="38" rx="18" fill="#f0f2f5" stroke="#cbd3dc"/><text x="370" y="238" fill="#243246">卷 / 页</text>
+  </g>
+  <text x="380" y="35" text-anchor="middle" fill="#647184" font-family="Arial, sans-serif" font-size="12">保留断言的出处，避免把“图谱中有边”误当作无条件的事实</text>
+</svg>

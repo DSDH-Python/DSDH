@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 310" role="img" aria-labelledby="title desc">
+  <title id="title">Minard拿破仑远征图多变量编码方式示意</title>
+  <desc id="desc">概念图说明经典流向地图如何将路线、行进方向、队伍规模和温度时间序列组合呈现；不是原图数据的重绘。</desc>
+  <rect width="760" height="310" rx="8" fill="#fff"/>
+  <text x="380" y="29" text-anchor="middle" fill="#243246" font-family="Arial, sans-serif" font-size="16" font-weight="700">经典流向地图：一张图承载多种证据</text>
+  <path d="M90 110 C180 70 245 90 320 125 S470 160 560 112 S650 86 690 125" fill="none" stroke="#c9b391" stroke-width="24" stroke-linecap="round"/>
+  <path d="M90 110 C180 70 245 90 320 125 S470 160 560 112 S650 86 690 125" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/>
+  <path d="M130 94l15 5-14 8 M280 111l15 8-16 5 M480 145l-16 5 9-14 M635 91l-12-5 3 14" fill="#243246"/>
+  <g fill="#243246" font-family="Arial, sans-serif" font-size="12">
+    <text x="105" y="165">出发</text><text x="348" y="185">路线位置与方向</text><text x="637" y="165">返程</text>
+  </g>
+  <path d="M92 235 C170 230 220 238 285 233 S400 245 465 240 S565 258 635 250 S680 261 700 264" fill="none" stroke="#557b9d" stroke-width="3"/>
+  <g stroke="#dfe4ea" stroke-width="1"><path d="M90 210H700 M90 260H700"/></g>
+  <g fill="#526070" font-family="Arial, sans-serif" font-size="11">
+    <text x="92" y="205">下方时间序列：沿途温度</text>
+    <text x="700" y="282" text-anchor="end">流带宽度可编码队伍规模；原作还结合地理底图与注记</text>
+  </g>
+  <text x="380" y="300" text-anchor="middle" fill="#8a5a3c" font-family="Arial, sans-serif" font-size="11">教学示意，不重绘 Minard 原图或其历史数值</text>
+</svg>

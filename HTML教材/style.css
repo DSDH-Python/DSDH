@@ -246,28 +246,41 @@ a:hover {
 pre.code {
   max-width: 100%;
   overflow-x: auto;
-  padding: 14px;
-  background: #202d38;
-  color: #f4f3ed;
+  padding: 40px 14px 12px;
+  border: 1px solid #d0d7de;
   border-radius: 5px;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  background: #f6f8fa;
+  color: #24292f;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre;
 }
 
 .code-block {
   position: relative;
-  margin: 16px 0;
+  margin: 12px 0;
 }
 
 .code-block pre.code {
   margin: 0;
-  padding-top: 48px;
 }
 
 .code-copy {
   position: absolute;
   top: 8px;
   right: 8px;
+  padding: 4px 9px;
+  border-color: #d0d7de;
+  background: #fff;
+  color: #57606a;
+  font-size: 12px;
+}
+
+.code-copy:hover {
+  border-color: #afb8c1;
+  background: #f3f4f6;
+  color: #24292f;
 }
 
 .readbox {

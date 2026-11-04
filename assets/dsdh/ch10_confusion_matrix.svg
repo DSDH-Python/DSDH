@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-labelledby="title desc">
+  <title id="title">二分类混淆矩阵教学示例</title>
+  <desc id="desc">合成测试集中，真实正类50例中模型识别44例、漏判6例；真实负类50例中误判16例、识别34例。数据为教学用合成数值。</desc>
+  <rect width="520" height="360" rx="8" fill="#fff"/>
+  <text x="295" y="28" text-anchor="middle" fill="#243246" font-family="Arial, sans-serif" font-size="16" font-weight="700">混淆矩阵：同时看见误报与漏报</text>
+  <text x="296" y="58" text-anchor="middle" fill="#647184" font-family="Arial, sans-serif" font-size="12">预测类别</text>
+  <text x="65" y="190" transform="rotate(-90 65 190)" text-anchor="middle" fill="#647184" font-family="Arial, sans-serif" font-size="12">真实类别</text>
+  <g fill="#647184" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">
+    <text x="235" y="85">负类</text><text x="355" y="85">正类</text>
+    <text x="145" y="151">负类</text><text x="145" y="246">正类</text>
+  </g>
+  <g stroke="#fff" stroke-width="3">
+    <rect x="175" y="98" width="120" height="82" fill="#dbece8"/><rect x="295" y="98" width="120" height="82" fill="#f3d9cf"/>
+    <rect x="175" y="180" width="120" height="82" fill="#f5e4d9"/><rect x="295" y="180" width="120" height="82" fill="#b9d9d1"/>
+  </g>
+  <g fill="#243246" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="235" y="136" font-size="25">34</text><text x="355" y="136" font-size="25">16</text>
+    <text x="235" y="219" font-size="25">6</text><text x="355" y="219" font-size="25">44</text>
+    <text x="235" y="158" font-size="11">真负例</text><text x="355" y="158" font-size="11">误报</text>
+    <text x="235" y="241" font-size="11">漏报</text><text x="355" y="241" font-size="11">真正例</text>
+  </g>
+  <text x="295" y="292" text-anchor="middle" fill="#8a5a3c" font-family="Arial, sans-serif" font-size="11">合成示例，共 100 条；研究报告须替换为独立测试集结果</text>
+</svg>

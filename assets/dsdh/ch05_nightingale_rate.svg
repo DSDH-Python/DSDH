@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 330" role="img" aria-labelledby="title desc">
+  <title id="title">克里米亚战争期间英军疾病死亡年化率</title>
+  <desc id="desc">1854年4月至1856年3月的月度疾病死亡年化率，1855年1月达到峰值，之后总体下降。单位为每千名士兵。</desc>
+  <rect width="860" height="330" fill="#fff"/>
+  <g stroke="#e6eaf0" stroke-width="1">
+    <path d="M70 250H805 M70 204.5H805 M70 159.1H805 M70 113.6H805 M70 68.2H805"/>
+  </g>
+  <g fill="#647184" font-family="Arial, sans-serif" font-size="12" text-anchor="end">
+    <text x="60" y="254">0</text>
+    <text x="60" y="208.5">250</text>
+    <text x="60" y="163.1">500</text>
+    <text x="60" y="117.6">750</text>
+    <text x="60" y="72.2">1,000</text>
+  </g>
+  <g stroke="#9aa5b1" stroke-width="1.2">
+    <path d="M70 50V250H805"/>
+    <path d="M426.5 50V250" stroke="#bb603f" stroke-dasharray="5 4"/>
+  </g>
+  <path d="M70 249.7 L101 248.9 L132 249.2 L163 222.7 L194 190.3 L225 193.2 L256 214.2 L287 188.1 L318 135.2 L349 64 L380 100.4 L411 162.7 L442 217.7 L473 218.8 L504 205 L535 230.5 L566 226.4 L597 241.4 L628 244 L659 239.7 L690 245.4 L721 247.9 L752 248.8 L783 249.3"
+        fill="none" stroke="#176b66" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#176b66" stroke="#fff" stroke-width="1.5">
+    <circle cx="70" cy="249.7" r="3.5"/><circle cx="101" cy="248.9" r="3.5"/><circle cx="132" cy="249.2" r="3.5"/>
+    <circle cx="163" cy="222.7" r="3.5"/><circle cx="194" cy="190.3" r="3.5"/><circle cx="225" cy="193.2" r="3.5"/>
+    <circle cx="256" cy="214.2" r="3.5"/><circle cx="287" cy="188.1" r="3.5"/><circle cx="318" cy="135.2" r="3.5"/>
+    <circle cx="349" cy="64" r="4.5"/><circle cx="380" cy="100.4" r="3.5"/><circle cx="411" cy="162.7" r="3.5"/>
+    <circle cx="442" cy="217.7" r="3.5"/><circle cx="473" cy="218.8" r="3.5"/><circle cx="504" cy="205" r="3.5"/>
+    <circle cx="535" cy="230.5" r="3.5"/><circle cx="566" cy="226.4" r="3.5"/><circle cx="597" cy="241.4" r="3.5"/>
+    <circle cx="628" cy="244" r="3.5"/><circle cx="659" cy="239.7" r="3.5"/><circle cx="690" cy="245.4" r="3.5"/>
+    <circle cx="721" cy="247.9" r="3.5"/><circle cx="752" cy="248.8" r="3.5"/><circle cx="783" cy="249.3" r="3.5"/>
+  </g>
+  <g fill="#526070" font-family="Arial, sans-serif" font-size="11" text-anchor="middle">
+    <text x="70" y="270">1854-04</text><text x="256" y="270">1854-10</text>
+    <text x="442" y="270">1855-04</text><text x="628" y="270">1855-10</text><text x="783" y="270">1856-03</text>
+  </g>
+  <g fill="#243246" font-family="Arial, sans-serif" font-size="12">
+    <text x="350" y="48">1855-01 峰值：1,022.8</text>
+    <text x="435" y="24" fill="#9a4c34">1855-03 卫生委员会到达</text>
+  </g>
+  <text x="70" y="305" fill="#647184" font-family="Arial, sans-serif" font-size="12">疾病死亡年化率（每千名士兵）</text>
+  <text x="805" y="305" fill="#647184" font-family="Arial, sans-serif" font-size="11" text-anchor="end">月度数据；年化率 = 当月疾病死亡数 × 12,000 ÷ 当月军队人数</text>
+</svg>
