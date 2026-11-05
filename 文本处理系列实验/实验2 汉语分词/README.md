@@ -186,4 +186,4 @@ crf_test -m model test.txt > output.txt
 - [ ] 备份需要保留的文本输出、分析图片和实验记录。
 - [ ] 在报告中区分模型推理与模型训练；不把统计图当作准确率评价。
 
- 
+ https://scholar.edu.cn/
