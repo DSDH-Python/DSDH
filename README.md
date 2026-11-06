@@ -11,13 +11,12 @@
 |---|---|---|
 | 章节 HTML 源页面 | `HTML教材/` | 13 章教材门户、章节页、9 款模块游戏及破冰游戏；这是 HTML 教材的编辑源目录 |
 | 配图与图表 | `assets/dsdh/` | 章节图片和原创教学图；HTML 页面通过相对路径引用 |
-| Markdown 源稿 | `src/` | 13 篇课程正文。与 HTML 页面是两套内容，不会自动互相转换 |
-| MkDocs 站点内容 | `docs/` | 站点首页、游戏目录及历史 Markdown 页面 |
+| MkDocs 站点内容 | `assets/` | 站点首页、游戏目录、历史 Markdown 页面及教材配图 |
 | MkDocs 配置 | `mkdocs.yml` | 站点主题、左侧导航和 Pages 基础地址 |
 | 站点依赖 | `requirements-site.txt` | 固定版本的 MkDocs 与 Material 主题 |
-| 静态资源准备脚本 | `scripts/prepare_site_assets.py` | 将 `HTML教材/` 和 `assets/dsdh/` 复制到构建输入目录 `docs/` |
+| 静态资源准备脚本 | `scripts/prepare_site_assets.py` | 将 `HTML教材/` 和 `assets/dsdh/` 复制到 `assets/` 下的站点构建路径 |
 | GitHub Pages 工作流 | `.github/workflows/deploy-pages.yml` | 在 `main` 推送或手动触发时构建并部署站点 |
-| 单文件翻页预览 | `数据科学与数字人文_互动翻页教材.html` | 可直接在浏览器打开的交互翻页版本 |
+| 单文件翻页预览 | `课程导入/数据科学与数字人文_互动翻页教材.html` | 可直接在浏览器打开的交互翻页版本 |
 | 实验教材预览 | `数字人文实验_教材预览.html` | 另一套《数字人文实验》教材内容 |
 | 教材 PDF | `数据科学与数字人文_教材_V2.2.pdf` | 离线阅读版本 |
 
@@ -25,9 +24,9 @@
 
 ## 编辑与预览
 
-- 更新 HTML 教材：编辑 `HTML教材/chNN.html`；新增或替换图片放入 `assets/dsdh/`，使用相对路径引用。不要编辑生成到 `docs/教材/` 的副本。
-- 更新课程首页或左侧导航：编辑 `docs/index.md` 和 `mkdocs.yml`。
-- 更新 Markdown 源稿：编辑 `src/` 中对应章节；它与 HTML 教材、MkDocs 首页目前不自动同步。
+- 更新 HTML 教材：编辑 `HTML教材/chNN.html`；新增或替换图片放入 `assets/dsdh/`，使用相对路径引用。不要编辑生成到 `assets/教材/` 的副本。
+- 更新课程首页或左侧导航：编辑 `assets/index.md` 和 `mkdocs.yml`。
+- 原 `src/` 中的 13 篇 Markdown 源稿已移除；它们与 HTML 教材、MkDocs 首页是独立内容，不能从现有页面自动同步或还原。如需原稿，可从 Git 历史找回。
 - 生成站点：先准备静态资源，再构建 MkDocs。
 
 Windows PowerShell 示例：
@@ -39,7 +38,7 @@ python -m mkdocs build --strict
 python -m http.server 8000 --directory site
 ```
 
-本地预览地址为 `http://localhost:8000/`。`site/` 是构建产物，不需要提交；`docs/教材/` 与 `docs/assets/dsdh/` 也由脚本生成并列入忽略规则。
+本地预览地址为 `http://localhost:8000/`。`site/` 是构建产物，不需要提交；`assets/教材/` 与 `assets/assets/dsdh/` 也由脚本生成并列入忽略规则。
 
 ## 发布到 GitHub Pages
 
@@ -47,4 +46,4 @@ python -m http.server 8000 --directory site
 
 ## 课堂游戏
 
-模块二至模块十各有一款 HTML5 游戏，涵盖数据获取、可复现流程、文本分析、可视化修辞、关系网络、空间分析、图像处理、知识图谱与模型评估。游戏中心位于 `docs/games.md`；单文件游戏位于 `docs/games/`，教材内配套游戏位于 `HTML教材/`。
+模块二至模块十各有一款 HTML5 游戏，涵盖数据获取、可复现流程、文本分析、可视化修辞、关系网络、空间分析、图像处理、知识图谱与模型评估。游戏中心位于 `assets/games.md`；单文件游戏位于 `assets/games/`，教材内配套游戏位于 `HTML教材/`。
