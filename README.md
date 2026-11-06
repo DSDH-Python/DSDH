@@ -2,7 +2,8 @@
 
 苏州大学历史文化学院课程资源。课程由 12 个方法模块和 1 个综合项目组成，贯穿可复现、案例真实与研究伦理。
 
-**站点入口：**[数据科学与数字人文 · GitHub Pages](https://dsdh-python.github.io/DSDH/)（预期地址；仓库 Pages 尚待管理员启用，启用前会返回 404）  
+**站点入口：**[数据科学与数字人文 · GitHub Pages](https://dsdh-python.github.io/DSDH/)
+
 **GitHub 仓库：**[DSDH-Python/DSDH](https://github.com/DSDH-Python/DSDH)
 
 ## 教材与站点
@@ -42,7 +43,7 @@ python -m http.server 8000 --directory site
 
 ## 发布到 GitHub Pages
 
-工作流 `.github/workflows/deploy-pages.yml` 监听 `main` 分支推送，并支持 GitHub Actions 手动运行。首次发布前，仓库管理员需在 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。目前仓库代码和本地构建已准备好，但 Pages 尚未启用；最近的 workflow 因缺少 Pages 配置而停在 `Setup Pages`，所以预期站点链接暂时不可访问。启用后可在 [Actions](https://github.com/DSDH-Python/DSDH/actions) 查看部署状态。
+工作流 `.github/workflows/deploy-pages.yml` 监听 `main` 分支推送，并支持 GitHub Actions 手动运行。仓库管理员应在 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**，避免分支发布与 MkDocs 工作流同时部署不同的站点内容。部署状态可在 [Actions](https://github.com/DSDH-Python/DSDH/actions) 查看。更新后如果仍看到旧页面或 404，可先强制刷新浏览器，或用无痕窗口检查。
 
 ## 课堂游戏
 
